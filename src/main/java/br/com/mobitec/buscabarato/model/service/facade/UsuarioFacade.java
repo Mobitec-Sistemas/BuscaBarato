@@ -11,7 +11,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.ServletContext;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -28,7 +27,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
     //@Inject
     //private Session session;
     
-    @PersistenceContext(unitName = "default")
+    //@PersistenceContext(unitName = "default")
     private EntityManager em;
 
     @Override

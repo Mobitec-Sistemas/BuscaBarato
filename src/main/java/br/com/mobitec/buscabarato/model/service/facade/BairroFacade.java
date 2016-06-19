@@ -8,7 +8,6 @@ package br.com.mobitec.buscabarato.model.service.facade;
 import br.com.mobitec.buscabarato.model.Bairro;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -17,7 +16,7 @@ import javax.persistence.PersistenceContext;
 @Named("bairro")
 public class BairroFacade extends AbstractFacade<Bairro> {
 
-    @PersistenceContext(unitName = "default")
+    //@PersistenceContext(unitName = "default")
     private EntityManager em;
 
     @Override
