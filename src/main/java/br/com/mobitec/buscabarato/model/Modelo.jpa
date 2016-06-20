@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jpa:entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" pkg="br.com.mobitec.buscabarato.model" v="1.5.4" xs="false" id="_14644508551091" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd">
+    <jpa:default-class abs="false" class="EnderecoEmpresaPK" visibile="true" minimized="false">
+        <jpa:embeddable>false</jpa:embeddable>
+        <jpa:attribute attribute-type="int" visibile="true" name="codEmpresa"/>
+        <jpa:attribute attribute-type="int" visibile="true" name="codEndereco"/>
+    </jpa:default-class>
+    <jpa:default-class abs="false" class="TabelaPrecoPK" visibile="true" minimized="false">
+        <jpa:embeddable>false</jpa:embeddable>
+        <jpa:attribute attribute-type="int" visibile="true" name="codEmpresa"/>
+        <jpa:attribute attribute-type="int" visibile="true" name="codProduto"/>
+    </jpa:default-class>
+    <jpa:entity xre="false" sm="false" abs="false" class="Cidade" visibile="true" minimized="false" rootElement="_14644508551091" id="_14644508551872">
+        <jpa:attributes>
+            <basic optional="false" attribute-type="String" visibile="true" name="nome" id="_146445085528113">
+                <jpa:column name="nome" unique="false" nullable="false" insertable="true" updatable="true" table="cidade" length="50"/>
+            </basic>
+            <many-to-one primaryKey="false" connected-entity-id="_14644508552813" connected-attribute-id="_146445085529618" visibile="true" name="codEstado" id="_146445085529614">
+                <join-column name="cod_estado" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </many-to-one>
+            <one-to-many own="false" collection-type="java.util.List" connected-entity-id="_14644508552818" connected-attribute-id="_146445085529641" visibile="true" name="bairroCollection" id="_146445085529615"/>
+            <jpa:id attribute-type="Integer" visibile="true" name="codigo" id="_146445085528112">
+                <jpa:column name="codigo" unique="false" nullable="false" insertable="true" updatable="true" table="cidade"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="cidade"/>
+    </jpa:entity>
+    <jpa:entity xre="false" sm="false" abs="false" class="Estado" visibile="true" minimized="false" rootElement="_14644508551091" id="_14644508552813">
+        <jpa:attributes>
+            <basic optional="true" attribute-type="String" visibile="true" name="nome" id="_146445085529617">
+                <jpa:column name="nome" unique="false" nullable="true" insertable="true" updatable="true" table="estado" length="30"/>
+            </basic>
+            <one-to-many own="false" collection-type="java.util.List" connected-entity-id="_14644508551872" connected-attribute-id="_146445085529614" visibile="true" name="cidadeCollection" id="_146445085529618"/>
+            <jpa:id attribute-type="Integer" visibile="true" name="codigo" id="_146445085529616">
+                <jpa:column name="codigo" unique="false" nullable="false" insertable="true" updatable="true" table="estado"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="estado"/>
+    </jpa:entity>
+    <jpa:entity xre="false" sm="false" abs="true" class="Pessoa" visibile="true" minimized="false" rootElement="_14644508551091" id="_14644508552814">
+        <jpa:attributes>
+            <basic optional="false" attribute-type="String" visibile="true" name="nome" id="_146445085529620">
+                <bv>
+                    <nn m="O nome não pode ser nulo"/>
+                    <si mi="5" ma="50" m="O nome deve ter de 5 a 50 caracteres"/>
+                </bv>
+                <jpa:column name="nome" unique="false" nullable="false" insertable="true" updatable="true" table="pessoa" length="50"/>
+            </basic>
+            <basic optional="true" attribute-type="String" visibile="true" name="login" id="_146445085529621">
+                <jpa:column name="login" unique="false" nullable="true" insertable="true" updatable="true" table="pessoa" length="30"/>
+            </basic>
+            <basic optional="true" attribute-type="String" visibile="true" name="senha" id="_146445085529622">
+                <bv/>
+                <jpa:column name="senha" unique="false" nullable="true" insertable="true" updatable="true" table="pessoa" length="30"/>
+            </basic>
+            <basic attribute-type="String" visibile="true" name="email" id="_146445107399577">
+                <bv>
+                    <si ma="50"/>
+                </bv>
+                <jpa:column unique="false" nullable="false" insertable="true" updatable="true" length="50"/>
+            </basic>
+            <jpa:id attribute-type="Integer" visibile="true" name="codigo" id="_146445085529619">
+                <jpa:column name="codigo" unique="false" nullable="false" insertable="true" updatable="true" table="pessoa"/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="pessoa"/>
+    </jpa:entity>
+    <jpa:entity xre="false" sm="false" abs="false" class="Endereco" visibile="true" minimized="false" rootElement="_14644508551091" id="_14644508552815">
+        <jpa:attributes>
+            <basic optional="true" attribute-type="String" visibile="true" name="logradouro" id="_146445085529626">
+                <jpa:column name="logradouro" unique="false" nullable="true" insertable="true" updatable="true" table="endereco" length="100"/>
+            </basic>
+            <basic optional="true" attribute-type="String" visibile="true" name="cep" id="_146445085529627">
+                <jpa:column name="cep" unique="false" nullable="true" insertable="true" updatable="true" table="endereco" length="8"/>
+            </basic>
+            <many-to-one primaryKey="false" connected-entity-id="_14644508552818" connected-attribute-id="_146445085529640" visibile="true" name="codBairro" id="_146445085529628">
+                <join-column name="cod_bairro" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </many-to-one>
+            <one-to-many own="false" collection-type="java.util.List" connected-entity-id="_14644508552817" connected-attribute-id="_146445085529637" visibile="true" name="enderecoEmpresaCollection" id="_146445085529629"/>
+            <jpa:id attribute-type="Integer" visibile="true" name="codigo" id="_146445085529625">
+                <jpa:column name="codigo" unique="false" nullable="false" insertable="true" updatable="true" table="endereco"/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="endereco"/>
+    </jpa:entity>
+    <jpa:entity xre="false" sm="false" abs="false" class="Produto" visibile="true" minimized="false" rootElement="_14644508551091" id="_14644508552816">
+        <jpa:attributes>
+            <basic optional="false" attribute-type="String" visibile="true" name="descricao" id="_146445085529631">
+                <jpa:column name="descricao" unique="false" nullable="false" insertable="true" updatable="true" table="produto" length="80"/>
+            </basic>
+            <one-to-many own="false" collection-type="java.util.List" connected-entity-id="_146445085528111" connected-attribute-id="_146445085529657" visibile="true" name="tabelaPrecoCollection" id="_146445085529632"/>
+            <jpa:id attribute-type="Integer" visibile="true" name="codigo" id="_146445085529630">
+                <jpa:column name="codigo" unique="false" nullable="false" insertable="true" updatable="true" table="produto"/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="produto"/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyType="IDCLASS" compositePrimaryKeyClass="EnderecoEmpresaPK" sm="false" abs="false" class="EnderecoEmpresa" visibile="true" minimized="false" rootElement="_14644508551091" id="_14644508552817">
+        <jpa:attributes>
+            <basic optional="true" attribute-type="Integer" visibile="true" name="numero" id="_146445085529635">
+                <jpa:column name="numero" unique="false" nullable="true" insertable="true" updatable="true" table="endereco_empresa"/>
+            </basic>
+            <many-to-one optional="false" primaryKey="false" connected-entity-id="_146445085528110" connected-attribute-id="_146445085529650" visibile="true" name="empresa" id="_146445085529636">
+                <join-column name="cod_empresa" unique="false" nullable="true" insertable="false" updatable="false"/>
+            </many-to-one>
+            <many-to-one optional="false" primaryKey="false" connected-entity-id="_14644508552815" connected-attribute-id="_146445085529629" visibile="true" name="endereco" id="_146445085529637">
+                <join-column name="cod_endereco" unique="false" nullable="true" insertable="false" updatable="false"/>
+            </many-to-one>
+            <jpa:id attribute-type="int" visibile="true" name="codEmpresa" id="_146445085529633">
+                <jpa:column name="cod_empresa" unique="false" nullable="false" insertable="true" updatable="true" table="endereco_empresa"/>
+            </jpa:id>
+            <jpa:id attribute-type="int" visibile="true" name="codEndereco" id="_146445085529634">
+                <jpa:column name="cod_endereco" unique="false" nullable="false" insertable="true" updatable="true" table="endereco_empresa"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="endereco_empresa"/>
+    </jpa:entity>
+    <jpa:entity xre="false" sm="false" abs="false" class="Bairro" visibile="true" minimized="false" rootElement="_14644508551091" id="_14644508552818">
+        <jpa:attributes>
+            <basic optional="false" attribute-type="String" visibile="true" name="nome" id="_146445085529639">
+                <jpa:column name="nome" unique="false" nullable="false" insertable="true" updatable="true" table="bairro" length="30"/>
+            </basic>
+            <many-to-one primaryKey="false" connected-entity-id="_14644508551872" connected-attribute-id="_146445085529615" visibile="true" name="codCidade" id="_146445085529641">
+                <join-column name="cod_cidade" unique="false" nullable="true" insertable="true" updatable="true"/>
+            </many-to-one>
+            <one-to-many own="false" collection-type="java.util.List" connected-entity-id="_14644508552815" connected-attribute-id="_146445085529628" visibile="true" name="enderecoCollection" id="_146445085529640"/>
+            <jpa:id attribute-type="Integer" visibile="true" name="codigo" id="_146445085529638">
+                <jpa:column name="codigo" unique="false" nullable="false" insertable="true" updatable="true" table="bairro"/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="bairro"/>
+    </jpa:entity>
+    <jpa:entity xre="false" sm="false" abs="false" class="Usuario" superclassId="_14644508552814" visibile="true" minimized="false" rootElement="_14644508551091" id="_14644508552819">
+        <jpa:attributes>
+            <basic optional="false" attribute-type="int" visibile="true" name="ponto" id="_146445085529644">
+                <bv>
+                    <mi v="0" m="A quantidade de pondos não pode ser menor que zero"/>
+                </bv>
+                <jpa:column name="ponto" unique="false" nullable="false" insertable="true" updatable="true" table="usuario"/>
+            </basic>
+            <jpa:id attribute-type="Integer" visibile="true" name="codPessoa" id="_146445085529642">
+                <jpa:column name="cod_pessoa" unique="false" nullable="false" insertable="true" updatable="true" table="usuario"/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="usuario"/>
+    </jpa:entity>
+    <jpa:entity xre="false" sm="false" abs="false" class="Empresa" superclassId="_14644508552814" visibile="true" minimized="false" rootElement="_14644508551091" id="_146445085528110">
+        <jpa:attributes>
+            <basic optional="true" attribute-type="Integer" visibile="true" name="coordenadaX" id="_146445085529647">
+                <jpa:column name="coordenada_x" unique="false" nullable="true" insertable="true" updatable="true" table="empresa"/>
+            </basic>
+            <basic optional="true" attribute-type="Integer" visibile="true" name="coordenadaY" id="_146445085529648">
+                <jpa:column name="coordenada_y" unique="false" nullable="true" insertable="true" updatable="true" table="empresa"/>
+            </basic>
+            <basic optional="true" attribute-type="Integer" visibile="true" name="codEndereco" id="_146445085529649">
+                <jpa:column name="cod_endereco" unique="false" nullable="true" insertable="true" updatable="true" table="empresa"/>
+            </basic>
+            <one-to-many own="false" collection-type="java.util.List" connected-entity-id="_14644508552817" connected-attribute-id="_146445085529636" visibile="true" name="enderecoEmpresaCollection" id="_146445085529650"/>
+            <one-to-many own="false" collection-type="java.util.List" connected-entity-id="_146445085528111" connected-attribute-id="_146445085529656" visibile="true" name="tabelaPrecoCollection" id="_146445085529652"/>
+            <jpa:id attribute-type="Integer" visibile="true" name="codPessoa" id="_146445085529646">
+                <jpa:column name="cod_pessoa" unique="false" nullable="false" insertable="true" updatable="true" table="empresa"/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="empresa"/>
+    </jpa:entity>
+    <jpa:entity xre="false" compositePrimaryKeyType="IDCLASS" compositePrimaryKeyClass="TabelaPrecoPK" sm="false" abs="false" class="TabelaPreco" visibile="true" minimized="false" rootElement="_14644508551091" id="_146445085528111">
+        <jpa:attributes>
+            <basic optional="true" attribute-type="java.math.BigDecimal" visibile="true" name="preco" id="_146445085529655">
+                <jpa:column name="preco" unique="false" nullable="true" insertable="true" updatable="true" table="tabela_preco" precision="10" scale="2"/>
+            </basic>
+            <many-to-one optional="false" primaryKey="false" connected-entity-id="_146445085528110" connected-attribute-id="_146445085529652" visibile="true" name="empresa" id="_146445085529656">
+                <join-column name="cod_empresa" unique="false" nullable="true" insertable="false" updatable="false"/>
+            </many-to-one>
+            <many-to-one optional="false" primaryKey="false" connected-entity-id="_14644508552816" connected-attribute-id="_146445085529632" visibile="true" name="produto" id="_146445085529657">
+                <join-column name="cod_produto" unique="false" nullable="true" insertable="false" updatable="false"/>
+            </many-to-one>
+            <jpa:id attribute-type="int" visibile="true" name="codEmpresa" id="_146445085529653">
+                <jpa:column name="cod_empresa" unique="false" nullable="false" insertable="true" updatable="true" table="tabela_preco"/>
+            </jpa:id>
+            <jpa:id attribute-type="int" visibile="true" name="codProduto" id="_146445085529654">
+                <jpa:column name="cod_produto" unique="false" nullable="false" insertable="true" updatable="true" table="tabela_preco"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:table name="tabela_preco"/>
+    </jpa:entity>
+    <jpa:diagram>
+        <plane elementRef="_14644508551091">
+            <shape elementRef="_14644508551872">
+                <Bounds x="1046.0" y="1234.0" width="144.0" height="147.0"/>
+            </shape>
+            <shape elementRef="_14644508552813">
+                <Bounds x="1254.0" y="1445.0" width="149.0" height="126.0"/>
+            </shape>
+            <shape elementRef="_14644508552814">
+                <Bounds x="818.0" y="75.0" width="139.0" height="155.0"/>
+            </shape>
+            <shape elementRef="_14644508552815">
+                <Bounds x="539.0" y="791.0" width="215.0" height="168.0"/>
+            </shape>
+            <shape elementRef="_14644508552816">
+                <Bounds x="32.0" y="264.0" width="178.0" height="126.0"/>
+            </shape>
+            <shape elementRef="_14644508552817">
+                <Bounds x="274.0" y="538.0" width="201.0" height="168.0"/>
+            </shape>
+            <shape elementRef="_14644508552818">
+                <Bounds x="818.0" y="1023.0" width="164.0" height="147.0"/>
+            </shape>
+            <shape elementRef="_14644508552819">
+                <Bounds x="906.0" y="353.0" width="140.0" height="92.0"/>
+            </shape>
+            <shape elementRef="_146445085528110">
+                <Bounds x="539.0" y="264.0" width="215.0" height="189.0"/>
+            </shape>
+            <shape elementRef="_146445085528111">
+                <Bounds x="274.0" y="32.0" width="168.0" height="168.0"/>
+            </shape>
+        </plane>
+    </jpa:diagram>
+</jpa:entity-mappings>
