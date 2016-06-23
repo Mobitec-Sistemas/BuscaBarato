@@ -11,6 +11,7 @@ import javax.enterprise.event.Observes;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import javax.servlet.ServletContext;
 
 /**
@@ -20,7 +21,7 @@ import javax.servlet.ServletContext;
 @ApplicationScoped
 public class ProdutoFacade extends AbstractFacade<Produto> {
 
-    //@PersistenceContext(unitName = "default")
+    @PersistenceContext(unitName = "default")
     private EntityManager em;
     
     @Override
