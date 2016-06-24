@@ -30,7 +30,7 @@ public class InicioController {
      */
     @Get("/")
     public void index() {
-        result.use(Results.http()).body("Olá vRaptor").setStatusCode(200);
+        result.use(Results.http()).body("Olá vRaptor.").setStatusCode(200);
     }
     
     /*public void ola() {
