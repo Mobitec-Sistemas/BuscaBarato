@@ -17,27 +17,27 @@ import javax.ws.rs.FormParam;
 @Table(name = "endereco_empresa")
 public class EnderecoEmpresa implements Serializable {
 
-    @Column(name = "cod_empresa", table = "endereco_empresa", unique = false, updatable = true, insertable = true, nullable = false, length = 255, scale = 0, precision = 0)
+    @Column(name = "cod_empresa", table = "endereco_empresa", nullable = false)
     @Id
     @FormParam("codEmpresa")
     private int codEmpresa;
 
-    @Column(name = "cod_endereco", table = "endereco_empresa", unique = false, updatable = true, insertable = true, nullable = false, length = 255, scale = 0, precision = 0)
+    @Column(name = "cod_endereco", table = "endereco_empresa", nullable = false)
     @Id
     @FormParam("codEndereco")
     private int codEndereco;
 
-    @Column(name = "numero", table = "endereco_empresa", unique = false, updatable = true, insertable = true, nullable = true, length = 255, scale = 0, precision = 0)
+    @Column(name = "numero", table = "endereco_empresa")
     @Basic
     @FormParam("numero")
     private Integer numero;
 
     @ManyToOne(optional = false, targetEntity = Empresa.class)
-    @JoinColumn(name = "cod_empresa", insertable = false, nullable = true, unique = false, updatable = false)
+    @JoinColumn(name = "cod_empresa", insertable = false, updatable = false)
     private Empresa empresa;
 
     @ManyToOne(optional = false, targetEntity = Endereco.class)
-    @JoinColumn(name = "cod_endereco", insertable = false, nullable = true, unique = false, updatable = false)
+    @JoinColumn(name = "cod_endereco", insertable = false, updatable = false)
     private Endereco endereco;
 
     public EnderecoEmpresa() {

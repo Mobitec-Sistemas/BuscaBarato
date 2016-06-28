@@ -26,6 +26,9 @@ public class ProdutoController {
     @Inject
     private ProdutoFacade produtoFacade;
     
+    /**
+     * @deprecated CDI eyes only
+     */
     public ProdutoController() {
     }
     

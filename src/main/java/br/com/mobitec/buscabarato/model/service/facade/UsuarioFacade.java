@@ -7,12 +7,10 @@
 package br.com.mobitec.buscabarato.model.service.facade;
 
 import br.com.mobitec.buscabarato.model.Usuario;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.event.Observes;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.servlet.ServletContext;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -21,27 +19,27 @@ import org.hibernate.criterion.Restrictions;
  * @author Fabio
  */
 
-@ApplicationScoped
+@RequestScoped
 @Named("usuario")
 public class UsuarioFacade extends AbstractFacade<Usuario> {
 
     //@Inject
     //private Session session;
     
-    @PersistenceContext(unitName = "default")
+    /*@PersistenceContext(unitName = "default")
     private EntityManager em;
 
     @Override
     protected EntityManager getEntityManager() {
         return em;
-    }
+    }*/
 
     public UsuarioFacade() {
         super(Usuario.class);
     }
     
     public Usuario carrega(Usuario usuario) {
-        Session session = (Session)em.getDelegate();
+        Session session = (Session)getEntityManager().getDelegate();
         
         return (Usuario) session.createCriteria(Usuario.class)
                 .add(Restrictions.eq("login", usuario.getLogin()))
@@ -49,7 +47,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
                 .uniqueResult();
     }
     
-    public void whenApplicationStarts(@Observes ServletContext context) {
+    /*public void whenApplicationStarts(@Observes ServletContext context) {
         //logger.info("My application is UP");
-    }
+    }*/
 }

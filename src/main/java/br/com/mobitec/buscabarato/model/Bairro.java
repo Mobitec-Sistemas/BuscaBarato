@@ -21,19 +21,19 @@ import javax.ws.rs.FormParam;
 @Table(name = "bairro")
 public class Bairro implements Serializable {
 
-    @Column(name = "codigo", table = "bairro", unique = false, updatable = true, insertable = true, nullable = false, length = 255, scale = 0, precision = 0)
+    @Column(name = "codigo", table = "bairro", nullable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @FormParam("codigo")
     private Integer codigo;
 
-    @Column(name = "nome", table = "bairro", unique = false, updatable = true, insertable = true, nullable = false, length = 30, scale = 0, precision = 0)
+    @Column(name = "nome", table = "bairro", nullable = false, length = 30)
     @Basic
     @FormParam("nome")
     private String nome;
 
-    @ManyToOne(optional = true, targetEntity = Cidade.class)
-    @JoinColumn(name = "cod_cidade", insertable = true, nullable = true, unique = false, updatable = true)
+    @ManyToOne(targetEntity = Cidade.class)
+    @JoinColumn(name = "cod_cidade")
     private Cidade codCidade;
 
     @OneToMany(targetEntity = Endereco.class, mappedBy = "codBairro")

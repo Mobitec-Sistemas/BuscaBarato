@@ -18,27 +18,27 @@ import javax.ws.rs.FormParam;
 @Table(name = "tabela_preco")
 public class TabelaPreco implements Serializable {
 
-    @Column(name = "cod_empresa", table = "tabela_preco", unique = false, updatable = true, insertable = true, nullable = false, length = 255, scale = 0, precision = 0)
+    @Column(name = "cod_empresa", table = "tabela_preco", nullable = false)
     @Id
     @FormParam("codEmpresa")
     private int codEmpresa;
 
-    @Column(name = "cod_produto", table = "tabela_preco", unique = false, updatable = true, insertable = true, nullable = false, length = 255, scale = 0, precision = 0)
+    @Column(name = "cod_produto", table = "tabela_preco", nullable = false)
     @Id
     @FormParam("codProduto")
     private int codProduto;
 
-    @Column(name = "preco", table = "tabela_preco", unique = false, updatable = true, insertable = true, nullable = true, length = 255, scale = 2, precision = 10)
+    @Column(name = "preco", table = "tabela_preco", scale = 2, precision = 10)
     @Basic
     @FormParam("preco")
     private BigDecimal preco;
 
     @ManyToOne(optional = false, targetEntity = Empresa.class)
-    @JoinColumn(name = "cod_empresa", insertable = false, nullable = true, unique = false, updatable = false)
+    @JoinColumn(name = "cod_empresa", insertable = false, updatable = false)
     private Empresa empresa;
 
     @ManyToOne(optional = false, targetEntity = Produto.class)
-    @JoinColumn(name = "cod_produto", insertable = false, nullable = true, unique = false, updatable = false)
+    @JoinColumn(name = "cod_produto", insertable = false, updatable = false)
     private Produto produto;
 
     public TabelaPreco() {

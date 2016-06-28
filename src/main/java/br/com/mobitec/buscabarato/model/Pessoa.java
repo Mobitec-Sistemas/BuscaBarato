@@ -22,30 +22,30 @@ import javax.ws.rs.FormParam;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Pessoa implements Serializable {
 
-    @Column(name = "codigo", table = "pessoa", unique = false, updatable = true, insertable = true, nullable = false, length = 255, scale = 0, precision = 0)
+    @Column(name = "codigo", table = "pessoa", nullable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @FormParam("codigo")
     private Integer codigo;
 
-    @Column(name = "nome", table = "pessoa", unique = false, updatable = true, insertable = true, nullable = false, length = 50, scale = 0, precision = 0)
+    @Column(name = "nome", table = "pessoa", nullable = false, length = 50)
     @Basic
     @NotNull(message = "O nome n�o pode ser nulo")
     @Size(min = 5, max = 50, message = "O nome deve ter de 5 a 50 caracteres")
     @FormParam("nome")
     private String nome;
 
-    @Column(name = "login", table = "pessoa", unique = false, updatable = true, insertable = true, nullable = true, length = 30, scale = 0, precision = 0)
+    @Column(name = "login", table = "pessoa", length = 30)
     @Basic
     @FormParam("login")
     private String login;
 
-    @Column(name = "senha", table = "pessoa", unique = false, updatable = true, insertable = true, nullable = true, length = 30, scale = 0, precision = 0)
+    @Column(name = "senha", table = "pessoa", length = 30)
     @Basic
     @FormParam("senha")
     private String senha;
 
-    @Column(unique = false, updatable = true, insertable = true, nullable = false, length = 50, scale = 0, precision = 0)
+    @Column(nullable = false, length = 50)
     @Basic
     @Size(max = 50)
     @FormParam("email")

@@ -7,9 +7,7 @@ package br.com.mobitec.buscabarato.controller;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
-import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
-import br.com.caelum.vraptor.view.Results;
 import javax.inject.Inject;
 
 /**
@@ -33,7 +31,4 @@ public class InicioController {
         //result.use(Results.http()).body("Olá vRaptor").setStatusCode(200);
     }
     
-    /*public void ola() {
-        result.use(Results.http()).body("Olá vRaptor").setStatusCode(200);
-    }*/
 }

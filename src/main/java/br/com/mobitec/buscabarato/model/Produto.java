@@ -19,13 +19,13 @@ import javax.ws.rs.FormParam;
 @Table(name = "produto")
 public class Produto implements Serializable {
 
-    @Column(name = "codigo", table = "produto", unique = false, updatable = true, insertable = true, nullable = false, length = 255, scale = 0, precision = 0)
+    @Column(name = "codigo", table = "produto", nullable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @FormParam("codigo")
     private Integer codigo;
 
-    @Column(name = "descricao", table = "produto", unique = false, updatable = true, insertable = true, nullable = false, length = 80, scale = 0, precision = 0)
+    @Column(name = "descricao", table = "produto", nullable = false, length = 80)
     @Basic
     @FormParam("descricao")
     private String descricao;

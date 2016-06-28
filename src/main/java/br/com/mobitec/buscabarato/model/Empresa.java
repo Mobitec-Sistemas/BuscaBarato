@@ -8,36 +8,36 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.ws.rs.FormParam;
 
-/**
- *
- * @author Sensum
- */
 @Entity
 @Table(name = "empresa")
 @PrimaryKeyJoinColumn(name="cod_pessoa")
 public class Empresa extends Pessoa implements Serializable {
 
-    //@GeneratedValue(strategy = GenerationType.AUTO)
-    /*@FormParam("codPessoa")
-    @Column(name = "cod_pessoa", table = "empresa", unique = false, updatable = true, insertable = true, nullable = false, length = 255, scale = 0, precision = 0)
+    /*@Column(name = "cod_pessoa", table = "empresa", nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @FormParam("codPessoa")
     private Integer codPessoa;*/
 
-    @Column(name = "coordenada_x", table = "empresa", unique = false, updatable = true, insertable = true, nullable = true, length = 255, scale = 0, precision = 0)
+    @Column(name = "coordenada_x", table = "empresa")
     @Basic
     @FormParam("coordenadaX")
     private Integer coordenadaX;
 
-    @Column(name = "coordenada_y", table = "empresa", unique = false, updatable = true, insertable = true, nullable = true, length = 255, scale = 0, precision = 0)
+    @Column(name = "coordenada_y", table = "empresa")
     @Basic
     @FormParam("coordenadaY")
     private Integer coordenadaY;
 
-    @Column(name = "cod_endereco", table = "empresa", unique = false, updatable = true, insertable = true, nullable = true, length = 255, scale = 0, precision = 0)
+    @Column(name = "cod_endereco", table = "empresa")
     @Basic
     @FormParam("codEndereco")
     private Integer codEndereco;

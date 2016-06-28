@@ -6,19 +6,17 @@
 package br.com.mobitec.buscabarato.model.service.facade;
 
 import br.com.mobitec.buscabarato.model.Produto;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.event.Observes;
+import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
-import javax.servlet.ServletContext;
 
 /**
  *
  * @author Fabio
  */
-@ApplicationScoped
+@RequestScoped
 public class ProdutoFacade extends AbstractFacade<Produto> {
 
     @PersistenceContext(unitName = "default")
@@ -39,7 +37,7 @@ public class ProdutoFacade extends AbstractFacade<Produto> {
         super(Produto.class);
     }
  
-    public void whenApplicationStarts(@Observes ServletContext context) {
+    /*public void whenApplicationStarts(@Observes ServletContext context) {
         //logger.info("My application is UP");
-    }
+    }*/
 }

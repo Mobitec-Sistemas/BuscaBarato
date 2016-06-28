@@ -7,6 +7,7 @@ package br.com.mobitec.buscabarato.model.service.facade;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -15,13 +16,19 @@ import javax.persistence.EntityManager;
  */
 public abstract class AbstractFacade<T> {
 
+    @PersistenceContext(unitName = "default")
+    private EntityManager em;
+    
     private Class<T> entityClass;
 
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 
-    protected abstract EntityManager getEntityManager();
+    //protected abstract EntityManager getEntityManager();
+    protected EntityManager getEntityManager() {
+        return em;
+    }
 
     public void create(T entity) {
         getEntityManager().persist(entity);
