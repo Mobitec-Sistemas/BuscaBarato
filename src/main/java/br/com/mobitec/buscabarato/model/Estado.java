@@ -33,7 +33,7 @@ public class Estado implements Serializable {
     @FormParam("sigla")
     private String sigla;
 
-    @OneToMany(targetEntity = Cidade.class, mappedBy = "codEstado")
+    @OneToMany(targetEntity = Cidade.class, mappedBy = "estado")
     private List<Cidade> cidadeCollection;
 
     public Estado() {

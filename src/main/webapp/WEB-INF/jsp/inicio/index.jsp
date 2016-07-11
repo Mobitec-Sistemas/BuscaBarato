@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,8 +14,15 @@
     </head>
     <body>
         <h1>Página inicial do Busca Barato</h1>
+        <h2>Olá ${usuario.nome}</h2>
         <a href="${linkTo[ProdutoController].lista}">Produtos</a>
         <br>
         <a href="${linkTo[UsuarioController].login}">Login</a>
+        <br>
+        <a href="${linkTo[EstadoController].lista}">Estado</a>
+        <br>
+        <a href="cidade">Cidade</a>
+        <br>
+        <a href="${linkTo[BairroController].lista}">Bairro</a>
     </body>
 </html>

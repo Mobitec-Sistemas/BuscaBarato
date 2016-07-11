@@ -34,7 +34,7 @@ public class Bairro implements Serializable {
 
     @ManyToOne(targetEntity = Cidade.class)
     @JoinColumn(name = "cod_cidade")
-    private Cidade codCidade;
+    private Cidade cidade;
 
     @OneToMany(targetEntity = Endereco.class, mappedBy = "codBairro")
     private List<Endereco> enderecoCollection;
@@ -59,12 +59,12 @@ public class Bairro implements Serializable {
         this.nome = nome;
     }
 
-    public Cidade getCodCidade() {
-        return this.codCidade;
+    public Cidade getCidade() {
+        return this.cidade;
     }
 
-    public void setCodCidade(Cidade codCidade) {
-        this.codCidade = codCidade;
+    public void setCidade(Cidade cidade) {
+        this.cidade = cidade;
     }
 
     public List<Endereco> getEnderecoCollection() {

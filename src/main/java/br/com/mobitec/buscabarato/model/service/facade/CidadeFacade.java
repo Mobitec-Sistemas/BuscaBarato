@@ -6,13 +6,13 @@
 package br.com.mobitec.buscabarato.model.service.facade;
 
 import br.com.mobitec.buscabarato.model.Cidade;
-import br.com.mobitec.buscabarato.model.Usuario;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Example;
+import org.hibernate.criterion.MatchMode;
 
 /**
  *
@@ -22,28 +22,46 @@ import org.hibernate.criterion.Restrictions;
 @Named("cidade")
 public class CidadeFacade extends AbstractFacade<Cidade> {
 
-    //@PersistenceContext(unitName = "default")
-    /*private EntityManager em;
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }*/
-
     public CidadeFacade() {
         super(Cidade.class);
     }
 
-    
+    /**
+     * Lista as cidade de um determinado estado
+     * @param estado
+     * @return Lista de cidades
+     */
     public List<Cidade> listarCidadeEstado(int estado) {
-        Session session = (Session)getEntityManager().getDelegate();
+        Session session = this.getSession();
         
-        String hql = "from Cidade c where c.codEstado = :estado";
+        String hql = "from Cidade c where c.estado.codigo = :nEstado";
         
         return session.createQuery(hql)
-                .setParameter("estado", estado)
+                .setParameter("nEstado", estado)
                 .list();
         
+    }
+
+    /**
+     * Lista as cidade de acordo com o filtro infomado
+     * @param cidade
+     * @return lista de cidades
+     */
+    public List<Cidade> listarCidade(Cidade cidade) {
+        Example exampleCidade = Example.create(cidade)
+                                        .enableLike(MatchMode.ANYWHERE)
+                                        .ignoreCase();
+        
+        Criteria criteria = this.getSession().createCriteria(Cidade.class).add(exampleCidade);
+        
+        if( cidade.getEstado() != null ) {
+            Example exampleEstado = Example.create(cidade.getEstado()).ignoreCase();
+            criteria.createCriteria("estado").add(exampleEstado);
+        }
+        
+        List<Cidade> cidades = criteria.list();
+        
+        return cidades;
     }
     
 }

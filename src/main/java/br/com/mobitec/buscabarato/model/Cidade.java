@@ -31,9 +31,9 @@ public class Cidade implements Serializable {
 
     @ManyToOne(targetEntity = Estado.class)
     @JoinColumn(name = "cod_estado")
-    private Estado codEstado;
+    private Estado estado;
 
-    @OneToMany(targetEntity = Bairro.class, mappedBy = "codCidade")
+    @OneToMany(targetEntity = Bairro.class, mappedBy = "cidade")
     private List<Bairro> bairroCollection;
 
     public Cidade() {
@@ -56,12 +56,12 @@ public class Cidade implements Serializable {
         this.nome = nome;
     }
 
-    public Estado getCodEstado() {
-        return this.codEstado;
+    public Estado getEstado() {
+        return this.estado;
     }
 
-    public void setCodEstado(Estado codEstado) {
-        this.codEstado = codEstado;
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 
     public List<Bairro> getBairroCollection() {

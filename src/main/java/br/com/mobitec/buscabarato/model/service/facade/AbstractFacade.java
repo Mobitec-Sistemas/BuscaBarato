@@ -8,6 +8,7 @@ package br.com.mobitec.buscabarato.model.service.facade;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.hibernate.Session;
 
 /**
  *
@@ -30,6 +31,14 @@ public abstract class AbstractFacade<T> {
         return em;
     }
 
+    /**
+     * Retorna o session do Hibernate
+     * @return Session do Hibernate
+     */
+    protected Session getSession() {
+        return (Session)getEntityManager().getDelegate();
+    }
+    
     public void create(T entity) {
         getEntityManager().persist(entity);
     }

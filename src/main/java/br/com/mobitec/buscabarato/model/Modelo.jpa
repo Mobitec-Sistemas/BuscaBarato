@@ -15,7 +15,7 @@
             <basic optional="false" attribute-type="String" visibile="true" name="nome" id="_146445085528113">
                 <jpa:column name="nome" unique="false" nullable="false" insertable="true" updatable="true" table="cidade" length="50"/>
             </basic>
-            <many-to-one primaryKey="false" connected-entity-id="_14644508552813" connected-attribute-id="_146445085529618" visibile="true" name="codEstado" id="_146445085529614">
+            <many-to-one primaryKey="false" connected-entity-id="_14644508552813" connected-attribute-id="_146445085529618" visibile="true" name="estado" id="_146445085529614">
                 <join-column name="cod_estado" unique="false" nullable="true" insertable="true" updatable="true"/>
             </many-to-one>
             <one-to-many own="false" collection-type="java.util.List" connected-entity-id="_14644508552818" connected-attribute-id="_146445085529641" visibile="true" name="bairroCollection" id="_146445085529615"/>
@@ -123,7 +123,7 @@
             <basic optional="false" attribute-type="String" visibile="true" name="nome" id="_146445085529639">
                 <jpa:column name="nome" unique="false" nullable="false" insertable="true" updatable="true" table="bairro" length="30"/>
             </basic>
-            <many-to-one primaryKey="false" connected-entity-id="_14644508551872" connected-attribute-id="_146445085529615" visibile="true" name="codCidade" id="_146445085529641">
+            <many-to-one primaryKey="false" connected-entity-id="_14644508551872" connected-attribute-id="_146445085529615" visibile="true" name="cidade" id="_146445085529641">
                 <join-column name="cod_cidade" unique="false" nullable="true" insertable="true" updatable="true"/>
             </many-to-one>
             <one-to-many own="false" collection-type="java.util.List" connected-entity-id="_14644508552815" connected-attribute-id="_146445085529628" visibile="true" name="enderecoCollection" id="_146445085529640"/>

@@ -9,49 +9,50 @@ import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Result;
 import static br.com.caelum.vraptor.view.Results.json;
+import br.com.mobitec.buscabarato.model.Bairro;
 import br.com.mobitec.buscabarato.model.Cidade;
-import br.com.mobitec.buscabarato.model.service.facade.CidadeFacade;
+import br.com.mobitec.buscabarato.model.Estado;
+import br.com.mobitec.buscabarato.model.service.facade.BairroFacade;
 import java.util.List;
 import javax.inject.Inject;
 
 /**
- * Controla a Cidade
+ *
  * @author Sensum
  */
 @Controller
-public class CidadeController {
+public class BairroController {
     
     @Inject
     private Result result;
     
     @Inject
-    private CidadeFacade cidadeFacade;
+    private BairroFacade bairroFacade;
     
     /**
      * @deprecated CDI eyes only
      */
-    protected CidadeController() {
+    protected BairroController() {    
     }
     
     /**
-     * Lista as cidades no formato json
-     * @param codCidade a ser pesquisada
+     * Lista os Bairros no formato json
      */
-    @Get("/cidade/{codCidade}")
-    public void lista(Integer codCidade) {
-        Cidade retorno = cidadeFacade.find(codCidade);
+    @Get("/bairro")
+    public void lista() {
+        List<Bairro> retorno = bairroFacade.findAll();
         
         result.use(json()).from(retorno).serialize();
     }
     
     /**
-     * Lista a cidade solicitada no formato json
-     * @param cidade 
+     * Lista o bairro solicitada no formato json.
+     * @param cidade
      */
-    @Get("/cidade")
+    @Get("/bairro/{cidade.codigo}")
     public void lista(Cidade cidade) {
-        List<Cidade> retorno = cidadeFacade.listarCidade(cidade);
+        List<Bairro> retorno = bairroFacade.listarBairroCidade(cidade.getCodigo());
         
-        result.use(json()).from(retorno, "cidades").include("estado").serialize();
+        result.use(json()).from(retorno).serialize();
     }
 }

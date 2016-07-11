@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//log4j/log4j Configuration//EN" "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    
+    <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{HH:mm:ss,SSS} %5p [%-20c{1}] %m%n" />
+        </layout>
+    </appender>
+    <category name="br.com.caelum.vraptor">
+        <priority value="DEBUG" />
+        <appender-ref ref="stdout" />
+    </category>
+    
+    <!-- <logger name="org.hibernate.SQL" additivity="false" >
+        <level value="DEBUG" />
+        <appender-ref ref="SQLROLLINGFILE" />
+    </logger>
+
+    <logger name="org.hibernate.type" additivity="false" >
+        <level value="TRACE" />
+        <appender-ref ref="SQLROLLINGFILE" />
+    </logger> -->
+        
+    <!-- Log all SQL DML statements as they are executed -->
+    <Logger name="org.hibernate.SQL" level="debug" />
+    <!-- Log all JDBC parameters -->
+    <Logger name="org.hibernate.type" level="debug" />
+    <!-- Log all SQL DDL statements as they are executed -->
+    <Logger name="org.hibernate.tool.hbm2ddl" level="debug" />
+    <!-- Log the state of all entities (max 20 entities) associated with the session at flush time -->
+    <Logger name="org.hibernate.pretty" level="debug" />
+    <!-- Log all second-level cache activity -->
+    <Logger name="org.hibernate.cache" level="debug" />
+    <!-- Log transaction related activity -->
+    <Logger name="org.hibernate.transaction" level="debug" />
+    <!-- Log all JDBC resource acquisition -->
+    <Logger name="org.hibernate.jdbc" level="debug" />
+    <!-- Log HQL and SQL ASTs during query parsing -->
+    <Logger name="org.hibernate.hql.ast.AST" level="debug" />
+    <!-- Log all JAAS authorization requests -->
+    <Logger name="org.hibernate.secure" level="debug" />
+    <!-- Log everything (a lot of information, but very useful for troubleshooting) -->
+    <Logger name="org.hibernate" level="debug" />
+        
+    <!-- incluir outras definições aqui -->
+</log4j:configuration>

@@ -20,7 +20,7 @@ import org.hibernate.criterion.Restrictions;
  */
 
 @RequestScoped
-@Named("usuario")
+//@Named("usuario")
 public class UsuarioFacade extends AbstractFacade<Usuario> {
 
     //@Inject
