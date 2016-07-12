@@ -39,4 +39,11 @@ public class ProdutoController {
         return lista;
     }
     
+    @Get("/produto/cadastro")
+    public Produto cadastro() {
+        Produto produto = new Produto();
+        
+        return produto;
+    }
+    
 }

@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.ws.rs.FormParam;
@@ -29,6 +31,10 @@ public class Produto implements Serializable {
     @Basic
     @FormParam("descricao")
     private String descricao;
+    
+    @ManyToOne(targetEntity = Marca.class)
+    @JoinColumn(name = "cod_marca")
+    private Marca marca;
 
     @OneToMany(targetEntity = TabelaPreco.class, mappedBy = "produto")
     private List<TabelaPreco> tabelaPrecoCollection;
@@ -59,5 +65,19 @@ public class Produto implements Serializable {
 
     public void setTabelaPrecoCollection(List<TabelaPreco> tabelaPrecoCollection) {
         this.tabelaPrecoCollection = tabelaPrecoCollection;
+    }
+
+    /**
+     * @return the marca
+     */
+    public Marca getMarca() {
+        return marca;
+    }
+
+    /**
+     * @param marca the marca to set
+     */
+    public void setMarca(Marca marca) {
+        this.marca = marca;
     }
 }
