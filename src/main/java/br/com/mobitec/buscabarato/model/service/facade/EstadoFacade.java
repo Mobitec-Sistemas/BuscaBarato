@@ -8,7 +8,6 @@ package br.com.mobitec.buscabarato.model.service.facade;
 import br.com.mobitec.buscabarato.model.Estado;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
 
 /**
  *

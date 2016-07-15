@@ -11,27 +11,18 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.ws.rs.FormParam;
 
 @Entity
-@Table(name = "estado", uniqueConstraints = @UniqueConstraint(columnNames = {"sigla"}))
+@Table(name = "estado")
 public class Estado implements Serializable {
 
     @Column(name = "codigo", table = "estado", nullable = false)
     @Id
-    @FormParam("codigo")
     private Integer codigo;
 
-    @Column(name = "nome", table = "estado", length = 30, nullable = false)
+    @Column(name = "nome", table = "estado", length = 30)
     @Basic
-    @FormParam("nome")
     private String nome;
-    
-    @Column(name = "sigla", table = "estado", nullable = false, length = 2, columnDefinition = "bpchar")
-    @Basic
-    @FormParam("sigla")
-    private String sigla;
 
     @OneToMany(targetEntity = Cidade.class, mappedBy = "estado")
     private List<Cidade> cidadeCollection;
@@ -54,14 +45,6 @@ public class Estado implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-    
-    public String getSigla() {
-        return this.sigla;
-    }
-    
-    public void setSigla(String sigla) {
-        this.sigla = sigla;
     }
 
     public List<Cidade> getCidadeCollection() {

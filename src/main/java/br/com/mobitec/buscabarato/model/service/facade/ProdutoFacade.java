@@ -19,20 +19,6 @@ import javax.persistence.PersistenceContext;
 @RequestScoped
 public class ProdutoFacade extends AbstractFacade<Produto> {
 
-    @PersistenceContext(unitName = "default")
-    private EntityManager em;
-    
-    @Override
-    protected EntityManager getEntityManager() {
-        
-        if (em == null) {
-            EntityManagerFactory factory = Persistence.createEntityManagerFactory("default");
-            em = factory.createEntityManager();
-        }
-   
-        return em;
-    }
-
     public ProdutoFacade() {
         super(Produto.class);
     }

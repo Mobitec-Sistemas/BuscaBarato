@@ -11,32 +11,22 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import javax.ws.rs.FormParam;
 
 @Entity
 @Table(name = "empresa")
 @PrimaryKeyJoinColumn(name="cod_pessoa")
 public class Empresa extends Pessoa implements Serializable {
 
-    /*@Column(name = "cod_pessoa", table = "empresa", nullable = false)
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @FormParam("codPessoa")
-    private Integer codPessoa;*/
-
     @Column(name = "coordenada_x", table = "empresa")
     @Basic
-    @FormParam("coordenadaX")
     private Integer coordenadaX;
 
     @Column(name = "coordenada_y", table = "empresa")
     @Basic
-    @FormParam("coordenadaY")
     private Integer coordenadaY;
 
     @Column(name = "cod_endereco", table = "empresa")
     @Basic
-    @FormParam("codEndereco")
     private Integer codEndereco;
 
     @OneToMany(targetEntity = EnderecoEmpresa.class, mappedBy = "empresa")

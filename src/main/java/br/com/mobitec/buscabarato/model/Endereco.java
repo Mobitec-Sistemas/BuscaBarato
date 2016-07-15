@@ -15,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.ws.rs.FormParam;
 
 @Entity
 @Table(name = "endereco")
@@ -24,17 +23,14 @@ public class Endereco implements Serializable {
     @Column(name = "codigo", table = "endereco", nullable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @FormParam("codigo")
     private Integer codigo;
 
     @Column(name = "logradouro", table = "endereco", length = 100)
     @Basic
-    @FormParam("logradouro")
     private String logradouro;
 
     @Column(name = "cep", table = "endereco", length = 8)
     @Basic
-    @FormParam("cep")
     private String cep;
 
     @ManyToOne(targetEntity = Bairro.class)

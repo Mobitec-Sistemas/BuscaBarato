@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.ws.rs.FormParam;
 
 @Entity
 @Table(name = "endereco_empresa")
@@ -19,17 +18,14 @@ public class EnderecoEmpresa implements Serializable {
 
     @Column(name = "cod_empresa", table = "endereco_empresa", nullable = false)
     @Id
-    @FormParam("codEmpresa")
     private int codEmpresa;
 
     @Column(name = "cod_endereco", table = "endereco_empresa", nullable = false)
     @Id
-    @FormParam("codEndereco")
     private int codEndereco;
 
     @Column(name = "numero", table = "endereco_empresa")
     @Basic
-    @FormParam("numero")
     private Integer numero;
 
     @ManyToOne(optional = false, targetEntity = Empresa.class)

@@ -14,20 +14,18 @@
     <class>br.com.mobitec.buscabarato.model.Usuario</class>
     <class>br.com.mobitec.buscabarato.model.Empresa</class>
     <class>br.com.mobitec.buscabarato.model.TabelaPreco</class>
+    <class>br.com.mobitec.buscabarato.model.Marca</class>
+    <class>br.com.mobitec.buscabarato.model.TipoProduto</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    
     <properties>
       <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-      
       <!-- <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/buscabarato" ></property>
       <property name="javax.persistence.jdbc.user" value="postgres" />
       <property name="javax.persistence.jdbc.password" value="123456" /> -->
-      
       <property name="hibernate.hbm2ddl.auto" value="validate"/>
       <!-- <property name="hibernate.show_sql" value="true"/>
       <property name="hibernate.format_sql" value="true"/> -->
-      
     </properties>
   </persistence-unit>
 </persistence>

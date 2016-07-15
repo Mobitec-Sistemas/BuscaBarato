@@ -102,14 +102,12 @@
                 <bv/>
                 <jpa:column name="descricao" unique="false" nullable="false" insertable="true" updatable="true" table="produto" length="80" precision="0" scale="0"/>
             </basic>
-            <many-to-one optional="true" primaryKey="false" connected-entity-id="_1468433447773" visibile="true" name="TipoProduto" id="_146843395435928">
-                <join-column name="cod_tipo_produto" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table=""/>
-            </many-to-one>
+            <many-to-one optional="true" primaryKey="false" connected-entity-id="_1468433447773" visibile="true" name="TipoProduto" id="_146843395435928"/>
             <one-to-many own="false" collection-type="java.util.List" connected-entity-id="_146445085528111" connected-attribute-id="_146445085529657" visibile="true" name="tabelaPrecoCollection" id="_146445085529632"/>
             <many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1468530351650" connected-attribute-id="_146858542783625" visibile="true" name="marcas" id="_146858542781724">
-                <join-table name="marca_produto">
-                    <jpa:join-column name="cod_marca" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table="marca_produto"/>
-                    <jpa:inverse-join-column name="cod_produto" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table="marca_produto"/>
+                <join-table name="produto_marca">
+                    <jpa:join-column name="cod_marca" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table="produto_marca"/>
+                    <jpa:inverse-join-column name="cod_produto" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table="produto_marca"/>
                 </join-table>
             </many-to-many>
             <jpa:id attribute-type="Integer" visibile="true" name="codigo" id="_146445085529630">
@@ -190,6 +188,7 @@
             <one-to-many own="false" collection-type="java.util.List" connected-entity-id="_146445085528111" connected-attribute-id="_146445085529656" visibile="true" name="tabelaPrecoCollection" id="_146445085529652"/>
         </jpa:attributes>
         <jpa:table name="empresa"/>
+        <jpa:discriminator-value>cod_pessoa</jpa:discriminator-value>
     </jpa:entity>
     <jpa:entity xre="false" compositePrimaryKeyType="IDCLASS" compositePrimaryKeyClass="TabelaPrecoPK" sm="false" abs="false" class="TabelaPreco" visibile="true" minimized="false" rootElement="_14644508551091" id="_146445085528111">
         <jpa:attributes>
@@ -227,7 +226,6 @@
                 <jpa:generated-value strategy="AUTO"/>
             </jpa:id>
         </jpa:attributes>
-        <jpa:table name="tipo_produto"/>
     </jpa:entity>
     <jpa:entity xre="false" sm="false" abs="false" class="Marca" visibile="true" minimized="false" rootElement="_14644508551091" id="_1468530351650">
         <jpa:attributes>

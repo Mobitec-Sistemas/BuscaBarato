@@ -10,23 +10,15 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
-import javax.ws.rs.FormParam;
 
 @Entity
 @Table(name = "usuario")
 @PrimaryKeyJoinColumn(name="cod_pessoa")
 public class Usuario extends Pessoa implements Serializable {
 
-    /*@Column(name = "cod_pessoa", table = "usuario", unique = false, updatable = true, insertable = true, nullable = false, length = 255, scale = 0, precision = 0)
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @FormParam("codPessoa")
-    private Integer codPessoa;*/
-
-    @Column(name = "ponto", table = "usuario", unique = false, updatable = true, insertable = true, nullable = false, length = 255, scale = 0, precision = 0)
+    @Column(name = "ponto", table = "usuario", nullable = false)
     @Basic
     @Min(value = 0, message = "A quantidade de pondos n�o pode ser menor que zero")
-    @FormParam("ponto")
     private int ponto;
 
     public Usuario() {

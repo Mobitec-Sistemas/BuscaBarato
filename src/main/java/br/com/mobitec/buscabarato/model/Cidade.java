@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.ws.rs.FormParam;
 
 @Entity
 @Table(name = "cidade")
@@ -21,12 +20,10 @@ public class Cidade implements Serializable {
 
     @Column(name = "codigo", table = "cidade", nullable = false)
     @Id
-    @FormParam("codigo")
     private Integer codigo;
 
     @Column(name = "nome", table = "cidade", nullable = false, length = 50)
     @Basic
-    @FormParam("nome")
     private String nome;
 
     @ManyToOne(targetEntity = Estado.class)

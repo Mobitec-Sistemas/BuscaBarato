@@ -12,10 +12,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.ws.rs.FormParam;
 
 @Entity
 @Table(name = "produto")
@@ -24,17 +25,21 @@ public class Produto implements Serializable {
     @Column(name = "codigo", table = "produto", nullable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @FormParam("codigo")
     private Integer codigo;
 
     @Column(name = "descricao", table = "produto", nullable = false, length = 80)
     @Basic
-    @FormParam("descricao")
     private String descricao;
-    
-    @ManyToOne(targetEntity = Marca.class)
-    @JoinColumn(name = "cod_marca")
-    private Marca marca;
+
+    @ManyToMany(targetEntity = Marca.class)
+    @JoinTable(name = "marca_produto", joinColumns = {
+        @JoinColumn(name = "cod_marca", table = "marca_produto")}, inverseJoinColumns = {
+        @JoinColumn(name = "cod_produto", table = "marca_produto")})
+    private List<Marca> marcas;
+
+    @ManyToOne(targetEntity = TipoProduto.class)
+    @JoinColumn(name = "cod_tipo_produto")
+    private TipoProduto TipoProduto;
 
     @OneToMany(targetEntity = TabelaPreco.class, mappedBy = "produto")
     private List<TabelaPreco> tabelaPrecoCollection;
@@ -59,25 +64,27 @@ public class Produto implements Serializable {
         this.descricao = descricao;
     }
 
+    public List<Marca> getMarcas() {
+        return this.marcas;
+    }
+
+    public void setMarcas(List<Marca> marcas) {
+        this.marcas = marcas;
+    }
+
+    public TipoProduto getTipoProduto() {
+        return this.TipoProduto;
+    }
+
+    public void setTipoProduto(TipoProduto TipoProduto) {
+        this.TipoProduto = TipoProduto;
+    }
+
     public List<TabelaPreco> getTabelaPrecoCollection() {
         return this.tabelaPrecoCollection;
     }
 
     public void setTabelaPrecoCollection(List<TabelaPreco> tabelaPrecoCollection) {
         this.tabelaPrecoCollection = tabelaPrecoCollection;
-    }
-
-    /**
-     * @return the marca
-     */
-    public Marca getMarca() {
-        return marca;
-    }
-
-    /**
-     * @param marca the marca to set
-     */
-    public void setMarca(Marca marca) {
-        this.marca = marca;
     }
 }

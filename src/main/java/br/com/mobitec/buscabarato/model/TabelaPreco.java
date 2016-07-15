@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.ws.rs.FormParam;
 
 @Entity
 @Table(name = "tabela_preco")
@@ -20,17 +19,14 @@ public class TabelaPreco implements Serializable {
 
     @Column(name = "cod_empresa", table = "tabela_preco", nullable = false)
     @Id
-    @FormParam("codEmpresa")
     private int codEmpresa;
 
     @Column(name = "cod_produto", table = "tabela_preco", nullable = false)
     @Id
-    @FormParam("codProduto")
     private int codProduto;
 
     @Column(name = "preco", table = "tabela_preco", scale = 2, precision = 10)
     @Basic
-    @FormParam("preco")
     private BigDecimal preco;
 
     @ManyToOne(optional = false, targetEntity = Empresa.class)

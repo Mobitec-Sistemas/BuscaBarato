@@ -17,6 +17,8 @@
         <h2>Olá ${usuario.nome}</h2>
         <a href="${linkTo[ProdutoController].lista}">Produtos</a>
         <br>
+        <a href="${linkTo[ProdutoController].cadastro}">Cadastro de Produtos</a>
+        <br>
         <a href="${linkTo[UsuarioController].login}">Login</a>
         <br>
         <a href="${linkTo[EstadoController].lista}">Estado</a>
