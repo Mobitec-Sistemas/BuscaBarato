@@ -10,10 +10,47 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="Buscador de Preços">
+        <meta name="author" content="Mobitec Sistemas">
+        <link rel="icon" href="imagem/BuscaBarato.png">
+    
+        <title>Busca Barato - Login</title>
+        
+        <!-- Bootstrap core CSS -->
+        <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        
+        <!-- Custom styles for this template -->
+        <link href="css/signin.css" rel="stylesheet">    
     </head>
+    
     <body>
-        <c:forEach var="error" items="${errors}">
+        <div class="container">
+
+            <form class="form-signin" action="${linkTo[UsuarioController].login}" method="POST">
+                
+                <h2 class="form-signin-heading">Acesso ao sistema Busca Barato</h2>
+                <label for="inputEmail" class="sr-only">Usuário</label>
+                <input type="text" id="inputUsuario" name="usuario.login" class="form-control" placeholder="Usuário" required autofocus >
+                <label for="inputPassword" class="sr-only">Senha</label>
+                <input type="password" id="inputPassword" name="usuario.senha" class="form-control" placeholder="Senha" required>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="remember-me"> Lembrar-me
+                    </label>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Efetuar Login</button>
+                
+            </form>
+
+        </div>
+
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="javaScript/ie10-viewport-bug-workaround.js"></script>
+            
+        <!-- <c:forEach var="error" items="${errors}">
             ${error.category} - ${error.message}<br />
         </c:forEach>
         
@@ -26,7 +63,7 @@
             <input type="password" id="senha" name="usuario.senha" />
             
             <input type="submit" value="Login"/>
-        </form>
-            
+        </form> -->
+
     </body>
 </html>

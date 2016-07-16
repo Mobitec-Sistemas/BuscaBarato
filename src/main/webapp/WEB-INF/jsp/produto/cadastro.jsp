@@ -21,6 +21,9 @@
             <select ng-model="ddlMarcas" ng-options="marca.nome for marca in Marcas track by marca.codigo">
             </select>
             
+            <select ng-model="ddlTiposProdutos" ng-options="tipoProduto.nome for tipoProduto in TiposProdutos track by tipoProduto.codigo">
+            </select>
+            
             <ul>
             <li ng-repeat="x in Marcas">
               {{ x.codigo + ', ' + x.nome }}
@@ -50,6 +53,10 @@
             
             $http.get("../marca").then(function (response) {
                 $scope.Marcas = response.data.marcas;
+            });
+            
+            $http.get("../tipo_produto").then(function (response) {
+                $scope.TiposProdutos = response.data.tiposProdutos;
             });
         });
     </script>
