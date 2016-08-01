@@ -16,7 +16,7 @@ import javax.inject.Inject;
  * @author Sensum
  */
 @RequestScoped
-@GlobalRule
+//@GlobalRule
 //@HandledBy(RedirecionaAcesso.class)
 public class ControlaAcesso implements CustomBrutauthRule {
 

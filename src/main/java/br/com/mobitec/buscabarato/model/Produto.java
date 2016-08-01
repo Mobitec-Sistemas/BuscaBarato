@@ -14,9 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "produto")
@@ -29,17 +29,18 @@ public class Produto implements Serializable {
 
     @Column(name = "descricao", table = "produto", nullable = false, length = 80)
     @Basic
+    @NotNull(message = "A descrição do produto não pode ficar em branco")
     private String descricao;
+
+    @Column(name = "medida", length = 30)
+    @Basic
+    private String medida;
 
     @ManyToMany(targetEntity = Marca.class)
     @JoinTable(name = "marca_produto", joinColumns = {
         @JoinColumn(name = "cod_marca", table = "marca_produto")}, inverseJoinColumns = {
         @JoinColumn(name = "cod_produto", table = "marca_produto")})
     private List<Marca> marcas;
-
-    @ManyToOne(targetEntity = TipoProduto.class)
-    @JoinColumn(name = "cod_tipo_produto")
-    private TipoProduto TipoProduto;
 
     @OneToMany(targetEntity = TabelaPreco.class, mappedBy = "produto")
     private List<TabelaPreco> tabelaPrecoCollection;
@@ -64,20 +65,20 @@ public class Produto implements Serializable {
         this.descricao = descricao;
     }
 
+    public String getMedida() {
+        return this.medida;
+    }
+
+    public void setMedida(String medida) {
+        this.medida = medida;
+    }
+
     public List<Marca> getMarcas() {
         return this.marcas;
     }
 
     public void setMarcas(List<Marca> marcas) {
         this.marcas = marcas;
-    }
-
-    public TipoProduto getTipoProduto() {
-        return this.TipoProduto;
-    }
-
-    public void setTipoProduto(TipoProduto TipoProduto) {
-        this.TipoProduto = TipoProduto;
     }
 
     public List<TabelaPreco> getTabelaPrecoCollection() {

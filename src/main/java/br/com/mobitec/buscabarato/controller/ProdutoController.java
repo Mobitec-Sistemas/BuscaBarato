@@ -7,7 +7,11 @@ package br.com.mobitec.buscabarato.controller;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
+import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.validator.Validator;
+import br.com.mobitec.buscabarato.aspecto.Transacional;
+import br.com.mobitec.buscabarato.model.Marca;
 import br.com.mobitec.buscabarato.model.Produto;
 import br.com.mobitec.buscabarato.model.service.facade.ProdutoFacade;
 import java.util.List;
@@ -25,6 +29,9 @@ public class ProdutoController {
     
     @Inject
     private ProdutoFacade produtoFacade;
+    
+    @Inject
+    private Validator validator;
     
     /**
      * @deprecated CDI eyes only
@@ -44,6 +51,23 @@ public class ProdutoController {
         Produto produto = new Produto();
         
         return produto;
+    }
+    
+    @Post("/produto/cadastro")
+    @Transacional
+    public void cadastro(Produto produto) {
+         
+        validator.validate(produto);
+        
+        //validator.onErrorRedirectTo(this).cadastro();
+        validator.onErrorForwardTo(this).cadastro();
+
+        if(produto.getCodigo() == null)
+            produtoFacade.create(produto);
+        else
+            produtoFacade.edit(produto);
+        
+        result.redirectTo(InicioController.class).index();
     }
     
 }

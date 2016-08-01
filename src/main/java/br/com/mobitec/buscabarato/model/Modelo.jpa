@@ -99,12 +99,15 @@
     <jpa:entity xre="false" sm="false" abs="false" class="Produto" visibile="true" minimized="false" rootElement="_14644508551091" id="_14644508552816">
         <jpa:attributes>
             <basic optional="false" attribute-type="String" visibile="true" name="descricao" id="_146445085529631">
-                <bv/>
+                <bv>
+                    <nu m="A descrição do produto não pode ficar em branco"/>
+                </bv>
                 <jpa:column name="descricao" unique="false" nullable="false" insertable="true" updatable="true" table="produto" length="80" precision="0" scale="0"/>
             </basic>
-            <many-to-one optional="true" primaryKey="false" connected-entity-id="_1468433447773" visibile="true" name="TipoProduto" id="_146843395435928">
-                <join-column name="cod_tipo_produto" unique="false" nullable="true" insertable="true" updatable="true" column-definition="" table=""/>
-            </many-to-one>
+            <basic optional="true" attribute-type="String" visibile="true" name="medida" id="_146911533233924">
+                <bv/>
+                <jpa:column name="medida" unique="false" nullable="true" insertable="true" updatable="true" length="30" precision="0" scale="0"/>
+            </basic>
             <one-to-many own="false" collection-type="java.util.List" connected-entity-id="_146445085528111" connected-attribute-id="_146445085529657" visibile="true" name="tabelaPrecoCollection" id="_146445085529632"/>
             <many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1468530351650" connected-attribute-id="_146858542783625" visibile="true" name="marcas" id="_146858542781724">
                 <join-table name="marca_produto">
@@ -214,21 +217,6 @@
         </jpa:attributes>
         <jpa:table name="tabela_preco"/>
     </jpa:entity>
-    <jpa:entity xre="false" sm="false" abs="false" class="TipoProduto" visibile="true" minimized="false" rootElement="_14644508551091" id="_1468433447773">
-        <jpa:attributes>
-            <basic attribute-type="String" visibile="true" name="nome" id="_146843370918325">
-                <bv>
-                    <nn m="O nome do tipo de produto não pode ficar vazio"/>
-                </bv>
-            </basic>
-            <jpa:id attribute-type="Integer" visibile="true" name="codigo" id="_146843344782020">
-                <bv/>
-                <jpa:column unique="true" nullable="true" insertable="true" updatable="true" length="255" precision="0" scale="0"/>
-                <jpa:generated-value strategy="AUTO"/>
-            </jpa:id>
-        </jpa:attributes>
-        <jpa:table name="tipo_produto"/>
-    </jpa:entity>
     <jpa:entity xre="false" sm="false" abs="false" class="Marca" visibile="true" minimized="false" rootElement="_14644508551091" id="_1468530351650">
         <jpa:attributes>
             <basic attribute-type="String" visibile="true" name="nome" id="_146853042527924">
@@ -281,9 +269,6 @@
             </shape>
             <shape elementRef="_146445085528111">
                 <Bounds x="172.0" y="416.0" width="168.0" height="168.0"/>
-            </shape>
-            <shape elementRef="_1468433447773">
-                <Bounds x="160.0" y="638.0" width="165.0" height="92.0"/>
             </shape>
             <shape elementRef="_1468530351650">
                 <Bounds x="190.0" y="755.0" width="132.0" height="126.0"/>

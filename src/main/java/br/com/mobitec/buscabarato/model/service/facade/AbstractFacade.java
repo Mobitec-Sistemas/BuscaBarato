@@ -6,8 +6,10 @@
 package br.com.mobitec.buscabarato.model.service.facade;
 
 import java.util.List;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import org.hibernate.Session;
 
 /**
@@ -17,7 +19,8 @@ import org.hibernate.Session;
  */
 public abstract class AbstractFacade<T> {
 
-    @PersistenceContext(unitName = "default")
+    //@PersistenceContext(unitName = "default")
+    @Inject
     private EntityManager em;
     
     private Class<T> entityClass;

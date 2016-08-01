@@ -15,21 +15,29 @@
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     </head>
     <body>
-        <select id="marcas"></select>
+
+        <form class="form-signin" action="${linkTo[ProdutoController].cadastro}" method="POST">
+            <input type="hidden" name="produto.codigo" value="${produto.codigo}">
+            
+            <label for="inputDescricao">Descrição</label>
+            <input type="text" id="inputDescricao" name="produto.descricao" autofocus required >
+            <br>
+            <span class="error" style="color: red">${errors.from('descricao')}</span>
+            <br>
+
+            <div ng-app="MyApp" ng-controller="MyController">
+                <label for="selectMarca">Marca</label>
+                <select id="selectMarca" name="produto.marcas[0].codigo" ng-model="ddlMarcas" ng-options="marca.nome for marca in Marcas track by marca.codigo"></select>
+            </div>
+            <br>
+
+            <label for="inputMedida">Medida</label>
+            <input type="text" id="inputMedida" name="produto.medida" required>
+            <span class="error">${errors.from('produto.medida')}</span>
+            
+            <button type="submit">Cadastrar</button>
+        </form>
         
-        <div ng-app="MyApp" ng-controller="MyController">
-            <select ng-model="ddlMarcas" ng-options="marca.nome for marca in Marcas track by marca.codigo">
-            </select>
-            
-            <select ng-model="ddlTiposProdutos" ng-options="tipoProduto.nome for tipoProduto in TiposProdutos track by tipoProduto.codigo">
-            </select>
-            
-            <ul>
-            <li ng-repeat="x in Marcas">
-              {{ x.codigo + ', ' + x.nome }}
-            </li>
-          </ul>
-        </div>
     </body>
     
     <script type="text/JavaScript">
