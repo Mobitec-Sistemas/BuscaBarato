@@ -26,5 +26,9 @@
         <a href="cidade">Cidade</a>
         <br>
         <a href="${linkTo[BairroController].lista}">Bairro</a>
+        <br>
+        <a href="${linkTo[MarcaController].listaJson}">Marca JSon</a>
+        <br>
+        <a href="${linkTo[MarcaController].lista}">Marca HTML</a>
     </body>
 </html>

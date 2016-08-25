@@ -12,7 +12,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Cadastro de produto</title>
         <script type="text/JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+        <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script> -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.js"></script>
     </head>
     <body>
 
@@ -45,7 +46,7 @@
         var $select = $('#marcas');
  
         //request the JSON data and parse into the select element
-        $.getJSON('../marca', function(data){
+        $.getJSON('../marcaJson', function(data){
              
             //clear the current content of the select
             $select.html('');
@@ -59,7 +60,7 @@
         var app = angular.module('MyApp', []);
         app.controller('MyController', function ($scope, $http) {
             
-            $http.get("../marca").then(function (response) {
+            $http.get("../marcaJson").then(function (response) {
                 $scope.Marcas = response.data.marcas;
             });
             

@@ -6,6 +6,21 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          metadata-complete="false">
 
-         
+    <display-name>Busca Barato</display-name>
+    
+    <context-param>
+        <param-name>br.com.caelum.vraptor.encoding</param-name>
+        <param-value>UTF-8</param-value>
+    </context-param>
+    
+    <jsp-config>
+        <jsp-property-group>
+            <description>BuscaBarato</description>
+            <display-name>Busca Barato</display-name>
+            <url-pattern>*.jsp</url-pattern>
+            <include-prelude>/jspf/header.jspf</include-prelude>
+            <include-coda>/jspf/footer.jspf</include-coda>
+        </jsp-property-group>
+    </jsp-config>
 </web-app>
 

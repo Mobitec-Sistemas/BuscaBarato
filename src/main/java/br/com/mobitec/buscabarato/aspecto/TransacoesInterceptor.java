@@ -33,8 +33,9 @@ public class TransacoesInterceptor implements Interceptor {
             manager.getTransaction().begin();
 
             stack.next(method, controller);
-
-            manager.getTransaction().commit();
+            
+            if (manager.getTransaction().isActive())
+                manager.getTransaction().commit();
         } finally {
             if (manager.getTransaction().isActive()) {
                 manager.getTransaction().rollback();

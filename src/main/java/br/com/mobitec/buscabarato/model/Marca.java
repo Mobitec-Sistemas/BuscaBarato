@@ -3,27 +3,41 @@
 //
 package br.com.mobitec.buscabarato.model;
 
+import br.com.mobitec.buscabarato.validacao.DeleteRestrito;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 @Entity
 public class Marca implements Serializable {
 
     @Id
+    @SequenceGenerator(name="marca_codigo_seq", sequenceName="marca_codigo_seq")
+    @GeneratedValue(generator="marca_codigo_seq", strategy=GenerationType.AUTO)
     private Integer codigo;
 
     @Column(length = 50)
     @Basic
-    @NotNull(message = "O nome da marca nao pode ficar vazio")
+    @NotNull(message = "O nome da marca não pode ficar vazio")
     private String nome;
 
-    @ManyToMany(targetEntity = Produto.class, mappedBy = "marcas")
+    //@ManyToMany(targetEntity = Produto.class, mappedBy = "marcas")
+    @ManyToMany()
+    @JoinTable(name = "marca_produto", joinColumns = {
+        @JoinColumn(name = "cod_marca", table = "marca_produto")}, inverseJoinColumns = {
+        @JoinColumn(name = "cod_produto", table = "marca_produto")})
+    //@DeleteRestrito(message = "Esta marca possui produtos relacionados")
     private List<Produto> produtos;
 
     public Marca() {

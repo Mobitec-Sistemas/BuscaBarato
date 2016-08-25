@@ -8,7 +8,6 @@ package br.com.mobitec.buscabarato.model.service.facade;
 import br.com.mobitec.buscabarato.model.Marca;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
@@ -18,7 +17,6 @@ import org.hibernate.criterion.MatchMode;
  * @author Sensum
  */
 @RequestScoped
-@Named("marca")
 public class MarcaFacade extends AbstractFacade<Marca> {
     
     public MarcaFacade() {

@@ -6,7 +6,6 @@
 package br.com.mobitec.buscabarato.controleAcesso;
 
 import br.com.caelum.brutauth.auth.annotations.GlobalRule;
-import br.com.caelum.brutauth.auth.annotations.HandledBy;
 import br.com.caelum.brutauth.auth.rules.CustomBrutauthRule;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
