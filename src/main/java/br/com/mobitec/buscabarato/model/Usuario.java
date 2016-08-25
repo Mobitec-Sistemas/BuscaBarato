@@ -18,7 +18,7 @@ public class Usuario extends Pessoa implements Serializable {
 
     @Column(name = "ponto", table = "usuario", nullable = false)
     @Basic
-    @Min(value = 0, message = "A quantidade de pondos n�o pode ser menor que zero")
+    @Min(value = 0, message = "A quantidade de pondos não pode ser menor que zero")
     private int ponto;
 
     public Usuario() {

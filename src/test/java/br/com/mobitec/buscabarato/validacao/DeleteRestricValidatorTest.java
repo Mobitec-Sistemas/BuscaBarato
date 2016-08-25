@@ -6,6 +6,7 @@
 package br.com.mobitec.buscabarato.validacao;
 
 import br.com.caelum.vraptor.util.test.MockResult;
+import br.com.caelum.vraptor.util.test.MockValidator;
 import br.com.mobitec.buscabarato.model.Marca;
 import br.com.mobitec.buscabarato.model.Produto;
 import java.util.Arrays;
@@ -22,6 +23,8 @@ import static org.junit.Assert.*;
  */
 public class DeleteRestricValidatorTest {
     
+    private DeleteRestricValidator deleteValidator;
+    
     public DeleteRestricValidatorTest() {
     }
     
@@ -35,6 +38,9 @@ public class DeleteRestricValidatorTest {
     
     @Before
     public void setUp() {
+        MockResult result = new MockResult();
+        MockValidator validate = new MockValidator();
+        this.deleteValidator = new DeleteRestricValidator(result, validate);
     }
     
     @After
@@ -47,12 +53,10 @@ public class DeleteRestricValidatorTest {
     @Test
     public void testarMarcaNaoEncontrada() {
         Marca marca = null;
-        MockResult result = new MockResult();
         
-        DeleteRestricValidator instance = new DeleteRestricValidator(result);
-        instance.validate(marca);
+        this.deleteValidator.validate(marca);
         
-        assertNotNull(instance.getMensagem());
+        assertNotNull(this.deleteValidator.getMensagem());
     }
     
     /**
@@ -63,24 +67,19 @@ public class DeleteRestricValidatorTest {
         Marca marca = new Marca();
         Produto produto = new Produto();
         marca.setProdutos( Arrays.asList(produto) );
-        MockResult result = new MockResult();
         
-        DeleteRestricValidator instance = new DeleteRestricValidator(result);
-        instance.validate(marca);
+        this.deleteValidator.validate(marca);
         
-        assertNotNull(instance.getMensagem());
+        assertNotNull(this.deleteValidator.getMensagem());
     }
     
     @Test
     public void testarMarcaOK() {
         Marca marca = new Marca();
+                
+        this.deleteValidator.validate(marca);
         
-        MockResult result = new MockResult();
-        
-        DeleteRestricValidator instance = new DeleteRestricValidator(result);
-        instance.validate(marca);
-        
-        assertNull(instance.getMensagem());
+        assertNull(this.deleteValidator.getMensagem());
     }
 
     /**

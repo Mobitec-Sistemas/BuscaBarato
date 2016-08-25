@@ -26,7 +26,7 @@ public class DeleteRestricValidator {
     
     private String mensagem;
     
-    @Inject
+    //@Inject
     private Validator validate;
     
     /**
@@ -36,8 +36,9 @@ public class DeleteRestricValidator {
     }
 
     @Inject
-    public DeleteRestricValidator(Result result) {
+    public DeleteRestricValidator(Result result, Validator validate) {
         this.result = result;
+        this.validate = validate;
         this.mensagem = null;
     }
     

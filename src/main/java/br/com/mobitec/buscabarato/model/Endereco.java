@@ -14,15 +14,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "endereco")
 public class Endereco implements Serializable {
 
-    @Column(name = "codigo", table = "endereco", nullable = false)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name="endereco_codigo_seq", sequenceName="endereco_codigo_seq", allocationSize = 1)
+    @GeneratedValue(generator="endereco_codigo_seq", strategy=GenerationType.SEQUENCE)
     private Integer codigo;
 
     @Column(name = "logradouro", table = "endereco", length = 100)

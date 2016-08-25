@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -22,9 +23,9 @@ import javax.validation.constraints.NotNull;
 @Table(name = "produto")
 public class Produto implements Serializable {
 
-    @Column(name = "codigo", table = "produto", nullable = false)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name="produto_codigo_seq", sequenceName="produto_codigo_seq", allocationSize = 1)
+    @GeneratedValue(generator="produto_codigo_seq", strategy=GenerationType.SEQUENCE)
     private Integer codigo;
 
     @Column(name = "descricao", table = "produto", nullable = false, length = 80)

@@ -21,12 +21,12 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 public class Marca implements Serializable {
-
+    
     @Id
-    @SequenceGenerator(name="marca_codigo_seq", sequenceName="marca_codigo_seq")
-    @GeneratedValue(generator="marca_codigo_seq", strategy=GenerationType.AUTO)
+    @SequenceGenerator(name="marca_codigo_seq", sequenceName="marca_codigo_seq", allocationSize = 1)
+    @GeneratedValue(generator="marca_codigo_seq", strategy=GenerationType.SEQUENCE)
     private Integer codigo;
-
+    
     @Column(length = 50)
     @Basic
     @NotNull(message = "O nome da marca não pode ficar vazio")
