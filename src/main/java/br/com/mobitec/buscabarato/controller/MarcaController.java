@@ -11,6 +11,7 @@ import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
+import static br.com.caelum.vraptor.view.Results.http;
 import static br.com.caelum.vraptor.view.Results.json;
 import br.com.mobitec.buscabarato.aspecto.Transacional;
 import br.com.mobitec.buscabarato.model.Marca;
@@ -126,14 +127,18 @@ public class MarcaController {
         Marca marca = marcaFacade.find(codMarca);
         
         validator.validate(marca); 
-            
-        validator.onErrorSendErrorRequest();
         
-        // Remove a Marca
-        marcaFacade.remove(marca);
-        
-        result.nothing(); // apenas retorna o código de sucesso (HTTP 200 OK).
-        
+        //validator.onErrorSendErrorRequest();
+        if( !validator.hasErrors() ) {
+            // Remove a Marca
+            marcaFacade.remove(marca);
+
+            result.nothing(); // apenas retorna o código de sucesso (HTTP 200 OK).
+        }
+        else {
+            result.use(http()).sendError(500, validator.getMensagem()); 
+        }
+
     }
     
 }

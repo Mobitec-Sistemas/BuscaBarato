@@ -89,7 +89,7 @@ public class DeleteRestricValidatorTest {
     public void testOnErrorSendErrorRequest() {
         System.out.println("onErrorSendErrorRequest");
         DeleteRestricValidator instance = new DeleteRestricValidator();
-        instance.onErrorSendErrorRequest();
+        //instance.onErrorSendErrorRequest();
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }

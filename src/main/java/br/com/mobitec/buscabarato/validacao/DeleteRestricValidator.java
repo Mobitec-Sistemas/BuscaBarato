@@ -6,11 +6,13 @@
 package br.com.mobitec.buscabarato.validacao;
 
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.converter.ConversionMessage;
 import br.com.caelum.vraptor.validator.Message;
 import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.com.caelum.vraptor.validator.Validator;
 import static br.com.caelum.vraptor.view.Results.http;
 import br.com.mobitec.buscabarato.model.Marca;
+import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
@@ -59,10 +61,24 @@ public class DeleteRestricValidator {
         return this;
     }
 
-    public void onErrorSendErrorRequest() {
-        if(mensagem != null)
-            result.use(http()).sendError(500, mensagem);
+    public List<Message> getErrors() {        
+        List<Message> mensagens = validate.getErrors();
+        
+        mensagens.add(new SimpleMessage(mensagem, mensagem));
+        
+        return mensagens;
     }
+
+    public boolean hasErrors() {
+        return validate.hasErrors() || mensagem != null;
+    }
+
+    /*public void onErrorSendErrorRequest() {
+        if(mensagem != null) {
+            validate.add(new ConversionMessage(mensagem, mensagem));
+            result.use(http()).sendError(500, mensagem); 
+        }
+    }*/
 
     /**
      * Delegate da classe Validate
@@ -91,6 +107,11 @@ public class DeleteRestricValidator {
     public <T> T onErrorRedirectTo(T controller) {
         return validate.onErrorRedirectTo(controller);
     }
+
+    public void onErrorSendBadRequest() {
+        validate.onErrorSendBadRequest();
+    }
+    
     
     
     
