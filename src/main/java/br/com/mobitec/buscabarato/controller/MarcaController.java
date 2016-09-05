@@ -11,6 +11,7 @@ import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.validator.Validator;
 import static br.com.caelum.vraptor.view.Results.http;
 import static br.com.caelum.vraptor.view.Results.json;
 import br.com.mobitec.buscabarato.aspecto.Transacional;
@@ -35,7 +36,7 @@ public class MarcaController {
     
     @Inject
     private DeleteRestricValidator validator;
-    
+        
     /**
      * @deprecated CDI eyes only
      */
@@ -106,7 +107,7 @@ public class MarcaController {
     public void cadastro(Marca marca) { 
         validator.validate(marca);
         
-        validator.onErrorRedirectTo(this).formulario();
+        validator.onErrorForwardTo(this).formulario();
 
         if(marca.getCodigo() == null)
             marcaFacade.create(marca);

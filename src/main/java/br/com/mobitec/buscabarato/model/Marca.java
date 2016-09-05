@@ -3,6 +3,7 @@
 //
 package br.com.mobitec.buscabarato.model;
 
+import br.com.mobitec.buscabarato.validacao.DeleteRestrict;
 import br.com.mobitec.buscabarato.validacao.DeleteRestrito;
 import java.io.Serializable;
 import java.util.List;
@@ -32,12 +33,13 @@ public class Marca implements Serializable {
     @NotNull(message = "O nome da marca não pode ficar vazio")
     private String nome;
 
+    
     //@ManyToMany(targetEntity = Produto.class, mappedBy = "marcas")
     @ManyToMany()
     @JoinTable(name = "marca_produto", joinColumns = {
         @JoinColumn(name = "cod_marca", table = "marca_produto")}, inverseJoinColumns = {
         @JoinColumn(name = "cod_produto", table = "marca_produto")})
-    //@DeleteRestrito(message = "Esta marca possui produtos relacionados")
+    @DeleteRestrict(message = "Esta marca possui produtos relacionados")
     private List<Produto> produtos;
 
     public Marca() {
