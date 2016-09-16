@@ -6,7 +6,9 @@
 package br.com.mobitec.buscabarato.controleAcesso;
 
 import br.com.caelum.brutauth.auth.annotations.GlobalRule;
+import br.com.caelum.brutauth.auth.annotations.HandledBy;
 import br.com.caelum.brutauth.auth.rules.CustomBrutauthRule;
+import br.com.caelum.vraptor.Result;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
@@ -15,13 +17,16 @@ import javax.inject.Inject;
  * @author Sensum
  */
 @RequestScoped
-//@GlobalRule
-//@HandledBy(RedirecionaAcesso.class)
+@GlobalRule
+@HandledBy(RedirecionaAcesso.class)
 public class ControlaAcesso implements CustomBrutauthRule {
 
     @Inject
     private UsuarioLogado usuarioLogado;
 
+    @Inject
+    private Result result;
+    
     /**
      * @deprecated CDI eyes only
      */
@@ -33,6 +38,7 @@ public class ControlaAcesso implements CustomBrutauthRule {
      * @return true se o usuário pode proceguir
      */
     public boolean isAllowed() {
+        //result.include("usuarioLogado", this.usuarioLogado);
         return this.usuarioLogado != null && this.usuarioLogado.getUsuario() != null;
     }
         

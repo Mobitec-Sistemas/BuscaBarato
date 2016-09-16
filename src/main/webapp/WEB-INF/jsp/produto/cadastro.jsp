@@ -6,12 +6,13 @@
 
 <h2>Cadastro de Produtos</h2>
 
-<form class="form-signin" action="${linkTo[ProdutoController].cadastro}" method="POST">
+<form class="form-signin" action="${linkTo[ProdutoController].cadastro}" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="produto.codigo" value="${produto.codigo}">
 
     <div class="form-group">
         <label for="inputDescricao">Descrição</label>
-        <input type="text" id="inputDescricao" name="produto.descricao" autofocus required placeh >
+        <input type="text" id="inputDescricao" name="produto.descricao" autofocus placeholder="Descrição do Produto" >
+        <br>
         <span class="error" style="color: red">${errors.from('descricao')}</span>
     </div>
     
@@ -22,15 +23,24 @@
         
     <div class="form-group">
         <label for="inputMedida">Medida</label>
-        <input type="text" id="inputMedida" name="produto.medida" required>
+        <input type="text" id="inputMedida" name="produto.medida" required placeholder="Unidade de medida">
+        <br>
         <span class="error">${errors.from('produto.medida')}</span>
+    </div>
+    
     <div class="form-group">
-
-    <button type="submit">Cadastrar</button>
+        <label for="filaImagem">Imagem</label>
+        <input id="filaImagem" type="file" name="imagem" />
+    </div>
+    
+    <div class="form-group">
+        <button type="submit">Cadastrar</button>
+    </div>
+    
 </form>
 
 <script type="text/JavaScript">
-    //get a reference to the select element
+    //get a reference to the select element 
     var $select = $('#marcas');
 
     //request the JSON data and parse into the select element
@@ -52,8 +62,8 @@
             $scope.Marcas = response.data.marcas;
         });
 
-        $http.get("../tipo_produto").then(function (response) {
+        /*$http.get("../tipo_produto").then(function (response) {
             $scope.TiposProdutos = response.data.tiposProdutos;
-        });
+        });*/
     });
 </script>

@@ -54,9 +54,9 @@ public class DeleteRestricValidatorTest {
     public void testarMarcaNaoEncontrada() {
         Marca marca = null;
         
-        //this.deleteValidator.validate(marca);
+        this.deleteValidator.validate(marca);
         
-        //assertNotNull(this.deleteValidator.getMensagem());
+        assertNotNull(this.deleteValidator.getMensagem());
     }
     
     /**
@@ -68,18 +68,18 @@ public class DeleteRestricValidatorTest {
         Produto produto = new Produto();
         marca.setProdutos( Arrays.asList(produto) );
         
-        //this.deleteValidator.validate(marca);
+        this.deleteValidator.validate(marca);
         
-        //assertNotNull(this.deleteValidator.getMensagem());
+        assertNotNull(this.deleteValidator.getMensagem());
     }
     
     @Test
     public void testarMarcaOK() {
         Marca marca = new Marca();
                 
-        //this.deleteValidator.validate(marca);
+        this.deleteValidator.validate(marca);
         
-        //assertNull(this.deleteValidator.getMensagem());
+        assertNull(this.deleteValidator.getMensagem());
     }
 
     /**
