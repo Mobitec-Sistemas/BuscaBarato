@@ -15,3 +15,7 @@ and open the template in the editor.
 .col_codigo {
     width: 116px;
 }
+
+#usuarioId {
+    float: right;
+}

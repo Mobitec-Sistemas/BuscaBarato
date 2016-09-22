@@ -38,7 +38,7 @@ public class ControlaAcesso implements CustomBrutauthRule {
      * @return true se o usuário pode proceguir
      */
     public boolean isAllowed() {
-        //result.include("usuarioLogado", this.usuarioLogado);
+        result.include(usuarioLogado.getUsuario());
         return this.usuarioLogado != null && this.usuarioLogado.getUsuario() != null;
     }
         
