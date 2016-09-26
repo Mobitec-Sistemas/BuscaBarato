@@ -16,8 +16,8 @@ import javax.inject.Inject;
  *
  * @author Fabio
  */
+//@Public
 @Controller
-@Public
 public class InicioController {
     
     @Inject

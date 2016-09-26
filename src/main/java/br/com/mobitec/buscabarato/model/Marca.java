@@ -4,11 +4,9 @@
 package br.com.mobitec.buscabarato.model;
 
 import br.com.mobitec.buscabarato.validacao.DeleteRestrict;
-import br.com.mobitec.buscabarato.validacao.DeleteRestrito;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,9 +16,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Table(name = "marca")
 public class Marca implements Serializable {
     
     @Id

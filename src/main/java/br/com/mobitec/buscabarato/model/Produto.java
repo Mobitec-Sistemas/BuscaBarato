@@ -8,11 +8,13 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -46,6 +48,9 @@ public class Produto implements Serializable {
     @OneToMany(targetEntity = TabelaPreco.class, mappedBy = "produto")
     private List<TabelaPreco> tabelaPrecoCollection;
 
+    @Lob @Basic(fetch= FetchType.EAGER)
+    private byte[] imagem;
+    
     public Produto() {
 
     }
@@ -88,5 +93,19 @@ public class Produto implements Serializable {
 
     public void setTabelaPrecoCollection(List<TabelaPreco> tabelaPrecoCollection) {
         this.tabelaPrecoCollection = tabelaPrecoCollection;
+    }
+
+    /**
+     * @return the imagem
+     */
+    public byte[] getImagem() {
+        return imagem;
+    }
+
+    /**
+     * @param imagem the imagem to set
+     */
+    public void setImagem(byte[] imagem) {
+        this.imagem = imagem;
     }
 }

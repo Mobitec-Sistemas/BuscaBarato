@@ -9,6 +9,7 @@ import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
+import static br.com.caelum.vraptor.Path.LOW;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
@@ -20,6 +21,9 @@ import br.com.mobitec.buscabarato.model.service.facade.MarcaFacade;
 import br.com.mobitec.buscabarato.validacao.DeleteRestricValidator;
 import java.util.List;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -76,7 +80,8 @@ public class MarcaController {
         return retorno;
     }
     
-    @Get("/marca/formulario")
+    @Get
+    @Path(value = "/marca/formulario", priority = LOW )
     public void formulario() {
     } 
     
@@ -99,14 +104,13 @@ public class MarcaController {
         
         return marca;
     }
-    
-    @Get
-    
+        
     @Post("/marca")
     @Transacional
     public void cadastro(Marca marca) { 
         validator.validate(marca);
         
+        result.include(marca);
         validator.onErrorForwardTo(this).formulario();
 
         if(marca.getCodigo() == null)

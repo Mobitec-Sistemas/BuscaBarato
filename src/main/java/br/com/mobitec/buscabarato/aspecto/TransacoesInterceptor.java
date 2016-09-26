@@ -8,8 +8,6 @@ import br.com.caelum.vraptor.controller.ControllerMethod;
 import br.com.caelum.vraptor.core.InterceptorStack;
 import br.com.caelum.vraptor.interceptor.Interceptor;
 import javax.inject.Inject;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 
 @Intercepts
 public class TransacoesInterceptor implements Interceptor {

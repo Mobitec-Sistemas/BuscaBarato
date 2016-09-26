@@ -26,6 +26,10 @@ public class FabricaDeEntityManager {
      */
     @Produces @ApplicationScoped
     public EntityManager getEntityManager() {
+        
+        if(!this.manager.isOpen())
+            this.manager = factory.createEntityManager();
+        
         return this.manager;
     }
 

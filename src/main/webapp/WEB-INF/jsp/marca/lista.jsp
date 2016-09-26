@@ -7,8 +7,10 @@
     <table  class="table table-striped">
         <thead>
             <tr>
-                <th>Código</th>
+                <th class="col_codigo">Código</th>
                 <th>Marca</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -16,8 +18,16 @@
                 <tr id="marca_${marca.codigo}">
                     <td>${marca.codigo}</td>
                     <td>${marca.nome}</td>
-                    <td><a href="${linkTo[MarcaController].lista}/${marca.codigo}">Editar</a></td>
-                    <td><a href="javascript:void(0)" ng-click="excluirMarca(${marca.codigo});">Excluir</a></td>
+                    <td class="col_icone">
+                        <a href="${linkTo[MarcaController].lista}/${marca.codigo}">
+                            <img src="<c:url value="/imagem/editar.png"/>" alt="Edita a marca" title="Editar Marca">
+                        </a>
+                    </td>
+                    <td class="col_icone">
+                        <a href="javascript:void(0)" ng-click="excluirMarca(${marca.codigo});">
+                            <img src="<c:url value="/imagem/Delete.png"/>" alt="Excluir a marca" title="Excluir Marca">
+                        </a>
+                    </td>
                 </tr>
             </c:forEach>
         </tbody>
