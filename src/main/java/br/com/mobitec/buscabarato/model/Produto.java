@@ -4,6 +4,7 @@
 package br.com.mobitec.buscabarato.model;
 
 import java.io.Serializable;
+import java.util.Base64;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -48,9 +49,9 @@ public class Produto implements Serializable {
     @OneToMany(targetEntity = TabelaPreco.class, mappedBy = "produto")
     private List<TabelaPreco> tabelaPrecoCollection;
 
-    @Lob @Basic(fetch= FetchType.EAGER)
+    @Lob @Basic(fetch = FetchType.EAGER)
     private byte[] imagem;
-    
+        
     public Produto() {
 
     }
@@ -108,4 +109,15 @@ public class Produto implements Serializable {
     public void setImagem(byte[] imagem) {
         this.imagem = imagem;
     }
+    
+    /**
+     * Retorna a imamge na base 64
+     * @return 
+     */
+    public String getImagemBase64() {
+        if(imagem != null)        
+            return Base64.getEncoder().encodeToString(imagem);
+        return "";
+    }
+    
 }

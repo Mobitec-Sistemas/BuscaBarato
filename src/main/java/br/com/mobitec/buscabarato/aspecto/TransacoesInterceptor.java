@@ -8,6 +8,7 @@ import br.com.caelum.vraptor.controller.ControllerMethod;
 import br.com.caelum.vraptor.core.InterceptorStack;
 import br.com.caelum.vraptor.interceptor.Interceptor;
 import javax.inject.Inject;
+import javax.persistence.EntityTransaction;
 
 @Intercepts
 public class TransacoesInterceptor implements Interceptor {
@@ -27,16 +28,19 @@ public class TransacoesInterceptor implements Interceptor {
 
     @Override
     public void intercept(InterceptorStack stack, ControllerMethod method, Object controller) throws InterceptionException {
+        
+        EntityTransaction transaction = null;
         try {
-            manager.getTransaction().begin();
+            transaction = manager.getTransaction();
+            transaction.begin();
 
             stack.next(method, controller);
             
-            if (manager.getTransaction().isActive())
-                manager.getTransaction().commit();
+            if (transaction.isActive())
+                transaction.commit();
         } finally {
-            if (manager.getTransaction().isActive()) {
-                manager.getTransaction().rollback();
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
             }
         }
     }

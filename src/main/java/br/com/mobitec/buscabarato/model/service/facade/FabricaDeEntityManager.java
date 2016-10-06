@@ -36,6 +36,8 @@ public class FabricaDeEntityManager {
     @PreDestroy
     public void fechaManager() {
         this.manager.close();
+        
+        this.factory.close();
     }
 
 }

@@ -23,7 +23,7 @@
         <!-- Bootstrap core CSS -->
         <!-- Última versão CSS compilada e minificada -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
+        
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <link href="<c:url value="/css/ie10-viewport-bug-workaround.css"/>" rel="stylesheet">
 
@@ -78,7 +78,7 @@
                     <c:if test="${not empty usuario.nome}">
                         <a id="usuarioId" href="#" class="navbar-brand dropdown-toggle navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${usuario.nome}<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#<c:url value="/usuario/logoff"/>">Sair</a></li>
+                            <li><a href="<c:url value="/usuario/logoff"/>">Sair</a></li>
                         </ul>
                     </c:if>
                     
@@ -86,23 +86,26 @@
                                 
             </div>
         </nav>
-
+        
         <div class="container-fluid">
             <div class="row">
                 <c:if test="${not empty usuario.nome}">
-                    <div class="col-sm-3 col-md-2 sidebar" id="slidemenu"> <!-- col-xs-10 -->
-                        <ul class="nav nav-sidebar">
+                    <div class="col-sm-3 col-md-2 sidebar" id="slidemenu" ng-app="urlApp"> <!-- col-xs-10 -->
+                        <ul class="nav nav-sidebar" ng-controller="urlCtrl">
+                            
+                            <c:set var="uri" value="${req.requestURI}" />
+                            
                             <li class="active"><a href="<c:url value="/" />">Principal<span class="sr-only">(current)</span></a></li>
                             <li><a href="<c:url value="/usuario"/>">Login</a></li>
+                            <!-- <li><a href="#" ng-click="ListaJSon('<c:url value="/produto"/>')">Lista de Produto JSon</a></li> -->
                             <li><a href="<c:url value="/produto"/>">Lista de Produto</a></li>
-                            <li><a href="<c:url value="/produto/cadastro"/>">Cadastro de Produto</a></li>
                             <li><a href="<c:url value="/estado"/>">Lista de Estado</a></li>
                             <li><a href="<c:url value="/cidade"/>">Lista de Cidade</a></li>
                             <li><a href="<c:url value="/bairro"/>">Lista de Bairro</a></li>
                             <li><a href="<c:url value="/marcaJson"/>">Lista de Marca</a></li>
                             <li><a href="<c:url value="/marca"/>">Cadastro de Marca</a></li>
                         </ul>
-
+                        
                     </div>
                 </c:if>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="corpo"> <!-- col-xs-2 -->

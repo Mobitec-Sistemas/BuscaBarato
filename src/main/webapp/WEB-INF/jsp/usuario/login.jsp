@@ -52,9 +52,12 @@
 
             $scope.enviarForm = function(){
                 if($scope.lembrarSenha) {
-                    $cookies.put('login', $scope.login);
-                    $cookies.put('senha', $scope.senha);
-                    $cookies.put('lembrarSenha', $scope.lembrarSenha);
+                    var now = new Date();
+                    var exp = new Date(now.getFullYear()+1, now.getMonth(), now.getDate());
+                    
+                    $cookies.put('login', $scope.login, {'expires': exp});
+                    $cookies.put('senha', $scope.senha, {'expires': exp});
+                    $cookies.put('lembrarSenha', $scope.lembrarSenha, {'expires': exp});
                 }
                 else {
                     $cookies.remove('login');
