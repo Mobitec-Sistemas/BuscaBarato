@@ -7,20 +7,21 @@ import br.com.caelum.vraptor.Intercepts;
 import br.com.caelum.vraptor.controller.ControllerMethod;
 import br.com.caelum.vraptor.core.InterceptorStack;
 import br.com.caelum.vraptor.interceptor.Interceptor;
+import br.com.caelum.vraptor.validator.Validator;
 import javax.inject.Inject;
 import javax.persistence.EntityTransaction;
 
-@Intercepts
+@Intercepts //(after = ControlaAcesso.class)
 public class TransacoesInterceptor implements Interceptor {
 
     //@PersistenceContext(unitName = "default")
     @Inject
     private EntityManager manager;
+    
+    @Inject
+    private Validator validator;
 
-    /*public TransacoesInterceptor(EntityManager manager) {
-        this.manager = manager;
-    }*/
-
+    
     @Override
     public boolean accepts(ControllerMethod method) {
         return method.containsAnnotation(Transacional.class);
@@ -36,7 +37,7 @@ public class TransacoesInterceptor implements Interceptor {
 
             stack.next(method, controller);
             
-            if (transaction.isActive())
+            if (!validator.hasErrors() && transaction.isActive())
                 transaction.commit();
         } finally {
             if (transaction != null && transaction.isActive()) {

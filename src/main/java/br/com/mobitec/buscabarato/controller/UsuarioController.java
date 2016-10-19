@@ -75,7 +75,7 @@ public class UsuarioController {
         usuarioLogado.setUsuario(usuarioCarregado);
         
         // Obtém o cabecalho para verificar se os dados vieram por formulário ou JSON
-        if( request.getHeader("Content-Type").equalsIgnoreCase("application/json") )
+        if( request.getHeader("Content-Type") != null && request.getHeader("Content-Type").equalsIgnoreCase("application/json") )
         {
             // Trata como aplicativo
             if(usuarioCarregado != null)

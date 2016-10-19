@@ -44,15 +44,12 @@ public class ProdutoController {
     @Inject
     private DeleteRestricValidator validator;
     
-    @Inject
-    private UsuarioLogado usuarioLogado;
-    
     private static final Logger logger = Logger.getLogger(ProdutoController.class);
     
     /**
      * @deprecated CDI eyes only
      */
-    public ProdutoController() {
+    protected ProdutoController() {
     }
     
     
@@ -110,7 +107,8 @@ public class ProdutoController {
         logger.info("Iniciando o metodo Cadastro por Post");
         
         if(imagem != null) {
-            validator.addIf( !imagem.getContentType().equals("image/jpg") && 
+            validator.addIf( !imagem.getContentType().equals("image/jpeg") && 
+                             !imagem.getContentType().equals("image/jpg") && 
                              !imagem.getContentType().equals("image/png"), 
                     new SimpleMessage("imagem", "A imagem deve ser no formato JPG ou PNG"));
 
@@ -127,8 +125,8 @@ public class ProdutoController {
         else
             produtoFacade.edit(produto);
         
-        //result.redirectTo(this).lista();
-        result.redirectTo(this).cadastro();
+        result.redirectTo(this).lista();
+        //result.redirectTo(this).cadastro();
     }
     
 }

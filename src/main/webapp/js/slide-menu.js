@@ -1,13 +1,23 @@
 /* 
  * É necessário o JQuery
  */
+
+function expandirMenu(){
+    //var selected = $("#navbar-toggle").hasClass('slide-active');
+
+    $(".navbar-toggle").toggleClass('slide-active');
+
+    $('#slidemenu').toggleClass("col-xs-10");
+    $('#corpo').toggleClass("col-xs-2");
+    $('#slidemenu').toggleClass("sidebar");
+}
+
 $(document).ready(function () {
 
     // Enter your ids or classes
     var toggler = '.navbar-toggle';
     
     $("#slide-nav").on("click", toggler, function (e) {
-
         var selected = $(this).hasClass('slide-active');
 
       

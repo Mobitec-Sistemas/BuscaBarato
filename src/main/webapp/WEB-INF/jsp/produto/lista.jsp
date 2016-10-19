@@ -7,7 +7,7 @@
 
 <h3>Lista de Produtos</h3>
 
-<c:if test="${errors}">
+<c:if test="${not empty errors}">
     <div class="alert alert-danger" role="alert">
         <ul class="errors">
             <c:forEach items="${errors}" var="error">

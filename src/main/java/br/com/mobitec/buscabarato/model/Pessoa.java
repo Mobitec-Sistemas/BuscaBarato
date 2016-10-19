@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -23,12 +24,13 @@ public abstract class Pessoa implements Serializable {
 
     @Column(name = "codigo", table = "pessoa", nullable = false)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name="pessoa_codigo_seq", sequenceName="pessoa_codigo_seq", allocationSize = 1)
+    @GeneratedValue(generator="pessoa_codigo_seq", strategy=GenerationType.SEQUENCE)
     private Integer codigo;
 
     @Column(name = "nome", table = "pessoa", nullable = false, length = 50)
     @Basic
-    @NotNull(message = "O nome n�o pode ser nulo")
+    @NotNull(message = "O nome nao pode ficar em branco")
     @Size(min = 5, max = 50, message = "O nome deve ter de 5 a 50 caracteres")
     private String nome;
 

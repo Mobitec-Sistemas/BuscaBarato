@@ -7,6 +7,9 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ taglib tagdir="/WEB-INF/tags" prefix="mt" %>
+
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -23,6 +26,7 @@
         <!-- Bootstrap core CSS -->
         <!-- Última versão CSS compilada e minificada -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
         
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <link href="<c:url value="/css/ie10-viewport-bug-workaround.css"/>" rel="stylesheet">
@@ -65,14 +69,14 @@
             <div class="container-fluid">
                 <div class="navbar-header">
                                         
-                    <a class="navbar-toggle">
+                    <a class="navbar-toggle" href="javascript:expandirMenu();">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
                     
-                    <a class="navbar-brand" href="#">Busca Barato</a>
+                    <a class="navbar-brand" href="<c:url value="/"/>">Busca Barato</a>
                 
                     <!-- Nome do Usuário -->
                     <c:if test="${not empty usuario.nome}">
@@ -104,6 +108,7 @@
                             <li><a href="<c:url value="/bairro"/>">Lista de Bairro</a></li>
                             <li><a href="<c:url value="/marcaJson"/>">Lista de Marca</a></li>
                             <li><a href="<c:url value="/marca"/>">Cadastro de Marca</a></li>
+                            <li><a href="<c:url value="/empresa"/>">Cadastro de Empresa</a></li>
                         </ul>
                         
                     </div>

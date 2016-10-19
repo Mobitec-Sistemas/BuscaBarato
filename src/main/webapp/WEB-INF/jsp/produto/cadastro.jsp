@@ -6,7 +6,8 @@
 
 <h2>Cadastro de Produtos</h2>
 
-<c:if test="${errors}">
+<!-- Importa a parte do html que mostra as mensagens de erro -->
+<c:if test="${not empty errors}">
     <div class="alert alert-danger" role="alert">
         <ul class="errors">
             <c:forEach items="${errors}" var="error">
@@ -81,56 +82,37 @@
 </form>
 
 <script type="text/JavaScript">
-    //get a reference to the select element 
-    /*var $select = $('#marcas');
-
-    //request the JSON data and parse into the select element
-    $.getJSON('../marcaJson', function(data){
-
-    //clear the current content of the select
-    $select.html('');
-
-    //iterate over the data and append a select option
-    $.each(data.marcas, function(key, val){ 
-    $select.append('<option id="' + val.codigo + '">' + val.nome + '</option>');
-    })
-    });*/
-
+    
     var app = angular.module('MyApp', []);
     app.controller('MyController', function ($scope, $http) {
 
-    $http.get("${linkTo[MarcaController].listaJson}").then(function (response) {
-    $scope.Marcas = response.data.marcas;
+        $http.get("${linkTo[MarcaController].listaJson}").then(function (response) {
+            $scope.Marcas = response.data.marcas;
 
-    $('#marcas').value = "${produto.marcas[0].codigo}";
+            $('#marcas').value = "${produto.marcas[0].codigo}";
+        });
 
-    //$scope.ddlMarcas = "${produto.marcas[0].codigo}";
-    });
-
-    /*$http.get("../tipo_produto").then(function (response) {
-    $scope.TiposProdutos = response.data.tiposProdutos;
-    });*/
     });
 
     // Faz o previw da imagem que será feito o upload
     $("#fileUpload").on('change', function () {
 
-    if (typeof (FileReader) != "undefined") {
+        if (typeof (FileReader) != "undefined") {
+            var image_holder = $("#image-holder");
+            image_holder.empty();
 
-    var image_holder = $("#image-holder");
-    image_holder.empty();
-
-    var reader = new FileReader();
-    reader.onload = function (e) {
-    $("<img />", {
-    "src": e.target.result,
-    "class": "thumb-image"
-    }).appendTo(image_holder);
-    }
-    image_holder.show();
-    reader.readAsDataURL($(this)[0].files[0]);
-    } else{
-    //alert("Este navegador nao suporta FileReader.");
-    }
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $("<img />", {
+                    "src": e.target.result,
+                    "class": "thumb-image",
+                    "style": "width: 200px;"
+                }).appendTo(image_holder);
+            }
+            image_holder.show();
+            reader.readAsDataURL($(this)[0].files[0]);
+        } else{
+            //alert("Este navegador nao suporta FileReader.");
+        }
     });
 </script>

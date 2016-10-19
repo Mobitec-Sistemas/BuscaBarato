@@ -4,10 +4,12 @@
 package br.com.mobitec.buscabarato.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -17,17 +19,15 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name="cod_pessoa")
 public class Empresa extends Pessoa implements Serializable {
 
-    @Column(name = "coordenada_x", table = "empresa")
-    @Basic
-    private Integer coordenadaX;
+    @Column(name = "latitude", table = "empresa", precision=13, scale=10)
+    private BigDecimal latitude;
 
-    @Column(name = "coordenada_y", table = "empresa")
-    @Basic
-    private Integer coordenadaY;
+    @Column(name = "longitude", table = "empresa", precision=13, scale=10)
+    private BigDecimal longitude;
 
-    @Column(name = "cod_endereco", table = "empresa")
-    @Basic
-    private Integer codEndereco;
+    @ManyToOne(targetEntity = Endereco.class)
+    @JoinColumn(name = "cod_endereco")
+    private Endereco endereco;
 
     @OneToMany(targetEntity = EnderecoEmpresa.class, mappedBy = "empresa")
     private List<EnderecoEmpresa> enderecoEmpresaCollection;
@@ -39,28 +39,28 @@ public class Empresa extends Pessoa implements Serializable {
 
     }
 
-    public Integer getCoordenadaX() {
-        return this.coordenadaX;
+    public BigDecimal  getLatitude() {
+        return this.latitude;
     }
 
-    public void setCoordenadaX(Integer coordenadaX) {
-        this.coordenadaX = coordenadaX;
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
     }
 
-    public Integer getCoordenadaY() {
-        return this.coordenadaY;
+    public BigDecimal getLongitude() {
+        return this.longitude;
     }
 
-    public void setCoordenadaY(Integer coordenadaY) {
-        this.coordenadaY = coordenadaY;
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
     }
 
-    public Integer getCodEndereco() {
-        return this.codEndereco;
+    public Endereco getEndereco() {
+        return this.endereco;
     }
 
-    public void setCodEndereco(Integer codEndereco) {
-        this.codEndereco = codEndereco;
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
     public List<EnderecoEmpresa> getEnderecoEmpresaCollection() {
