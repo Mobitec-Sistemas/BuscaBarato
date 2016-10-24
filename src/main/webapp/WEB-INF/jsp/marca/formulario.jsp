@@ -3,9 +3,9 @@
     Created on : 24/08/2016, 11:44:15
     Author     : Sensum
 --%>
-<h1>Cadastro de Marcas</h1>
+<h2>Cadastro de Marcas</h2>
 
-<c:if test="${errors}">
+<c:if test="${not empty errors}">
     <div class="alert alert-danger" role="alert">
         <ul class="errors">
             <c:forEach items="${errors}" var="error">

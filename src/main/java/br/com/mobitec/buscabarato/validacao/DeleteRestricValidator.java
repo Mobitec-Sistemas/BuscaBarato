@@ -5,13 +5,9 @@
  */
 package br.com.mobitec.buscabarato.validacao;
 
-import br.com.caelum.vraptor.Result;
-import br.com.caelum.vraptor.converter.ConversionMessage;
 import br.com.caelum.vraptor.validator.Message;
 import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.com.caelum.vraptor.validator.Validator;
-import static br.com.caelum.vraptor.view.Results.http;
-import br.com.mobitec.buscabarato.model.Marca;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.logging.Level;
@@ -151,8 +147,10 @@ public class DeleteRestricValidator {
     public void onErrorSendBadRequest() {
         validate.onErrorSendBadRequest();
     }
-    
-    
+
+    public Validator addIf(boolean expression, Message message) {
+        return validate.addIf(expression, message);
+    }
     
     
     public String getMensagem() {

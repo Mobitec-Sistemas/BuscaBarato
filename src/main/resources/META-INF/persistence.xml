@@ -7,9 +7,7 @@
     <class>br.com.mobitec.buscabarato.model.Cidade</class>
     <class>br.com.mobitec.buscabarato.model.Estado</class>
     <class>br.com.mobitec.buscabarato.model.Pessoa</class>
-    <class>br.com.mobitec.buscabarato.model.Endereco</class>
     <class>br.com.mobitec.buscabarato.model.Produto</class>
-    <class>br.com.mobitec.buscabarato.model.EnderecoEmpresa</class>
     <class>br.com.mobitec.buscabarato.model.Bairro</class>
     <class>br.com.mobitec.buscabarato.model.Usuario</class>
     <class>br.com.mobitec.buscabarato.model.Empresa</class>

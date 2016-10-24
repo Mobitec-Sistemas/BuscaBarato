@@ -19,3 +19,9 @@ and open the template in the editor.
 #usuarioId {
     float: right;
 }
+
+.tabela_formulario {
+    width: 300px;
+    max-height:400px;
+    overflow-y:auto;
+}

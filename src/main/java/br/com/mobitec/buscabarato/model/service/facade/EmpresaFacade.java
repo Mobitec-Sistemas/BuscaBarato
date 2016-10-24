@@ -6,24 +6,18 @@
 package br.com.mobitec.buscabarato.model.service.facade;
 
 import br.com.mobitec.buscabarato.model.Empresa;
-import javax.inject.Named;
+import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 
 /**
  *
  * @author Fabio
  */
-@Named("empresa")
+//@Named("empresa")
+@RequestScoped
 public class EmpresaFacade extends AbstractFacade<Empresa> {
 
-    //@PersistenceContext(unitName = "default")
-    private EntityManager em;
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
+    
     public EmpresaFacade() {
         super(Empresa.class);
     }
