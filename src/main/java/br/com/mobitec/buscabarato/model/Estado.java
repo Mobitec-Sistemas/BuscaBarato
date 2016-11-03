@@ -23,6 +23,11 @@ public class Estado implements Serializable {
     @Column(name = "nome", table = "estado", length = 30)
     @Basic
     private String nome;
+    
+    /*@Column(name = "sigla", table = "estado", length = 2, columnDefinition="bpchar(2)")
+    @Basic*/
+    @Column(name = "sigla", table = "estado", length = 2, columnDefinition="bpchar(2)")
+    private String sigla;
 
     @OneToMany(targetEntity = Cidade.class, mappedBy = "estado")
     private List<Cidade> cidadeCollection;
@@ -53,5 +58,19 @@ public class Estado implements Serializable {
 
     public void setCidadeCollection(List<Cidade> cidadeCollection) {
         this.cidadeCollection = cidadeCollection;
+    }
+
+    /**
+     * @return the sigla
+     */
+    public String getSigla() {
+        return sigla;
+    }
+
+    /**
+     * @param sigla the sigla to set
+     */
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
     }
 }

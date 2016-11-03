@@ -11,7 +11,10 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Example;
+import org.hibernate.criterion.MatchMode;
 
 /**
  *
@@ -33,6 +36,23 @@ public class BairroFacade extends AbstractFacade<Bairro> {
         return session.createQuery(hql)
                 .setParameter("cidade", codigo)
                 .list();
+    }
+    
+    /**
+     * Lista o bairro
+     * @param bairro
+     * @return 
+     */
+    public List<Bairro> listarBairro(Bairro bairro) {
+        Example exampleMarca = Example.create(bairro)
+                                        .enableLike(MatchMode.EXACT)
+                                        .ignoreCase();
+        
+        Criteria criteria = this.getSession().createCriteria(Bairro.class).add(exampleMarca);
+                
+        List<Bairro> bairros = criteria.list();
+        
+        return bairros;
     }
     
 }

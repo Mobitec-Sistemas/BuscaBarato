@@ -7,14 +7,16 @@ package br.com.mobitec.buscabarato.controller;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
+import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.validator.Validator;
 import static br.com.caelum.vraptor.view.Results.json;
 import br.com.mobitec.buscabarato.model.Bairro;
 import br.com.mobitec.buscabarato.model.Cidade;
-import br.com.mobitec.buscabarato.model.Estado;
 import br.com.mobitec.buscabarato.model.service.facade.BairroFacade;
 import java.util.List;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 /**
  *
@@ -28,6 +30,9 @@ public class BairroController {
     
     @Inject
     private BairroFacade bairroFacade;
+    
+    @Inject
+    private Validator validator;
     
     /**
      * @deprecated CDI eyes only
@@ -55,4 +60,23 @@ public class BairroController {
         
         result.use(json()).from(retorno).serialize();
     }
+    
+    public List<Bairro> lista(Bairro bairro) {
+        List<Bairro> bairros = bairroFacade.listarBairro(bairro);
+        
+        return bairros;
+    }
+    
+    @Post("/bairro/cadastro")
+    @Transactional
+    public void cadastro(Bairro bairro) {
+        validator.validate(bairro);
+        
+        if(bairro.getCodigo() == null)
+            bairroFacade.create(bairro);
+        else
+            bairroFacade.edit(bairro);
+        
+    }
+    
 }

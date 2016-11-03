@@ -12,18 +12,14 @@ import br.com.caelum.vraptor.Path;
 import static br.com.caelum.vraptor.Path.LOW;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
-import br.com.caelum.vraptor.validator.Validator;
 import static br.com.caelum.vraptor.view.Results.http;
 import static br.com.caelum.vraptor.view.Results.json;
-import br.com.mobitec.buscabarato.aspecto.Transacional;
 import br.com.mobitec.buscabarato.model.Marca;
 import br.com.mobitec.buscabarato.model.service.facade.MarcaFacade;
 import br.com.mobitec.buscabarato.validacao.DeleteRestricValidator;
 import java.util.List;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import javax.transaction.Transactional;
 
 /**
  *
@@ -106,7 +102,7 @@ public class MarcaController {
     }
         
     @Post("/marca")
-    @Transacional
+    @Transactional
     public void cadastro(Marca marca) { 
         validator.validate(marca);
         
@@ -127,7 +123,7 @@ public class MarcaController {
      * @param codMarca 
      */
     @Delete("/marca/{codMarca}")
-    @Transacional
+    @Transactional
     public void excluir(Integer codMarca) {
         Marca marca = marcaFacade.find(codMarca);
         

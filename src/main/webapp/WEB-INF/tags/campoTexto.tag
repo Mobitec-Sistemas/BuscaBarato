@@ -14,6 +14,7 @@
 <%@ attribute name="value" %>
 <%@ attribute name="placeholder" %>
 <%@ attribute name="step" %>
+<%@ attribute name="autofocus" %>
 
 <!-- Verifica se tem erro -->
 <c:set var="comErro" value="${false}" />
@@ -34,7 +35,7 @@
 <div class="form-group ${classeErro}"> <!-- has-error has-feedback -->
     <label form="${id}" class="control-label col-sm-2">${label}</label>
     <div class="col-sm-10">
-        <input type="${type}" step="${step}" id="${id}" class="form-control" name="${name}" value="${value}" placeholder="${placeholder}">
+        <input type="${type}" step="${step}" id="${id}" class="form-control" name="${name}" value="${value}" placeholder="${placeholder}" autofocus="autofocus">
         
         <c:if test="${comErro}">
             <!-- Apresenta a mensagem de erro -->

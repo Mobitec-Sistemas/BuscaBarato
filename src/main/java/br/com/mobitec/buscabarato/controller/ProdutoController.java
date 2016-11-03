@@ -12,8 +12,6 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.observer.upload.UploadedFile;
 import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.com.caelum.vraptor.view.Results;
-import br.com.mobitec.buscabarato.aspecto.Transacional;
-import br.com.mobitec.buscabarato.controleAcesso.UsuarioLogado;
 import br.com.mobitec.buscabarato.model.Marca;
 import br.com.mobitec.buscabarato.model.Produto;
 import br.com.mobitec.buscabarato.model.service.facade.MarcaFacade;
@@ -23,6 +21,7 @@ import com.google.common.io.ByteStreams;
 import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import org.apache.log4j.Logger;
 
 /**
@@ -43,9 +42,7 @@ public class ProdutoController {
     
     @Inject
     private DeleteRestricValidator validator;
-    
-    private static final Logger logger = Logger.getLogger(ProdutoController.class);
-    
+        
     /**
      * @deprecated CDI eyes only
      */
@@ -59,9 +56,8 @@ public class ProdutoController {
      * Sesão irá redirecionar para a página HTML
      */
     @Get("/produto")
-    @Transacional
+    @Transactional
     public void lista() {
-        logger.info("Iniciando o metodo Lista");
         
         List<Produto> lista = produtoFacade.findAll();
                 
@@ -74,7 +70,6 @@ public class ProdutoController {
             
     @Get("/produto/cadastro")
     public Produto cadastro() {
-        logger.info("Iniciando o metodo Cadastro");
         
         Produto produto = new Produto();
         
@@ -87,7 +82,6 @@ public class ProdutoController {
     @Get("/produto/cadastro/{codigo}")
     //@Transacional
     public Produto cadastro(Integer codigo) {
-        logger.info("Iniciando o metodo Cadastro com código de parâmetro");
         
         Produto produto = produtoFacade.find(codigo);
         
@@ -102,9 +96,8 @@ public class ProdutoController {
     }
     
     @Post("/produto/cadastro")
-    @Transacional
+    @Transactional
     public void cadastro(Produto produto, UploadedFile imagem) throws IOException {
-        logger.info("Iniciando o metodo Cadastro por Post");
         
         if(imagem != null) {
             validator.addIf( !imagem.getContentType().equals("image/jpeg") && 

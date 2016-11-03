@@ -6,9 +6,16 @@
 package br.com.mobitec.buscabarato.model.service.facade;
 
 import br.com.mobitec.buscabarato.model.Cidade;
+import br.com.mobitec.buscabarato.model.Estado;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.Metamodel;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Example;
@@ -62,6 +69,20 @@ public class CidadeFacade extends AbstractFacade<Cidade> {
         List<Cidade> cidades = criteria.list();
         
         return cidades;
+    }
+
+    public List<Cidade> findCidadesEstado(Integer codEstado) {
+        Estado estado = new Estado();
+        estado.setCodigo(codEstado);
+        
+        EntityManager manager = getEntityManager();
+        
+        List<Cidade> listaCidade = manager
+                .createQuery("select t from Cidade as t where t.estado = :codigoEstado order by t.nome")
+                .setParameter("codigoEstado", estado)
+                .getResultList();
+                
+        return listaCidade;
     }
     
 }

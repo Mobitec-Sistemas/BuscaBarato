@@ -20,12 +20,12 @@ import javax.validation.constraints.NotNull;
 @PrimaryKeyJoinColumn(name="cod_pessoa")
 public class Empresa extends Pessoa implements Serializable {
 
-    @Column(name = "latitude", table = "empresa", precision=13, scale=10)
+    @Column(name = "latitude", table = "empresa", precision=18, scale=15)
     @NotNull(message = "A latitude não pode ficar em branco")
     private BigDecimal latitude;
 
     @NotNull(message = "A longitude não pode ficar em branco")
-    @Column(name = "longitude", table = "empresa", precision=13, scale=10)
+    @Column(name = "longitude", table = "empresa", precision=18, scale=15)
     private BigDecimal longitude;
 
     @Column(name = "logradouro", table = "empresa", length = 100)

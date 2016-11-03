@@ -37,12 +37,25 @@ public class CidadeController {
      * Lista as cidades no formato json
      * @param codCidade a ser pesquisada
      */
-    @Get("/cidade/{codCidade}")
+    /*@Get("/cidade/{codCidade}")
     public void lista(Integer codCidade) {
         Cidade retorno = cidadeFacade.find(codCidade);
         
         result.use(json()).from(retorno).serialize();
+    }*/
+    
+    /**
+     * Lista as cidades de um determinado estado
+     * @param codEstado a ser pesquisada
+     */
+    @Get("/cidade/estado/{codEstado}")
+    public void listaCidadesEstado(Integer codEstado) {
+        List<Cidade> retorno = cidadeFacade.findCidadesEstado(codEstado);
+        
+        result.use(json()).from(retorno, "cidades").serialize();
     }
+    
+    
     
     /**
      * Lista a cidade solicitada no formato json

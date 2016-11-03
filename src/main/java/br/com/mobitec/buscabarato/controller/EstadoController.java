@@ -41,7 +41,7 @@ public class EstadoController {
     public void lista() {
         List<Estado> retorno = estadoFacade.findAll();
         
-        result.use(json()).from(retorno).serialize();
+        result.use(json()).from(retorno, "estados").serialize();
     }
     
     /**

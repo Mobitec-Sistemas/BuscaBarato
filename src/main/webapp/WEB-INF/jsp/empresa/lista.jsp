@@ -1,5 +1,11 @@
 <h2>Lista de Empresas</h2>
 
+<c:if test="${not empty mensagem}">
+    <div class="alert alert-success" role="alert">
+        <p class="success">${mensagem}</p>
+    </div>
+</c:if>
+
 <c:if test="${not empty errors}">
     <div class="alert alert-danger" role="alert">
         <ul class="errors">

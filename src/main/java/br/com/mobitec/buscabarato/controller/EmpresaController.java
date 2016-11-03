@@ -13,11 +13,12 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.caelum.vraptor.view.Results;
-import br.com.mobitec.buscabarato.aspecto.Transacional;
+import br.com.mobitec.buscabarato.model.Bairro;
 import br.com.mobitec.buscabarato.model.Empresa;
 import br.com.mobitec.buscabarato.model.service.facade.EmpresaFacade;
 import java.util.List;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 /**
  *
@@ -35,6 +36,9 @@ public class EmpresaController {
     @Inject
     private Validator validator;
     
+    @Inject
+    private BairroController bairroController;
+        
     /**
      * @deprecated CDI eyes only
      */
@@ -52,6 +56,7 @@ public class EmpresaController {
         List<Empresa> lista = empresaFacade.findAll();
                         
         result.use(Results.representation()).from(lista, "empresaList").serialize();
+        
     }
     
     /**
@@ -89,9 +94,18 @@ public class EmpresaController {
     }
     
     @Post("/empresa/cadastro")
-    @Transacional
+    @Transactional
     public void cadastro(Empresa empresa) {
-                 
+        
+        // Valida o Bairro
+        List<Bairro> bairros = bairroController.lista(empresa.getBairro());
+        
+        // Verifica se o bairro já está cadastrado
+        if(bairros != null && bairros.size() == 1 )
+            empresa.setBairro(bairros.get(0));
+        else 
+            bairroController.cadastro(empresa.getBairro());
+        
         validator.validate(empresa);
         
         validator.onErrorRedirectTo(this).formulario(empresa);
@@ -101,6 +115,7 @@ public class EmpresaController {
         else
             empresaFacade.edit(empresa);
         
+        result.include("mensagem", "Empresa cadastrada com sucesso!");
         result.redirectTo(this).lista();
     }
     
