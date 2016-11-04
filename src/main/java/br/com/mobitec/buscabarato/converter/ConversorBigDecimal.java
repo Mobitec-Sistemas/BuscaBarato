@@ -10,10 +10,10 @@ import br.com.caelum.vraptor.converter.BigDecimalConverter;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
 import java.util.Locale;
 import javax.enterprise.inject.Specializes;
 import javax.inject.Inject;
+import org.apache.log4j.Logger;
 
 /**
  * Converte os tipos BigDecimal que vem do HTML
@@ -24,6 +24,8 @@ import javax.inject.Inject;
 @Convert(BigDecimal.class)
 public class ConversorBigDecimal extends BigDecimalConverter {
 
+    private static final Logger logger = Logger.getLogger(ConversorBigDecimal.class);    
+    
     /**
      * @deprecated CDI eyes only
      */
@@ -38,10 +40,20 @@ public class ConversorBigDecimal extends BigDecimalConverter {
 
     @Override
     public BigDecimal convert(String value, Class<? extends BigDecimal> type) {
+                
+        logger.info("Valor a ser convertido: "+ value);
+        logger.info("Locate: "+ java.util.Locale.getDefault());
+        logger.info("Separador: "+ DecimalFormatSymbols.getInstance().getDecimalSeparator());
+        
         // Troca o separador decimal
         value = value.replace('.', DecimalFormatSymbols.getInstance().getDecimalSeparator());
 
-        return super.convert(value, type);
+        logger.info("Valor convertido passo 1: "+ value);
+        
+        BigDecimal retorno = super.convert(value, type);
+        logger.info("Valor convertido: "+ retorno);
+        
+        return retorno;
     }
 
 }
