@@ -41,6 +41,7 @@
             <select id="estado" 
                     class="form-control"
                     name="empresa.bairro.cidade.estado.codigo"
+                    value="${empresa.bairro.cidade.estado.codigo}"
                     ng-model="ddlEstado" 
                     ng-options="estado.nome for estado in Estados track by estado.codigo" 
                     ng-change="listarCidade(ddlEstado)">
@@ -54,6 +55,7 @@
             <select id="cidade" 
                     class="form-control" 
                     name="empresa.bairro.cidade.codigo"
+                    value="${empresa.bairro.cidade.codigo}"
                     ng-model="ddlCidade" 
                     ng-options="cidade.nome for cidade in Cidades track by cidade.codigo">
             </select>

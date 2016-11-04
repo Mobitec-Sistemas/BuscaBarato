@@ -19,6 +19,7 @@ import br.com.mobitec.buscabarato.model.service.facade.EmpresaFacade;
 import java.util.List;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -38,7 +39,9 @@ public class EmpresaController {
     
     @Inject
     private BairroController bairroController;
-        
+    
+    private static final Logger logger = Logger.getLogger(EmpresaController.class);    
+    
     /**
      * @deprecated CDI eyes only
      */
@@ -96,6 +99,9 @@ public class EmpresaController {
     @Post("/empresa/cadastro")
     @Transactional
     public void cadastro(Empresa empresa) {
+        
+        logger.info("Latitude: "+ empresa.getLatitude());
+        logger.info("Longitude: "+empresa.getLongitude());
         
         // Valida o Bairro
         List<Bairro> bairros = bairroController.lista(empresa.getBairro());
