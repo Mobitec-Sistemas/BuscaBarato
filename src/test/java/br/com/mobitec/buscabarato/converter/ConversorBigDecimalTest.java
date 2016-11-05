@@ -70,6 +70,15 @@ public class ConversorBigDecimalTest {
     }
     
     @Test
+    public void testConvertDecimalPontoNegativo() {
+        
+        BigDecimal convertido = conversor.convert("-26.911877", BigDecimal.class);
+        BigDecimal resultado = new BigDecimal("-26.911877");
+                
+        assertEquals(resultado, convertido);
+    }
+    
+    @Test
     public void testConvertDecimalVirgulaPositivo() {
         
         BigDecimal convertido = conversor.convert("123,456", BigDecimal.class);

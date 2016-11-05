@@ -7,12 +7,21 @@ package br.com.mobitec.buscabarato.converter;
 
 import br.com.caelum.vraptor.Convert;
 import br.com.caelum.vraptor.converter.BigDecimalConverter;
+import br.com.caelum.vraptor.converter.ConversionException;
+import br.com.caelum.vraptor.converter.ConversionMessage;
+import br.com.caelum.vraptor.converter.Converter;
+import static com.google.common.base.Strings.isNullOrEmpty;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Locale;
+import javax.annotation.Priority;
+import javax.enterprise.inject.Alternative;
 import javax.enterprise.inject.Specializes;
 import javax.inject.Inject;
+import javax.interceptor.Interceptor;
 import org.apache.log4j.Logger;
 
 /**
@@ -20,40 +29,53 @@ import org.apache.log4j.Logger;
  *
  * @author Sensum
  */
-@Specializes
+@Alternative
+@Priority(Interceptor.Priority.APPLICATION)
 @Convert(BigDecimal.class)
-public class ConversorBigDecimal extends BigDecimalConverter {
+public class ConversorBigDecimal implements Converter<BigDecimal> {
 
-    private static final Logger logger = Logger.getLogger(ConversorBigDecimal.class);    
-    
+    private static final String INVALID_MESSAGE_KEY = "is_not_a_valid_number";
+
+    private final Locale locale;
+
+    private static final Logger logger = Logger.getLogger(ConversorBigDecimal.class);
+
     /**
      * @deprecated CDI eyes only
      */
     protected ConversorBigDecimal() {
         this(null);
     }
-    
+
     @Inject
     public ConversorBigDecimal(Locale locale) {
-        super(locale != null ? locale : java.util.Locale.getDefault());
+        if (locale == null) {
+            locale = java.util.Locale.getDefault();
+        }
+
+        this.locale = locale;
     }
 
     @Override
     public BigDecimal convert(String value, Class<? extends BigDecimal> type) {
-                
-        logger.info("Valor a ser convertido: "+ value);
-        logger.info("Locate: "+ java.util.Locale.getDefault());
-        logger.info("Separador: "+ DecimalFormatSymbols.getInstance().getDecimalSeparator());
-        
-        // Troca o separador decimal
-        value = value.replace('.', DecimalFormatSymbols.getInstance().getDecimalSeparator());
+        if (isNullOrEmpty(value)) {
+            return null;
+        }
 
-        logger.info("Valor convertido passo 1: "+ value);
-        
-        BigDecimal retorno = super.convert(value, type);
-        logger.info("Valor convertido: "+ retorno);
-        
-        return retorno;
+        try {
+            // Troca o separador decimal
+            value = value.replace('.', DecimalFormatSymbols.getInstance(this.locale).getDecimalSeparator());
+
+            return (BigDecimal) getNumberFormat().parse(value);
+        } catch (ParseException e) {
+            throw new ConversionException(new ConversionMessage(INVALID_MESSAGE_KEY, value));
+        }
+    }
+
+    protected NumberFormat getNumberFormat() {
+        DecimalFormat fmt = (DecimalFormat) DecimalFormat.getInstance(locale);
+        fmt.setParseBigDecimal(true);
+        return fmt;
     }
 
 }
