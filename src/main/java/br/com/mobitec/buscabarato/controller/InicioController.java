@@ -5,7 +5,6 @@
  */
 package br.com.mobitec.buscabarato.controller;
 
-import br.com.caelum.brutauth.auth.annotations.Public;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Result;
