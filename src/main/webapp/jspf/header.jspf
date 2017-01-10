@@ -103,15 +103,40 @@
                             <li class="active"><a href="<c:url value="/" />">Principal<span class="sr-only">(current)</span></a></li>
                             <li><a href="<c:url value="/usuario"/>">Login</a></li>
                             <!-- <li><a href="#" ng-click="ListaJSon('<c:url value="/produto"/>')">Lista de Produto JSon</a></li> -->
-                            <li><a href="<c:url value="/produto"/>">Lista de Produto</a></li>
                             <li><a href="<c:url value="/estado"/>">Lista de Estado</a></li>
                             <li><a href="<c:url value="/cidade"/>">Lista de Cidade</a></li>
                             <li><a href="<c:url value="/bairro"/>">Lista de Bairro</a></li>
                             <li><a href="<c:url value="/marcaJson"/>">Lista de Marca</a></li>
                             <li><a href="<c:url value="/marca"/>">Cadastro de Marca</a></li>
+                            <li><a href="<c:url value="/produto"/>">Cadastro de Produto</a></li>
                             <li><a href="<c:url value="/empresa"/>">Cadastro de Empresa</a></li>
+                            <li><a href="<c:url value="/consultaPreco"/>" id="idLinkConsultaPreco">Tabela de Preços</a></li>
                         </ul>
                         
                     </div>
                 </c:if>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="corpo"> <!-- col-xs-2 -->
+                    <script>
+                        $("#idLinkConsultaPreco").click( function() {
+                            
+                            if (navigator.geolocation) {
+                            // Pega a posição atual
+                            navigator.geolocation.getCurrentPosition(
+                                    function (position) {
+                                        $(location).attr('href', $("#idLinkConsultaPreco")[0].href + "/"+ position.coords.latitude + "/"+ position.coords.longitude);
+                                    },
+                                    function(erro){
+                                        alert(erro.code + " - "+ erro.message);
+                                        console.warn('ERROR(' + erro.code + '): ' + erro.message);
+                                        $(location).attr('href', $("#idLinkConsultaPreco")[0].href);
+                                    }); 
+                            
+                                //$(location).attr('href', $("#idLinkConsultaPreco")[0].href + "/"+ latitude + "/"+ longitude);
+                                return false;
+                            }
+                            else {
+                                return true;
+                            }
+                            
+                        });
+                    </script>

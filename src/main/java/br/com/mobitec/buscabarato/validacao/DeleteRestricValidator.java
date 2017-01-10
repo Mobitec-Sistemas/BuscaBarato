@@ -5,6 +5,7 @@
  */
 package br.com.mobitec.buscabarato.validacao;
 
+import br.com.caelum.vraptor.View;
 import br.com.caelum.vraptor.validator.Message;
 import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.com.caelum.vraptor.validator.Validator;
@@ -151,6 +152,19 @@ public class DeleteRestricValidator {
     public Validator addIf(boolean expression, Message message) {
         return validate.addIf(expression, message);
     }
+
+    public <T extends View> T onErrorUse(Class<T> view) {
+        return validate.onErrorUse(view);
+    }
+
+    public <T> T onErrorUsePageOf(Class<T> controller) {
+        return validate.onErrorUsePageOf(controller);
+    }
+
+    public <T> T onErrorUsePageOf(T controller) {
+        return validate.onErrorUsePageOf(controller);
+    }
+    
     
     
     public String getMensagem() {

@@ -25,6 +25,7 @@
         <tr>
             <th class="col_codigo">Código</th>
             <th>Produto</th>
+            <th>Marca</th>
             <th>Imagem</th>
             <th></th>
             <th></th>
@@ -34,8 +35,9 @@
         <c:forEach items="${produtoList}" var="produto">
             <tr>
                 <td style="vertical-align: middle;">${produto.codigo}</td>
-                <td style="vertical-align: middle;">${produto.descricao}</td>
-                <td style="vertical-align: middle;" class="text-center"><img class="img-thumbnail" alt="Imagem do produto" src="data:image/png;base64,${produto.getImagemBase64()}" /></td>
+                <td style="vertical-align: middle;">${produto.descricao} ${produto.medida}</td>
+                <td style="vertical-align: middle;">${produto.marca.nome}</td>
+                <td style="vertical-align: middle;" class="text-center"><img class="img-thumbnail imagem-grid" alt="Imagem do produto" src="data:image/png;base64,${produto.getImagemBase64()}" /></td>
                 
                 <td style="vertical-align: middle;" class="col_icone">
                     <a href="${linkTo[ProdutoController].cadastro}/${produto.codigo}">
@@ -53,4 +55,6 @@
     </tbody>
 </table>
 
-<input type="button" onclick="location.href = '${linkTo[ProdutoController].cadastro}';" value="Novo" />
+<div class="form-group col-xs-12">
+    <input type="button" class="btn btn-default center-block" onclick="location.href='${linkTo[ProdutoController].cadastro}';" value="Novo" />
+</div>

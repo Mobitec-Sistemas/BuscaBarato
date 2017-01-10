@@ -6,7 +6,6 @@
 package br.com.mobitec.buscabarato.converter;
 
 import br.com.caelum.vraptor.Convert;
-import br.com.caelum.vraptor.converter.BigDecimalConverter;
 import br.com.caelum.vraptor.converter.ConversionException;
 import br.com.caelum.vraptor.converter.ConversionMessage;
 import br.com.caelum.vraptor.converter.Converter;
@@ -19,7 +18,6 @@ import java.text.ParseException;
 import java.util.Locale;
 import javax.annotation.Priority;
 import javax.enterprise.inject.Alternative;
-import javax.enterprise.inject.Specializes;
 import javax.inject.Inject;
 import javax.interceptor.Interceptor;
 import org.apache.log4j.Logger;
@@ -32,23 +30,23 @@ import org.apache.log4j.Logger;
 @Alternative
 @Priority(Interceptor.Priority.APPLICATION)
 @Convert(BigDecimal.class)
-public class ConversorBigDecimal implements Converter<BigDecimal> {
+public class BigDecimalConverter implements Converter<BigDecimal> {
 
     private static final String INVALID_MESSAGE_KEY = "is_not_a_valid_number";
 
     private final Locale locale;
 
-    private static final Logger logger = Logger.getLogger(ConversorBigDecimal.class);
+    private static final Logger logger = Logger.getLogger(BigDecimalConverter.class);
 
     /**
      * @deprecated CDI eyes only
      */
-    protected ConversorBigDecimal() {
+    protected BigDecimalConverter() {
         this(null);
     }
 
     @Inject
-    public ConversorBigDecimal(Locale locale) {
+    public BigDecimalConverter(Locale locale) {
         if (locale == null) {
             locale = java.util.Locale.getDefault();
         }

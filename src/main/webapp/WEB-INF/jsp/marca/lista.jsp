@@ -46,8 +46,10 @@
         </tbody>
     </table>
 
-    <input type="button" onclick="location.href = '${linkTo[MarcaController].lista}/0';" value="Novo" />
-
+    <div class="form-group col-xs-12">
+        <input type="button" class="btn btn-default center-block" onclick="location.href = '${linkTo[MarcaController].lista}/0';" value="Novo" />
+    </div>
+    
 </div>
 
 <script type="text/JavaScript">

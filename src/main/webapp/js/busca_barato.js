@@ -4,22 +4,47 @@
  * and open the template in the editor.
  */
 
+// Adiciona as máscaras no campo
 
-/*
- * Busca o CEP do CEP aberto
- */
-function buscarCEP(pCEP) {
+// Márcara para valores
+ //$('.preco').mask("#.##0,00", {reverse: true});
+ //$('.preco').mask("##0,00", {reverse: true});
 
-    $http.defaults.headers.common.Authorization = 'Token token=99af931de527e2e67fa1a63d35d641b9';
+// CEP
+$('#cep').mask('00000-000');
 
-    $http({
-        method: 'GET',
-        url: 'http://www.cepaberto.com/api/v2/ceps.json?cep=88311300'
-    }).then(function successCallback(response) {
-        // this callback will be called asynchronously
-        // when the response is available
-    }, function errorCallback(response) {
-        // called asynchronously if an error occurs
-        // or server returns response with an error status.
-    });
+// Latitude e longitude
+$('#latitude').mask('D0ZZ.ZZZZZZZZZZ', {translation: {
+        'D': {pattern: /[-]/, optional: true},
+        'Z': {pattern: /[0-9]/, optional: true}}
+});
+$('#longitude').mask('D0ZZ.ZZZZZZZZZZ', {translation: {
+        'D': {pattern: /[-]/, optional: true},
+        'Z': {pattern: /[0-9]/, optional: true}}
+});
+
+// Formata os parâmetros para ser envido via http
+function formatarParametro(pParametro, pPrefixo) {
+    var retorno = "";
+    
+    if ( pPrefixo === undefined )
+        pPrefixo = "";
+    else
+        pPrefixo += ".";
+    
+    for (var item in pParametro) {
+        
+        if( retorno !== "" )
+                retorno += "&";
+        
+        if( typeof pParametro[item] === "object" )
+        {
+            retorno += formatarParametro(pParametro[item], pPrefixo + item);
+        }
+        else {
+            retorno += pPrefixo + item +"="+ pParametro[item];
+        }
+    }
+    
+    return retorno;
 }

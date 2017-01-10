@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
  */
 public class ConversorBigDecimalTest {
     
-    private ConversorBigDecimal conversor;
+    private BigDecimalConverter conversor;
     
     public ConversorBigDecimalTest() {
     }
@@ -34,7 +34,7 @@ public class ConversorBigDecimalTest {
     
     @Before
     public void setUp() {
-        conversor = new ConversorBigDecimal(java.util.Locale.getDefault());
+        conversor = new BigDecimalConverter(java.util.Locale.getDefault());
     }
     
     @After
@@ -42,7 +42,7 @@ public class ConversorBigDecimalTest {
     }
 
     /**
-     * Test of convert method, of class ConversorBigDecimal.
+     * Test of convert method, of class BigDecimalConverter.
      */
     @Test
     public void testConvertInteiroPositivo() {

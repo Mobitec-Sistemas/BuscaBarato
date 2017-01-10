@@ -41,7 +41,6 @@
             <select id="estado" 
                     class="form-control"
                     name="empresa.bairro.cidade.estado.codigo"
-                    value="${empresa.bairro.cidade.estado.codigo}"
                     ng-model="ddlEstado" 
                     ng-options="estado.nome for estado in Estados track by estado.codigo" 
                     ng-change="listarCidade(ddlEstado)">
@@ -55,7 +54,6 @@
             <select id="cidade" 
                     class="form-control" 
                     name="empresa.bairro.cidade.codigo"
-                    value="${empresa.bairro.cidade.codigo}"
                     ng-model="ddlCidade" 
                     ng-options="cidade.nome for cidade in Cidades track by cidade.codigo">
             </select>
@@ -77,17 +75,6 @@
 </form>
 
 <script type="text/javascript">
-
-    // Adiciona as máscaras no campo
-    $('#cep').mask('00000-000');
-    $('#latitude').mask('D0ZZ.ZZZZZZZZZZ', {translation: {
-            'D': {pattern: /[-]/, optional: true},
-            'Z': {pattern: /[0-9]/, optional: true}}
-    });
-    $('#longitude').mask('D0ZZ.ZZZZZZZZZZ', {translation: {
-            'D': {pattern: /[-]/, optional: true},
-            'Z': {pattern: /[0-9]/, optional: true}}
-    });
 
     // Auto complete utilizando o google maps
     var placeSearch, autocomplete;
@@ -174,9 +161,6 @@
         // Seta os combos de cidade e estado
         $('#estado').scope().listarCidadeEstado(componentSelect.administrative_area_level_1, componentSelect.locality);
 
-        //$('#estado').val(componentSelect.administrative_area_level_1).trigger('input');
-        //$('#estado').scope().listarCidade()
-
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?libraries=places&language=pt-BR&callback=initAutocomplete&key=AIzaSyDPbVO3kBAlAkfzmZVWqGokiPm65loumnc" async defer></script>
@@ -186,48 +170,67 @@
     var app = angular.module('MyApp', []);
     app.controller('MyController', function ($scope, $http) {
 
-    $http.get("${linkTo[EstadoController].lista}").then(
-    function(response){
-    $scope.Estados = response.data.estados;
-    }, 
-    function(response){
-    $scope.Estados = [];
-    }
-    );
+        $http.get("${linkTo[EstadoController].lista}").then(
+            function(response) {
+                $scope.Estados = response.data.estados;
+                //$scope.ddlEstado = $scope.Estados[1];
+                // seta o estado padrão
+                <c:if test="${not empty empresa.bairro.cidade.estado.codigo}">
+                    $scope.ddlEstado = $scope.Estados.find( function(element, index, array){
+                        return element.codigo === ${empresa.bairro.cidade.estado.codigo};
+                    });
+                    
+                    // Lista as cidas do estado padrão e seta a cidade padrão
+                    $scope.listarCidade($scope.ddlEstado, ${empresa.bairro.cidade.codigo});
+                </c:if>
+                
+            }, 
+            function(response) {
+                $scope.Estados = [];
+            }
+        );
 
-    $scope.listarCidade = function(uf) {
-    $http.get("${linkTo[CidadeController].listaCidadesEstado}"+ uf.codigo).then(
-    function(response){
-    $scope.Cidades = response.data.cidades;
-    }, 
-    function(response){
-    $scope.Cidades = [];
-    }
-    );
-    }
+        $scope.listarCidade = function(uf, cidade) {
+            $http.get("${linkTo[CidadeController].listaCidadesEstado}"+ uf.codigo).then(
+                function(response) {
+                    $scope.Cidades = response.data.cidades;
+                    
+                    // Seta a cidade padrão
+                    if (typeof cidade === "number")
+                    {
+                        $scope.ddlCidade = $scope.Cidades.find( function(element, index, array){
+                            return element.codigo === cidade;
+                        });
+                    }
+                }, 
+                function(response) {
+                    $scope.Cidades = [];
+                }
+            );
+        }
 
-    $scope.listarCidadeEstado = function(uf, cidade) {
-    $http({
-    method: 'GET',
-    url: '<c:url value="/cidade"/>',
-    params: {'cidade.nome': cidade, 'cidade.estado.sigla': uf}
-    }).then(function successCallback(response) {
+        $scope.listarCidadeEstado = function(uf, cidade) {
+            $http({
+                method: 'GET',
+                url: '<c:url value="/cidade"/>',
+                params: {'cidade.nome': cidade, 'cidade.estado.sigla': uf}
+            }).then(function successCallback(response) {
 
-    if(response.data.cidades.length > 0)
-    {
-    $scope.ddlEstado = response.data.cidades[0].estado;
+                if(response.data.cidades.length > 0)
+                {
+                    $scope.ddlEstado = response.data.cidades[0].estado;
 
-    // Carrega a lista de cidades do estado
-    $scope.listarCidade(response.data.cidades[0].estado);
+                    // Carrega a lista de cidades do estado
+                    $scope.listarCidade(response.data.cidades[0].estado, response.data.cidades[0].codigo);
 
-    $scope.ddlCidade = response.data.cidades[0];
-    }
+                    //$scope.ddlCidade = response.data.cidades[0];
+                }
 
-    }, function errorCallback(response) {
-    // called asynchronously if an error occurs
-    // or server returns response with an error status.
-    });   
-    }
+            }, function errorCallback(response) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+            });   
+        }
 
     });
 

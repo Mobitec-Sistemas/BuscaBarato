@@ -5,6 +5,7 @@
  */
 package br.com.mobitec.buscabarato.controller;
 
+import br.com.caelum.brutauth.auth.annotations.Public;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
@@ -55,6 +56,7 @@ public class ProdutoController {
      * Se usar no Header o Accept=application/json, irá retornar JSon,
      * Sesão irá redirecionar para a página HTML
      */
+    //@Public
     @Get("/produto")
     @Transactional
     public void lista() {
@@ -64,7 +66,7 @@ public class ProdutoController {
         // Gera o Base 64 das imagens
         //lista.forEach(l -> l.gerarBase64());
         
-        result.use(Results.representation()).from(lista, "produtoList").serialize();
+        result.use(Results.representation()).from(lista, "produtoList").include("marca").include("imagem").serialize();
         //return lista;
     }
             

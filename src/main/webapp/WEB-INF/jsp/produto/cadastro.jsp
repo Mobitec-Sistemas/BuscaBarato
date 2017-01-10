@@ -22,46 +22,23 @@
 
 <form class="form-horizontal" action="${linkTo[ProdutoController].cadastro}" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="produto.codigo" value="${produto.codigo}">
+    <input type="hidden" name="produto.marca.nome" value="teste">
 
     <mt:campoTexto type="text" id="inputDescricao" label="Descrição" name="produto.descricao" value="${produto.descricao}" placeholder="Descrição do Produto" />
     
     <mt:campoTexto type="text" id="inputMedida" label="Medida" name="produto.medida" value="${produto.medida}" placeholder="Unidade de medida do Produto" />
 
-    
-
-    <!-- <div ng-app="MyApp" ng-controller="MyController" class="form-group">
-        <label for="selectMarca">Marca</label>
-        <select id="selectMarca" name="produto.marcas[0].codigo" value="${produto.marcas[0].codigo}" ng-model="ddlMarcas" ng-options="marca.nome for marca in Marcas track by marca.codigo"></select>
-    </div> -->
-
-    <!-- Tabela com as Marcas -->
     <div class="form-group">
-        <div class="col-xs-2"></div>
-        <div class="tabela_formulario col-xs-10">
-            <table  class="table table-striped table-bordered table-condensed">
-                <thead>
-                    <tr>
-                        <th class="col_codigo">V</th>
-                        <th>Marca</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:set var="seqProduto" value="${0}" />
-                    <c:forEach items="${marcaList}" var="marca">
-                        <tr>
-                            <td style="vertical-align: middle;">
-                                <input type="checkbox" name="produto.marcas[${seqProduto}].codigo" value="${marca.codigo}">
-                            </td>
-                            <td style="vertical-align: middle;">${marca.nome}</td>
-                        </tr>
+        <label form="idCodigoMarca" class="control-label col-sm-2">Marca:</label>
+        <div class="col-sm-10">
+            <select name="produto.marca.codigo" id="idCodigoMarca" class="form-control" ng-model="cmbMarca" placeholder="Selecione uma marca">
+                <c:forEach items="${marcaList}" var="marca">
+                    <option value='${marca.codigo}'>${marca.nome}</option>
+                </c:forEach>
+            </select>
 
-                        <c:set var="seqProduto" value="${seqProduto + 1}" />
-                    </c:forEach>
-                </tbody>
-            </table>
         </div>
     </div>
-    <!-- Fim da tabela com as marcas -->
 
     <div class="form-group" id="wrapper">
         <label for="fileUpload" class="control-label col-xs-2">Imagem</label>
@@ -87,7 +64,7 @@
         $http.get("${linkTo[MarcaController].listaJson}").then(function (response) {
             $scope.Marcas = response.data.marcas;
 
-            $('#marcas').value = "${produto.marcas[0].codigo}";
+            $('#marcas').value = "${produto.marca.codigo}";
         });
 
     });

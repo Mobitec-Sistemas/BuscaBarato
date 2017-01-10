@@ -52,7 +52,7 @@ public class EmpresaController {
     /**
      * Lista os produtos.
      * Se usar no Header o Accept=application/json, irá retornar JSon,
-     * Sesão irá redirecionar para a página HTML
+     * Senão irá redirecionar para a página HTML
      */
     @Get("/empresa")
     public void lista() {        

@@ -17,6 +17,7 @@ import br.com.caelum.vraptor.view.Results;
 import br.com.mobitec.buscabarato.controleAcesso.UsuarioLogado;
 import br.com.mobitec.buscabarato.model.Usuario;
 import br.com.mobitec.buscabarato.model.service.facade.UsuarioFacade;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Sensum
  */
 @Controller
+@RequestScoped
 public class UsuarioController {
     
     @Inject

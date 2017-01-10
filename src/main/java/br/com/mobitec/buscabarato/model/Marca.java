@@ -12,9 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -35,12 +33,10 @@ public class Marca implements Serializable {
 
     
     //@ManyToMany(targetEntity = Produto.class, mappedBy = "marcas")
-    @ManyToMany()
-    @JoinTable(name = "marca_produto", joinColumns = {
-        @JoinColumn(name = "cod_marca", table = "marca_produto")}, inverseJoinColumns = {
-        @JoinColumn(name = "cod_produto", table = "marca_produto")})
+    /*@OneToMany(targetEntity = Produto.class, mappedBy = "marca")
     @DeleteRestrict(message = "Esta marca possui produtos relacionados")
-    private List<Produto> produtos;
+    private List<Produto> produtos;*/
+    
 
     public Marca() {
 
@@ -62,11 +58,11 @@ public class Marca implements Serializable {
         this.nome = nome;
     }
 
-    public List<Produto> getProdutos() {
+    /*public List<Produto> getProdutos() {
         return this.produtos;
     }
 
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
-    }
+    }*/
 }

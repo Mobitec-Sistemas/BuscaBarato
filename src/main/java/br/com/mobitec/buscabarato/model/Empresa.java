@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -38,7 +39,7 @@ public class Empresa extends Pessoa implements Serializable {
     @Column(name = "cep", table = "empresa", length = 8)
     private String cep;
 
-    @ManyToOne(targetEntity = Bairro.class)
+    @ManyToOne(targetEntity = Bairro.class, fetch=FetchType.LAZY)
     @JoinColumn(name = "cod_bairro")
     //@NotNull(message = "O bairro não pode ficar em branco")
     private Bairro bairro;

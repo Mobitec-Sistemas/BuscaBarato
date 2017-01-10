@@ -137,7 +137,8 @@ public class MarcaController {
             result.nothing(); // apenas retorna o código de sucesso (HTTP 200 OK).
         }
         else {
-            result.use(http()).sendError(500, validator.getMensagem()); 
+            //result.use(http()).sendError(500, validator.getMensagem()); 
+            validator.onErrorUse(http()).sendError(500, validator.getMensagem()); 
         }
 
     }

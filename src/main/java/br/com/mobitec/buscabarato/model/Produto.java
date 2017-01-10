@@ -14,12 +14,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -40,17 +40,24 @@ public class Produto implements Serializable {
     @Basic
     private String medida;
 
-    @ManyToMany(targetEntity = Marca.class)
+    /*@ManyToMany(targetEntity = Marca.class)
     @JoinTable(name = "marca_produto", joinColumns = {
         @JoinColumn(name = "cod_marca", table = "marca_produto")}, inverseJoinColumns = {
         @JoinColumn(name = "cod_produto", table = "marca_produto")})
-    private List<Marca> marcas;
+    private List<Marca> marcas;*/
+    @ManyToOne(targetEntity = Marca.class, fetch=FetchType.EAGER)
+    @JoinColumn(name = "cod_marca")
+    @NotNull(message = "A marca não pode ficar em branco")
+    private Marca marca;
 
     @OneToMany(targetEntity = TabelaPreco.class, mappedBy = "produto")
     private List<TabelaPreco> tabelaPrecoCollection;
 
     @Lob @Basic(fetch = FetchType.EAGER)
     private byte[] imagem;
+    
+    @Transient
+    private String descricaoCompleta;
         
     public Produto() {
 
@@ -71,7 +78,7 @@ public class Produto implements Serializable {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
+    
     public String getMedida() {
         return this.medida;
     }
@@ -79,13 +86,13 @@ public class Produto implements Serializable {
     public void setMedida(String medida) {
         this.medida = medida;
     }
-
-    public List<Marca> getMarcas() {
-        return this.marcas;
+    
+    public Marca getMarca() {
+        return this.marca;
     }
 
-    public void setMarcas(List<Marca> marcas) {
-        this.marcas = marcas;
+    public void setMarca(Marca marca) {
+        this.marca = marca;
     }
 
     public List<TabelaPreco> getTabelaPrecoCollection() {
@@ -119,5 +126,21 @@ public class Produto implements Serializable {
             return Base64.getEncoder().encodeToString(imagem);
         return "";
     }
+
+    /**
+     * Retorna a descrição completa do produto
+     * @return 
+     */
+    public String getDescricaoCompleta() {
+        return this.getDescricao() + " "+ this.getMedida();
+    }
+    
+    /**
+     * @param descricaoCompleta the descricaoCompleta to set
+     */
+    public void setDescricaoCompleta(String descricaoCompleta) {
+        //this.descricaoCompleta = descricaoCompleta;
+    }
+    
     
 }

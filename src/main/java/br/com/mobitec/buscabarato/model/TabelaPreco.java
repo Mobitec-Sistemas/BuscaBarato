@@ -5,6 +5,7 @@ package br.com.mobitec.buscabarato.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,50 +13,42 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tabela_preco")
 public class TabelaPreco implements Serializable {
 
-    @Column(name = "cod_empresa", table = "tabela_preco", nullable = false)
-    @Id
-    private int codEmpresa;
-
-    @Column(name = "cod_produto", table = "tabela_preco", nullable = false)
-    @Id
-    private int codProduto;
-
-    @Column(name = "preco", table = "tabela_preco", scale = 2, precision = 10)
-    @Basic
-    private BigDecimal preco;
-
     @ManyToOne(optional = false, targetEntity = Empresa.class)
     @JoinColumn(name = "cod_empresa", insertable = false, updatable = false)
+    @NotNull(message="A empresa não pode ser nula")
+    @Id
     private Empresa empresa;
 
     @ManyToOne(optional = false, targetEntity = Produto.class)
     @JoinColumn(name = "cod_produto", insertable = false, updatable = false)
+    @NotNull(message="O produto não pode ser nulo")
+    @Id
     private Produto produto;
+    
+    @Column(name = "preco", table = "tabela_preco", scale = 2, precision = 10)
+    @Min(value=0, message = "O preço do produto não pode ser negativo")
+    @NotNull(message="O preço do produto não pode ser nulo")
+    @Basic
+    private BigDecimal preco;
 
+    @Column(name = "alteracao", columnDefinition= "TIMESTAMP WITH TIME ZONE")
+    @NotNull(message="A data de alteração do preço não pode ser nula")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date alteracao;
+    
     public TabelaPreco() {
 
     }
 
-    public int getCodEmpresa() {
-        return this.codEmpresa;
-    }
-
-    public void setCodEmpresa(int codEmpresa) {
-        this.codEmpresa = codEmpresa;
-    }
-
-    public int getCodProduto() {
-        return this.codProduto;
-    }
-
-    public void setCodProduto(int codProduto) {
-        this.codProduto = codProduto;
-    }
 
     public BigDecimal getPreco() {
         return this.preco;
@@ -79,5 +72,33 @@ public class TabelaPreco implements Serializable {
 
     public void setProduto(Produto produto) {
         this.produto = produto;
+    }
+
+    /**
+     * Compara duas tabelas de preços
+     * @param t2
+     * @return 
+     */
+    public int compareTo(TabelaPreco t2) {
+        int retorno = this.getProduto().getDescricao().compareTo(t2.getProduto().getDescricao());
+        
+        if(retorno == 0)
+            retorno = this.getPreco().compareTo(t2.getPreco());
+        
+        return retorno;
+    }
+
+    /**
+     * @return the alteracao
+     */
+    public Date getAlteracao() {
+        return alteracao;
+    }
+
+    /**
+     * @param alteracao the alteracao to set
+     */
+    public void setAlteracao(Date alteracao) {
+        this.alteracao = alteracao;
     }
 }
