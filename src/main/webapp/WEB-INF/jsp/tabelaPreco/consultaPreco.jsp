@@ -92,7 +92,7 @@
         $scope.registrarPreco = function(tabelaPreco) {
             
             // Abre a confirmação da alteração
-            $( "#caixa-confirmacao" ).dialog( "open" );
+            //$( "#caixa-confirmacao" ).dialog( "open" );
             
             // Remove a imagem do parâmetro
             var imagem = tabelaPreco.produto.imagem;
