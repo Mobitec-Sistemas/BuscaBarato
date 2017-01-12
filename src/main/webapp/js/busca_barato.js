@@ -48,3 +48,43 @@ function formatarParametro(pParametro, pPrefixo) {
     
     return retorno;
 }
+
+// Formata os campos da classe preco
+$(document).ready(function () {
+    var input = $('.preco');
+    //console.log('teste');
+
+    input.onfocus = function(){
+        if (!input.value)
+            input.value = '0.00';
+    };
+
+    input.onblur = function(){
+        if (this.value == '0.00')
+            this.value = '';
+    };
+
+    input.onkeyup = function() {
+        var value = this.value.replace(/\./g, ''); // Remove ponto
+
+        // Remove todos os zeros à esquerda
+        while (1) {
+            if (value[0] == '0')
+                value = value.substr(1);
+            else
+                break;
+        }
+
+        // Se o número não tiver tamannho 3 insere zeros à esquerda
+        while (1) {
+            if (value.length < 3)
+                value = '0' + value;
+            else
+                break;
+        }
+
+        var result = value.substr(0, value.length - 2);
+        result += '.' + value.substr(value.length - 2);
+        this.value = result;
+    };
+});
