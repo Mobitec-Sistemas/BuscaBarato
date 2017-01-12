@@ -124,7 +124,7 @@
                 $("#alertaErro").fadeIn(900).delay(10000).fadeOut(900);
             });
         };
-
+        
     });
 
 

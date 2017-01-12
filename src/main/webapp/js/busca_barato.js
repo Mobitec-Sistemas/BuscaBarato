@@ -50,41 +50,34 @@ function formatarParametro(pParametro, pPrefixo) {
 }
 
 // Formata os campos da classe preco
-$(document).ready(function () {
-    var input = $('.preco');
-    //console.log('teste');
+$(document).on('focus', '.preco', function(){
+    if (!this.value)
+        this.value = '0.00';
+});
+$(document).on('blur', '.preco', function(){
+    if (!this.value)
+        this.value = '0.00';
+});
+$(document).on('keyup', '.preco', function(){
+    var value = this.value.replace(/\./g, ''); // Remove ponto
 
-    input.onfocus = function(){
-        if (!input.value)
-            input.value = '0.00';
-    };
+    // Remove todos os zeros à esquerda
+    while (1) {
+        if (value[0] == '0')
+            value = value.substr(1);
+        else
+            break;
+    }
 
-    input.onblur = function(){
-        if (this.value == '0.00')
-            this.value = '';
-    };
+    // Se o número não tiver tamannho 3 insere zeros à esquerda
+    while (1) {
+        if (value.length < 3)
+            value = '0' + value;
+        else
+            break;
+    }
 
-    input.onkeyup = function() {
-        var value = this.value.replace(/\./g, ''); // Remove ponto
-
-        // Remove todos os zeros à esquerda
-        while (1) {
-            if (value[0] == '0')
-                value = value.substr(1);
-            else
-                break;
-        }
-
-        // Se o número não tiver tamannho 3 insere zeros à esquerda
-        while (1) {
-            if (value.length < 3)
-                value = '0' + value;
-            else
-                break;
-        }
-
-        var result = value.substr(0, value.length - 2);
-        result += '.' + value.substr(value.length - 2);
-        this.value = result;
-    };
+    var result = value.substr(0, value.length - 2);
+    result += '.' + value.substr(value.length - 2);
+    this.value = result;
 });
