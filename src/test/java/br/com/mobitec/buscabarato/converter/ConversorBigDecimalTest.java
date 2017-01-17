@@ -20,6 +20,7 @@ import static org.junit.Assert.*;
 public class ConversorBigDecimalTest {
     
     private BigDecimalConverter conversor;
+    private BigDecimalConverter conversorEn;
     
     public ConversorBigDecimalTest() {
     }
@@ -35,6 +36,7 @@ public class ConversorBigDecimalTest {
     @Before
     public void setUp() {
         conversor = new BigDecimalConverter(java.util.Locale.getDefault());
+        conversorEn = new BigDecimalConverter(java.util.Locale.ENGLISH);
     }
     
     @After
@@ -96,6 +98,26 @@ public class ConversorBigDecimalTest {
         BigDecimal resultado = new BigDecimal("-123.456");
             
         assertEquals(resultado, convertido);
+    }
+    
+    @Test
+    public void testConvertDecimalPontoPositivoEn() {
+        BigDecimal convertido = conversorEn.convert("123.456", BigDecimal.class);
+        BigDecimal resultado = new BigDecimal("123.456");
+                
+        assertEquals(resultado, convertido);
+        assertTrue( convertido.compareTo(new BigDecimal("123")) == 1 );
+        assertTrue( convertido.compareTo(new BigDecimal("124")) == -1 );
+    }
+    
+    @Test
+    public void testConvertDecimalVirgulaPositivoEn() {
+        BigDecimal convertido = conversorEn.convert("123,456", BigDecimal.class);
+        BigDecimal resultado = new BigDecimal("123.456");
+                
+        assertEquals(resultado, convertido);
+        assertTrue( convertido.compareTo(new BigDecimal("123")) == 1 );
+        assertTrue( convertido.compareTo(new BigDecimal("124")) == -1 );
     }
     
 }

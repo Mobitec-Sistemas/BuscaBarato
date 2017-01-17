@@ -94,35 +94,58 @@
             // Abre a confirmação da alteração
             //$( "#caixa-confirmacao" ).dialog( "open" );
             
-            // Remove a imagem do parâmetro
-            var imagem = tabelaPreco.produto.imagem;
-            tabelaPreco.produto.imagem = "";
-            
-            var parametros = formatarParametro(tabelaPreco, "tabelaPreco");
-            tabelaPreco.produto.imagem = imagem;
-            
+                if(tabelaPreco.preco > 0) {
+
+                // Remove a imagem do parâmetro
+                var imagem = tabelaPreco.produto.imagem;
+                tabelaPreco.produto.imagem = "";
+
+                var parametros = formatarParametro(tabelaPreco, "tabelaPreco");
+                tabelaPreco.produto.imagem = imagem;
+
+
+                //var parametros = $.param(tabelaPreco);
+                $http({
+                    method: 'POST',
+                    url: '${linkTo[TabelaPrecoController].registrarPreco}',
+                    data: parametros,
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                })
+                .success(function (data, status, headers) {
+                    /*$scope.mensagemSucesso = "Preço alterado com sucesso!";
+
+                    $('#alertaErro').hide();    
+                    $("#alertaSucesso").fadeIn(900).delay(10000).fadeOut(900);*/
+                    $scope.apresentaMensagem(1, "Preço alterado com sucesso!");
+                })
+                .error(function (data, status, header, config) {
+                    var inicio = data.indexOf("<body>") + 6;
+                    var fim = data.indexOf("</body>");
+                    /*$scope.mensagemErro = data.substring(inicio, fim);
+
+                    $('#alertaSucesso').hide();                
+                    $("#alertaErro").fadeIn(900).delay(10000).fadeOut(900);*/
+                    $scope.apresentaMensagem(2, data.substring(inicio, fim));
+                });
+            }
+            else {
+                $scope.apresentaMensagem(2, "Preço inválido!")
+            }
+        };
         
-            //var parametros = $.param(tabelaPreco);
-            $http({
-                method: 'POST',
-                url: '${linkTo[TabelaPrecoController].registrarPreco}',
-                data: parametros,
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            })
-            .success(function (data, status, headers) {
-                $scope.mensagemSucesso = "Preço alterado com sucesso!";
-        
+        $scope.apresentaMensagem = function(tipo, mensagem) {
+            if(tipo === 1) {
+                // Sucesso
+                $scope.mensagemSucesso = mensagem;
                 $('#alertaErro').hide();    
                 $("#alertaSucesso").fadeIn(900).delay(10000).fadeOut(900);
-            })
-            .error(function (data, status, header, config) {
-                var inicio = data.indexOf("<body>") + 6;
-                var fim = data.indexOf("</body>");
-                $scope.mensagemErro = data.substring(inicio, fim);
-                
+            }
+            else {
+                // Erro
+                $scope.mensagemErro = mensagem;
                 $('#alertaSucesso').hide();                
                 $("#alertaErro").fadeIn(900).delay(10000).fadeOut(900);
-            });
+            }
         };
         
     });

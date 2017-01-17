@@ -58,12 +58,12 @@ $(document).on('blur', '.preco', function(){
     if (!this.value)
         this.value = '0.00';
 });
-$(document).on('keyup', '.preco', function(){
+/*$(document).on('keyup', '.preco', function(){
     var value = this.value.replace(/\./g, ''); // Remove ponto
 
     // Remove todos os zeros à esquerda
     while (1) {
-        if (value[0] == '0')
+        if (value[0] === '0')
             value = value.substr(1);
         else
             break;
@@ -80,4 +80,10 @@ $(document).on('keyup', '.preco', function(){
     var result = value.substr(0, value.length - 2);
     result += '.' + value.substr(value.length - 2);
     this.value = result;
+});*/
+
+$(document).on('change', '.preco', function(){
+    if(!this.validity.valid) {
+        this.value = "0.00";
+    }
 });

@@ -79,8 +79,6 @@ public class EmpresaController {
         Empresa empresa = new Empresa();
         
         result.redirectTo(this).formulario(empresa);
-        
-        //return empresa;
     }
     
     @Get("/empresa/cadastro/{codigo}")
@@ -91,9 +89,8 @@ public class EmpresaController {
             result.notFound();
         }
         
-        result.redirectTo(this).formulario(empresa);
-        
-        //return empresa;
+        //result.redirectTo(this).formulario(empresa);
+        result.forwardTo(this).formulario(empresa);
     }
     
     @Post("/empresa/cadastro")

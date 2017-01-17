@@ -62,7 +62,11 @@ public class BigDecimalConverter implements Converter<BigDecimal> {
 
         try {
             // Troca o separador decimal
-            value = value.replace('.', DecimalFormatSymbols.getInstance(this.locale).getDecimalSeparator());
+            char separador = DecimalFormatSymbols.getInstance(this.locale).getDecimalSeparator();
+            if( separador == ',' )
+                value = value.replace('.', separador);
+            else
+                value = value.replace(',', separador);
 
             return (BigDecimal) getNumberFormat().parse(value);
         } catch (ParseException e) {

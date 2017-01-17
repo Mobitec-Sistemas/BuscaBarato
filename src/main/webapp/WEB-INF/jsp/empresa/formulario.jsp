@@ -61,9 +61,9 @@
     </div>
 
     <!-- Latitude e Longitude -->
-    <mt:campoTexto type="text" step="any" id="latitude" label="Latitude:" name="empresa.latitude" value="${empresa.latitude}" placeholder="Coordenadas GPS - Latitude" />    
+    <mt:campoTexto type="number" step="any" id="latitude" label="Latitude:" name="empresa.latitude" value="${empresa.latitude}" placeholder="Coordenadas GPS - Latitude" />    
 
-    <mt:campoTexto type="text" step="any" id="longitude" label="Longitude:" name="empresa.longitude" value="${empresa.longitude}" placeholder="Coordenadas GPS - Longitude" />    
+    <mt:campoTexto type="number" step="any" id="longitude" label="Longitude:" name="empresa.longitude" value="${empresa.longitude}" placeholder="Coordenadas GPS - Longitude" />    
 
     <!-- Botão de enviar -->
     <div class="form-group">
