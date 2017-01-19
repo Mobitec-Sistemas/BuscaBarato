@@ -18,11 +18,7 @@
         <span class="sr-only">Sucesso:</span>
         {{ mensagemSucesso }}
     </div>
-    
-    <div id="caixa-confirmacao" title="Alterar Preço">
-        <p>Deseja alterar o preço deste produto?</p>
-    </div>
-    
+        
     <div class="form-group">
         <label form="mercado" class="control-label col-sm-2">Mercado:</label>
         <div class="col-sm-10">
@@ -35,6 +31,20 @@
         </div>
     </div>
 
+    <div class="form-group">
+        <label form="produto" class="control-label col-sm-2">Produto:</label>
+        <div class="col-sm-10">
+            <div class="input-group">
+                <input type="search" id="idProduto" name="nomeProduto" ng-model="txtProduto" class="form-control" placeholder="Pesquisa de Produto">
+                <span class="input-group-btn"><!--Estava faltando esse span-->
+                    <button ng-click="filtrarGrid(txtProduto)" class="btn btn-info" value="Procurar">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+    
     <table class="table table-striped">
         <thead>
             <tr>
@@ -45,7 +55,7 @@
             </tr>
         </thead>
         <tbody>            
-            <tr ng-repeat="tabelaPreco in tabelaPrecoList">
+            <tr ng-repeat="tabelaPreco in tabelaPrecoList | filter:txtProduto">
                 <td style="vertical-align: middle;" class="text-center">
                     <img class="img-thumbnail imagem-grid" alt="Imagem do produto" data-ng-src="data:image/png;base64,{{tabelaPreco.produto.imagem}}" data-err-src="<c:url value="/imagem/produto_sem_foto.png"/>" />
                 </td>
@@ -89,12 +99,13 @@
             );
         }
         
+        $scope.filtrarGrid = function(produto) {
+            alert(produto);
+        }
+        
         $scope.registrarPreco = function(tabelaPreco) {
             
-            // Abre a confirmação da alteração
-            //$( "#caixa-confirmacao" ).dialog( "open" );
-            
-                if(tabelaPreco.preco > 0) {
+            if(tabelaPreco.preco > 0) {
 
                 // Remove a imagem do parâmetro
                 var imagem = tabelaPreco.produto.imagem;

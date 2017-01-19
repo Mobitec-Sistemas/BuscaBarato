@@ -99,9 +99,12 @@
         var input = document.getElementById('nome');
 
         // Pega a localização atual do usuário
+        /*var defaultBounds = new google.maps.LatLngBounds(
+                new google.maps.LatLng(-28.749126, -54.028829),
+                new google.maps.LatLng(-25.955088, -48.591970));*/
         var defaultBounds = new google.maps.LatLngBounds(
-                new google.maps.LatLng(3.919395, -63.844094),
-                new google.maps.LatLng(3.919395, -63.844094));
+                new google.maps.LatLng(-26.874435, -48.697507),
+                new google.maps.LatLng(-26.874435, -48.697507));
 
         navigator.geolocation.getCurrentPosition(function (position) {
             var geolocation = {
@@ -113,6 +116,8 @@
                 radius: position.coords.accuracy
             });
             defaultBounds = circle.getBounds();
+            
+            autocomplete.setBounds(defaultBounds);;
         });
 
         var options = {
