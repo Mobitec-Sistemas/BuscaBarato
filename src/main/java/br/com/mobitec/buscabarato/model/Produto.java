@@ -40,15 +40,10 @@ public class Produto implements Serializable {
     @Basic
     private String medida;
 
-    /*@ManyToMany(targetEntity = Marca.class)
-    @JoinTable(name = "marca_produto", joinColumns = {
-        @JoinColumn(name = "cod_marca", table = "marca_produto")}, inverseJoinColumns = {
-        @JoinColumn(name = "cod_produto", table = "marca_produto")})
-    private List<Marca> marcas;*/
-    @ManyToOne(targetEntity = Marca.class, fetch=FetchType.EAGER)
+    /*@ManyToOne(targetEntity = Marca.class, fetch=FetchType.EAGER)
     @JoinColumn(name = "cod_marca")
     @NotNull(message = "A marca não pode ficar em branco")
-    private Marca marca;
+    private Marca marca;*/
 
     @OneToMany(targetEntity = TabelaPreco.class, mappedBy = "produto")
     private List<TabelaPreco> tabelaPrecoCollection;
@@ -87,13 +82,13 @@ public class Produto implements Serializable {
         this.medida = medida;
     }
     
-    public Marca getMarca() {
+    /*public Marca getMarca() {
         return this.marca;
     }
 
     public void setMarca(Marca marca) {
         this.marca = marca;
-    }
+    }*/
 
     public List<TabelaPreco> getTabelaPrecoCollection() {
         return this.tabelaPrecoCollection;

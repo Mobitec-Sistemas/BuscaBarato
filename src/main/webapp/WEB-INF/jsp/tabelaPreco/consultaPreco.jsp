@@ -8,21 +8,25 @@
 
 <div ng-controller="MyController">
 
-    <div id="alertaErro" class="alert alert-danger" role="alert">
+    <div id="alertaErro" class="alert alert-danger" role="alert" style="display:none">
         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
         <span class="sr-only">Erro:</span>
         {{mensagemErro}}
     </div>
-    <div id="alertaSucesso" class="alert alert-success" role="alert">
+    <div id="alertaSucesso" class="alert alert-success" role="alert" style="display:none">
         <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
         <span class="sr-only">Sucesso:</span>
         {{ mensagemSucesso }}
+    </div>
+    
+    <div id="confirmacaoPreco" title="Alteração de Preço" style="display:none">
+        <p>Confirma a alteração de preço deste produto?</p>
     </div>
         
     <div class="form-group">
         <label form="mercado" class="control-label col-sm-2">Mercado:</label>
         <div class="col-sm-10">
-            <select name="codigoEmpresa" id="idCodigoEmpresa" class="form-control" ng-model="cmbEmpresa" ng-change="atualizaGrid(cmbEmpresa)" placeholder="Selecione um mercado">
+            <select name="codigoEmpresa" id="idCodigoEmpresa" class="form-control" ng-model="cmbEmpresa" placeholder="Selecione um mercado">
                 <c:forEach items="${empresaList}" var="empresa">
                     <option value='${empresa.codigo}'>${empresa.nome} - ${empresa.bairro.cidade.nome}/${empresa.bairro.cidade.estado.nome}</option>
                 </c:forEach>
@@ -35,16 +39,16 @@
         <label form="produto" class="control-label col-sm-2">Produto:</label>
         <div class="col-sm-10">
             <div class="input-group">
-                <input type="search" id="idProduto" name="nomeProduto" ng-model="txtProduto" class="form-control" placeholder="Pesquisa de Produto">
+                <input type="search" id="idProduto" name="nomeProduto" ng-model="txtProduto" onkeypress="(window.event.keyCode === 13 ? $('#btnProcurar').click() : '' )" class="form-control" placeholder="Pesquisa de Produto">
                 <span class="input-group-btn"><!--Estava faltando esse span-->
-                    <button ng-click="filtrarGrid(txtProduto)" class="btn btn-info" value="Procurar">
+                    <button ng-click="atualizaGrid()" class="btn btn-info" value="Procurar" id="btnProcurar">
                         <span class="glyphicon glyphicon-search"></span>
                     </button>
                 </span>
             </div>
         </div>
     </div>
-    
+        
     <table class="table table-striped">
         <thead>
             <tr>
@@ -55,11 +59,11 @@
             </tr>
         </thead>
         <tbody>            
-            <tr ng-repeat="tabelaPreco in tabelaPrecoList | filter:txtProduto">
+            <tr ng-repeat="tabelaPreco in tabelaPrecoList"> <!-- | filter:txtProduto"> -->
                 <td style="vertical-align: middle;" class="text-center">
                     <img class="img-thumbnail imagem-grid" alt="Imagem do produto" data-ng-src="data:image/png;base64,{{tabelaPreco.produto.imagem}}" data-err-src="<c:url value="/imagem/produto_sem_foto.png"/>" />
                 </td>
-                <td>{{ tabelaPreco.produto.descricao }} {{ tabelaPreco.produto.marca.nome }} {{ tabelaPreco.produto.medida }}</td>
+                <td>{{ tabelaPreco.produto.descricao }} {{ tabelaPreco.produto.medida }}</td>
                 <td>{{ tabelaPreco.alteracao | date: "dd/MM/yyyy HH:mm:ss" }}</td>
                 <td style="width: 150px;">
                     <div class="input-group">
@@ -75,6 +79,12 @@
             </tr>
         </tbody>
     </table>
+    
+    <div class="col-sm-10" id="carregando" style="display:none">
+        <center><img src="<c:url value="/imagem/carregando.gif"/>"/></center>
+    </div>
+                    
+                    
 </div>
                     
 <script src="<c:url value="/js/dialog_sim_nao.js"/>" type="text/javascript"></script>
@@ -82,13 +92,14 @@
 
     $('#alertaErro').hide();
     $('#alertaSucesso').hide();
+    $('#carregando').hide();
 
     // Carrega os combos de cidade e estado
     var app = angular.module('MyApp', ["ngSanitize"]);
     
     app.controller('MyController', function ($scope, $http) {
 
-        $scope.atualizaGrid = function(empresa) {
+        /*$scope.atualizaGrid = function(empresa) {
             $http.get("${linkTo[TabelaPrecoController].lista}/"+ empresa).then(
                 function(response) {
                     $scope.tabelaPrecoList = response.data.tabelaPrecoList;
@@ -97,51 +108,101 @@
                     $scope.tabelaPrecoList = [];
                 }
             );
-        }
+        }*/
         
-        $scope.filtrarGrid = function(produto) {
-            alert(produto);
+        $scope.atualizaGrid = function() {
+            
+            $('#carregando').show();
+            
+            $http.get("${linkTo[TabelaPrecoController].lista}/"+ $scope.cmbEmpresa + "/"+ $scope.txtProduto ).then(
+                function(response) {
+                    $scope.tabelaPrecoList = response.data.tabelaPrecoList;
+                    $('#carregando').hide();
+                }, 
+                function(response) {
+                    $scope.tabelaPrecoList = [];
+                    $('#carregando').hide();
+                }
+            );
         }
-        
+                
         $scope.registrarPreco = function(tabelaPreco) {
             
             if(tabelaPreco.preco > 0) {
 
-                // Remove a imagem do parâmetro
-                var imagem = tabelaPreco.produto.imagem;
-                tabelaPreco.produto.imagem = "";
+                $("#confirmacaoPreco").dialog({
+                    resizable: false,
+                    height: "auto",
+                    modal: true,
+                    buttons: {
+                        "Sim": function () {
+                            
+                            // Remove a imagem do parâmetro
+                            var imagem = tabelaPreco.produto.imagem;
+                            tabelaPreco.produto.imagem = "";
 
-                var parametros = formatarParametro(tabelaPreco, "tabelaPreco");
-                tabelaPreco.produto.imagem = imagem;
+                            var parametros = formatarParametro(tabelaPreco, "tabelaPreco");
+                            tabelaPreco.produto.imagem = imagem;
 
 
-                //var parametros = $.param(tabelaPreco);
-                $http({
-                    method: 'POST',
-                    url: '${linkTo[TabelaPrecoController].registrarPreco}',
-                    data: parametros,
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-                })
-                .success(function (data, status, headers) {
-                    /*$scope.mensagemSucesso = "Preço alterado com sucesso!";
+                            //var parametros = $.param(tabelaPreco);
+                            $http({
+                                method: 'POST',
+                                url: '${linkTo[TabelaPrecoController].registrarPreco}',
+                                data: parametros,
+                                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                            })
+                            .success(function (data, status, headers) {
+                                $scope.apresentaMensagem(1, "Preço alterado com sucesso!");
+                            })
+                            .error(function (data, status, header, config) {
+                                var inicio = data.indexOf("<body>") + 6;
+                                var fim = data.indexOf("</body>");
+                                
+                                $scope.apresentaMensagem(2, data.substring(inicio, fim));
+                            });
+                            
+                            $(this).dialog('close');
+			},
+			"Não": function () {
+                            $(this).dialog('close');
+                        }
+                    }
+		});
 
-                    $('#alertaErro').hide();    
-                    $("#alertaSucesso").fadeIn(900).delay(10000).fadeOut(900);*/
-                    $scope.apresentaMensagem(1, "Preço alterado com sucesso!");
-                })
-                .error(function (data, status, header, config) {
-                    var inicio = data.indexOf("<body>") + 6;
-                    var fim = data.indexOf("</body>");
-                    /*$scope.mensagemErro = data.substring(inicio, fim);
+                    // Remove a imagem do parâmetro
+                    /*var imagem = tabelaPreco.produto.imagem;
+                    tabelaPreco.produto.imagem = "";
 
-                    $('#alertaSucesso').hide();                
-                    $("#alertaErro").fadeIn(900).delay(10000).fadeOut(900);*/
-                    $scope.apresentaMensagem(2, data.substring(inicio, fim));
-                });
+                    var parametros = formatarParametro(tabelaPreco, "tabelaPreco");
+                    tabelaPreco.produto.imagem = imagem;
+
+
+                    //var parametros = $.param(tabelaPreco);
+                    $http({
+                        method: 'POST',
+                        url: '${linkTo[TabelaPrecoController].registrarPreco}',
+                        data: parametros,
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                    })
+                    .success(function (data, status, headers) {
+                        /*$scope.mensagemSucesso = "Preço alterado com sucesso!";
+
+                        $('#alertaErro').hide();    
+                        $("#alertaSucesso").fadeIn(900).delay(10000).fadeOut(900);*/
+                    /*    $scope.apresentaMensagem(1, "Preço alterado com sucesso!");
+                    })
+                    .error(function (data, status, header, config) {
+                        var inicio = data.indexOf("<body>") + 6;
+                        var fim = data.indexOf("</body>");
+                        /*$scope.mensagemErro = data.substring(inicio, fim);
+
+                        $('#alertaSucesso').hide();                
+                        $("#alertaErro").fadeIn(900).delay(10000).fadeOut(900);*/
+                     /*   $scope.apresentaMensagem(2, data.substring(inicio, fim));
+                    });*/
             }
-            else {
-                $scope.apresentaMensagem(2, "Preço inválido!")
-            }
+            
         };
         
         $scope.apresentaMensagem = function(tipo, mensagem) {

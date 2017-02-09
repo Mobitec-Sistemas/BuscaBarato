@@ -15,6 +15,7 @@ import br.com.caelum.vraptor.validator.Validator;
 import br.com.caelum.vraptor.view.Results;
 import static br.com.caelum.vraptor.view.Results.http;
 import br.com.mobitec.buscabarato.model.Empresa;
+import br.com.mobitec.buscabarato.model.Produto;
 import br.com.mobitec.buscabarato.model.TabelaPreco;
 import br.com.mobitec.buscabarato.model.service.facade.EmpresaFacade;
 import br.com.mobitec.buscabarato.model.service.facade.TabelaPrecoFacade;
@@ -67,15 +68,43 @@ public class TabelaPrecoController {
      */
     @Get("/preco/{empresa.codigo}")
     public void lista(Empresa empresa) {
-        List<TabelaPreco> lista = tabelaPrecoFacade.listarProdutosEmpresa(empresa);
+        /*List<TabelaPreco> lista = tabelaPrecoFacade.listarProdutosEmpresa(empresa);
         
         result.use(Results.representation()).from(lista, "tabelaPrecoList")
                 .include("produto")
                 .include("produto.imagem")
-                .include("produto.marca")
+                //.include("produto.marca")
+                .include("empresa")
+                .serialize();*/
+        this.lista(empresa, null);
+    }
+    
+    /**
+     * Lista os produtos de todas as empresas
+     * @param produto 
+     */
+    @Get("/preco/{produto.descricao}")
+    public void lista(Produto produto) {
+        
+        this.lista(null, produto);
+    }
+    
+    /**
+     * Lista o preço de um determinado produto e empresa
+     * @param empresa a ser pesquisada
+     * @param produto a ser pesquisado
+     */
+    @Get("/preco/{empresa.codigo}/{produto.descricao}")
+    public void lista(Empresa empresa, Produto produto) {
+        List<TabelaPreco> lista = tabelaPrecoFacade.listarProdutosEmpresa(empresa, produto);
+        
+        result.use(Results.representation()).from(lista, "tabelaPrecoList")
+                .include("produto")
+                .include("produto.imagem")
+                //.include("produto.marca")
                 .include("empresa")
                 .serialize();
-    }
+    } 
     
     /**
      * Tela de consulta de preços dos Mercados

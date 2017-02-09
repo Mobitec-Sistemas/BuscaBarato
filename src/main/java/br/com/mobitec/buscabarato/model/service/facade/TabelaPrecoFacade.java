@@ -11,8 +11,12 @@ import br.com.mobitec.buscabarato.model.TabelaPreco;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.persistence.TypedQuery;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Example;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
@@ -33,21 +37,38 @@ public class TabelaPrecoFacade extends AbstractFacade<TabelaPreco> {
      * Lista os preços de todos os produtos de uma determinada empresa
      *
      * @param empresa
+     * @param filtroProduto
      * @return
      */
-    public List<TabelaPreco> listarProdutosEmpresa(Empresa empresa) {
-        
+    public List<TabelaPreco> listarProdutosEmpresa(Empresa empresa, Produto filtroProduto) {
+                
         // Seleciona as tabelas de preços da empresa
-        DetachedCriteria query = DetachedCriteria.forClass(TabelaPreco.class, "tp")
-                .createAlias("empresa", "emp", JoinType.INNER_JOIN)
+        DetachedCriteria query = DetachedCriteria.forClass(TabelaPreco.class, "tp");
+                
+        if(empresa != null && empresa.getCodigo() > 0 ) {
+            query.createAlias("empresa", "emp", JoinType.INNER_JOIN)
                 .add(Restrictions.eq("emp.codigo", empresa.getCodigo()));
+        }
         
-        List<TabelaPreco> tabelaPreco =  query.getExecutableCriteria(getSession()).list();
+        /*List<TabelaPreco> tabelaPreco =  query.getExecutableCriteria(getSession())
+                .createAlias("produto", "prod", JoinType.INNER_JOIN)
+                .list();*/
+        Criteria critTabelaPreco = query.getExecutableCriteria(getSession())
+                .createAlias("produto", "prod", JoinType.INNER_JOIN);
         
+        if(filtroProduto != null)
+            critTabelaPreco.add( Restrictions.ilike("prod.descricao", "%"+ filtroProduto.getDescricao().trim().replaceAll(" ", "%%") +"%", MatchMode.ANYWHERE) );
+        
+        List<TabelaPreco> tabelaPreco = critTabelaPreco.list();
+        
+                
         // Seleciona os produtos que não estão na tabela de preços
         query.setProjection( Property.forName("tp.produto") );
         Criteria queryProduto = getSession().createCriteria(Produto.class, "p")
                 .add( Property.forName("p.codigo").notIn(query) );
+        
+        if(filtroProduto != null)
+            queryProduto.add(Restrictions.ilike("p.descricao", "%"+ filtroProduto.getDescricao() +"%", MatchMode.ANYWHERE));
         
         List<Produto> produtos = queryProduto.list();
         

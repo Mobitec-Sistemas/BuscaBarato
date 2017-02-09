@@ -30,14 +30,7 @@ public class Marca implements Serializable {
     @Basic
     @NotNull(message = "O nome da marca não pode ficar vazio")
     private String nome;
-
     
-    //@ManyToMany(targetEntity = Produto.class, mappedBy = "marcas")
-    /*@OneToMany(targetEntity = Produto.class, mappedBy = "marca")
-    @DeleteRestrict(message = "Esta marca possui produtos relacionados")
-    private List<Produto> produtos;*/
-    
-
     public Marca() {
 
     }

@@ -18,6 +18,10 @@
         <priority value="TRACE"/>
     </category>
     
+    <category name="log4j.logger.org.hibernate.type">
+        <priority value="TRACE"/>
+    </category>
+    
     <!-- <logger name="org.hibernate.SQL" additivity="false" >
         <level value="DEBUG" />
         <appender-ref ref="SQLROLLINGFILE" />
@@ -48,6 +52,8 @@
     <Logger name="org.hibernate.secure" level="debug" />
     <!-- Log everything (a lot of information, but very useful for troubleshooting) -->
     <Logger name="org.hibernate" level="debug" />
+    
+    <Logger name="log4j.logger.org.hibernate.type" level="TRACE" />
     
     <logger name="org.hibernate.SQL" additivity="false" >   
         <level value="DEBUG" />    
