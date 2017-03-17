@@ -46,12 +46,21 @@
     
     <span ng-repeat="(key, value) in tabelaPrecoList | groupBy: 'produto.descricao'">
         
-        <div style="background-color: #f5f5f5; padding: 10px"><h5 style="font-weight: bold">{{ key }}<h6></div>
+        <div class="row" style="background-color: #f5f5f5; padding: 10px">
+            <img 
+                style="height: 70px; float: left; margin-right: 10px"
+                class="img-thumbnail imagem-grid" 
+                alt="Imagem do produto" 
+                data-ng-src="data:image/png;base64,{{value[0].produto.imagem}}" 
+                data-err-src="<c:url value="/imagem/produto_sem_foto.png"/>" />
+            
+            <h5 style="font-weight: bold">{{ key }}<h5>
+        </div>
         
         <div class="row container-fluid" style="margin: 10px 0px" ng-repeat="tabelaPreco in value">
-            <div class="col-sm-8 col-xs-7">{{ tabelaPreco.empresa.nome }}</div>
+            <div class="col-sm-8 col-xs-6">{{ tabelaPreco.empresa.nome }}</div>
 
-            <div class="col-sm-4 col-xs-5 input-group">
+            <div class="col-sm-4 col-xs-6 input-group">
                 <div class="input-group">
                     <span class="input-group-addon">R$</span>
                     <input type="number" step="0.01" min="0" max="999,999.99" class="form-control preco" placeholder="Preço do Produto" ng-model="tabelaPreco.preco">                                

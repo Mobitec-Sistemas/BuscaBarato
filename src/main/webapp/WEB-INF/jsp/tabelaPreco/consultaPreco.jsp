@@ -91,9 +91,10 @@
 </div>
                     
 <script src="<c:url value="/js/dialog_sim_nao.js"/>" type="text/javascript"></script>
+<script src="<c:url value="/js/precos.js"/>" type="text/javascript"></script>
 <script>
 
-    $('#alertaErro').hide();
+    /*$('#alertaErro').hide();
     $('#alertaSucesso').hide();
     $('#carregando').hide();
 
@@ -180,7 +181,7 @@
             }
         };
         
-    });
+    });*/
 
 
     
