@@ -58,9 +58,9 @@
         </div>
         
         <div class="row container-fluid" style="margin: 10px 0px" ng-repeat="tabelaPreco in value">
-            <div class="col-sm-8 col-xs-6">{{ tabelaPreco.empresa.nome }}</div>
+            <div class="col-sm-8 col-xs-12">{{ tabelaPreco.empresa.nome }}</div>
 
-            <div class="col-sm-4 col-xs-6 input-group">
+            <div class="col-sm-4 col-xs-12 input-group">
                 <div class="input-group">
                     <span class="input-group-addon">R$</span>
                     <input type="number" step="0.01" min="0" max="999,999.99" class="form-control preco" placeholder="Preço do Produto" ng-model="tabelaPreco.preco">                                
