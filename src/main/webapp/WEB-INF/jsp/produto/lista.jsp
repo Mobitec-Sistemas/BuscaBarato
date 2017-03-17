@@ -7,6 +7,8 @@
 
 <h2>Lista de Produtos</h2>
 
+<input type="hidden" value="${pagina}" />
+
 <c:if test="${not empty errors}">
     <div class="alert alert-danger" role="alert">
         <ul class="errors">
@@ -19,6 +21,27 @@
         </ul>
     </div>
 </c:if>
+
+<!-- Paginação -->
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class='${(pagina == 1 ? "disabled" : "")}'>
+            <a href="${linkTo[ProdutoController].lista}/${pagina == 1 ? pagina : pagina-1}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        
+        <c:forEach var="i" begin="1" end="${total_pagina}">       
+            <li class='${(pagina == i ? "active" : "")}'><a href="${linkTo[ProdutoController].lista}/${i}">${i}</a></li>
+        </c:forEach>
+        
+        <li class='${(total_pagina == pagina ? "disabled" : "")}'>
+            <a href="${linkTo[ProdutoController].lista}/${ total_pagina == pagina ? pagina : pagina+1}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
 
 <table  class="table table-striped">
     <thead>
@@ -35,8 +58,7 @@
         <c:forEach items="${produtoList}" var="produto">
             <tr>
                 <td style="vertical-align: middle;">${produto.codigo}</td>
-                <td style="vertical-align: middle;">${produto.descricao} ${produto.medida}</td>
-                <td style="vertical-align: middle;">${produto.marca.nome}</td>
+                <td style="vertical-align: middle;">${produto.descricao}</td>
                 <td style="vertical-align: middle;" class="text-center"><img class="img-thumbnail imagem-grid" alt="Imagem do produto" src="data:image/png;base64,${produto.getImagemBase64()}" /></td>
                 
                 <td style="vertical-align: middle;" class="col_icone">

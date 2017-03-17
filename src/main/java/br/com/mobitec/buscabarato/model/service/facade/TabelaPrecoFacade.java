@@ -11,11 +11,9 @@ import br.com.mobitec.buscabarato.model.TabelaPreco;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
-import javax.persistence.TypedQuery;
 import org.hibernate.Criteria;
-import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
@@ -40,7 +38,7 @@ public class TabelaPrecoFacade extends AbstractFacade<TabelaPreco> {
      * @param filtroProduto
      * @return
      */
-    public List<TabelaPreco> listarProdutosEmpresa(Empresa empresa, Produto filtroProduto) {
+/*    public List<TabelaPreco> listarProdutosEmpresa(Empresa empresa, Produto filtroProduto) {
                 
         // Seleciona as tabelas de preços da empresa
         DetachedCriteria query = DetachedCriteria.forClass(TabelaPreco.class, "tp");
@@ -53,7 +51,7 @@ public class TabelaPrecoFacade extends AbstractFacade<TabelaPreco> {
         /*List<TabelaPreco> tabelaPreco =  query.getExecutableCriteria(getSession())
                 .createAlias("produto", "prod", JoinType.INNER_JOIN)
                 .list();*/
-        Criteria critTabelaPreco = query.getExecutableCriteria(getSession())
+/*        Criteria critTabelaPreco = query.getExecutableCriteria(getSession())
                 .createAlias("produto", "prod", JoinType.INNER_JOIN);
         
         if(filtroProduto != null)
@@ -87,6 +85,55 @@ public class TabelaPrecoFacade extends AbstractFacade<TabelaPreco> {
         tabelaPreco.sort((t1, t2) -> t1.compareTo(t2) );
         
         return tabelaPreco;
+    }*/
+    
+    /**
+     * Lista os preços de todos os produtos de uma determinada empresa
+     *
+     * @param empresa
+     * @param filtroProduto
+     * @return
+     */
+    public List<TabelaPreco> listarProdutosEmpresa(Empresa empresa, Produto filtroProduto) {
+        
+        String cWhere = "%"+ filtroProduto.getDescricao().trim().replaceAll(" ", "%%") +"%";
+        String sql = "";
+        if(empresa != null && empresa.getCodigo() > 0 ) {
+            sql = " and empresa.cod_pessoa = :codEmpresa";
+        }
+        
+        SQLQuery query = getSession().createSQLQuery("SELECT " +
+                                                        "    uniao.*,               " +
+                                                        "    coalesce(tabela_preco.preco, 0) as \"preco\", " +
+                                                        "    tabela_preco.alteracao, " +
+                                                        "    uniao.codigo as \"cod_produto\", " +
+                                                        "    uniao.cod_pessoa as \"cod_empresa\" "+
+                                                        "from " +
+                                                        "    (select " +
+                                                        "        produto.*, " +
+                                                        "        empresa.* " +
+                                                        "    from " +
+                                                        "        produto cross join empresa "+ 
+                                                        "    where "+ 
+                                                        "        produto.descricao ILIKE :descProduto "+ sql +" ) as \"uniao\" " +
+                                                        "    left JOIN " +
+                                                        "         tabela_preco " +
+                                                        "    on " +
+                                                        "         uniao.codigo = tabela_preco.cod_produto and " +
+                                                        "         uniao.cod_pessoa = tabela_preco.cod_empresa")
+                                    .addEntity("tabela_preco", TabelaPreco.class);
+        
+        if(empresa != null && empresa.getCodigo() > 0 ) {
+            query.setInteger("codEmpresa", empresa.getCodigo());
+        }
+        
+        List<TabelaPreco> retorno = query.setString("descProduto", cWhere).list();
+        
+        // Ordena a lista por descrição do produto e preço
+        //tabelaPreco.sort((t1, t2) -> t1.getProduto().getDescricao().compareTo(t2.getProduto().getDescricao()) );
+        retorno.sort((t1, t2) -> t1.compareTo(t2) );
+        
+        return retorno;
     }
     
 }

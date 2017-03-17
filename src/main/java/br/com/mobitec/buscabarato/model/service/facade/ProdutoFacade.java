@@ -6,11 +6,10 @@
 package br.com.mobitec.buscabarato.model.service.facade;
 
 import br.com.mobitec.buscabarato.model.Produto;
+import java.util.List;
+import static javafx.scene.input.KeyCode.T;
 import javax.enterprise.context.RequestScoped;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
+import org.hibernate.Criteria;
 
 /**
  *
@@ -23,7 +22,13 @@ public class ProdutoFacade extends AbstractFacade<Produto> {
         super(Produto.class);
     }
  
-    /*public void whenApplicationStarts(@Observes ServletContext context) {
-        //logger.info("My application is UP");
-    }*/
+    public List<Produto> listar(int inicio, int maximo) {
+        Criteria criteria = this.getSession().createCriteria(Produto.class);
+        criteria.setFirstResult(inicio)
+                .setMaxResults(maximo);
+        List<Produto> produtolst = criteria.list();
+        
+        return produtolst;
+    }
+        
 }

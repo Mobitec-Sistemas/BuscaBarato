@@ -132,12 +132,20 @@ public class TabelaPrecoController {
             result.redirectTo(this).consultaPreco();
         }
     }
+    
+    /**
+     * Tela de consulta de preços do produtos
+     */
+    @Get("/consultaPrecoProduto")
+    public void consultaPrecoProduto()
+    {
+    }
         
     /**
      * Retistra o preço de um produto
      * @param tabelaPreco a ser registrado
      */
-    @Post("/registraPreco")
+    @Post("/registrarPreco")
     @Consumes( value = {"application/json", "application/x-www-form-urlencoded"} )
     @Transactional
     public void registrarPreco(TabelaPreco tabelaPreco) {

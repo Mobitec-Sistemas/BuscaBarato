@@ -5,7 +5,6 @@
  */
 package br.com.mobitec.buscabarato.controller;
 
-import br.com.caelum.brutauth.auth.annotations.Public;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
@@ -23,7 +22,6 @@ import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import org.apache.log4j.Logger;
 
 /**
  *
@@ -62,12 +60,28 @@ public class ProdutoController {
     public void lista() {
         
         List<Produto> lista = produtoFacade.findAll();
-                
-        // Gera o Base 64 das imagens
-        //lista.forEach(l -> l.gerarBase64());
         
         result.use(Results.representation()).from(lista, "produtoList").include("marca").include("imagem").serialize();
-        //return lista;
+    }
+    
+    /**
+     * Lista os produtos separados por página.
+     * Cara página terá 100 produtos
+     * @param pagina 
+     */
+    @Get("/produto/{pagina}")
+    @Transactional
+    public void lista(int pagina) {
+                
+        List<Produto> lista = produtoFacade.listar((pagina - 1)*100, 100); // Retira 1 pois as páginas são iniciados com zero
+        int totalPagina = produtoFacade.count();
+        int totalPag = (totalPagina / 100);
+        if(totalPag < (double)totalPagina / 100)
+            totalPag += 1;
+
+        result.include("pagina", pagina);
+        result.include("total_pagina", totalPag);
+        result.use(Results.representation()).from(lista, "produtoList").include("imagem").serialize();
     }
             
     @Get("/produto/cadastro")
@@ -120,7 +134,7 @@ public class ProdutoController {
         else
             produtoFacade.edit(produto);
         
-        result.redirectTo(this).lista();
+        result.redirectTo(this).lista(1);
         //result.redirectTo(this).cadastro();
     }
     

@@ -26,19 +26,7 @@
         <p>Confirma a alteração de preço deste produto?</p>
     </div>
         
-    <div class="form-group">
-        <label form="mercado" class="control-label col-sm-2">Mercado:</label>
-        <div class="col-sm-10">
-            <select name="codigoEmpresa" id="idCodigoEmpresa" class="form-control" ng-model="cmbEmpresa" placeholder="Selecione um mercado">
-                <c:forEach items="${empresaList}" var="empresa">
-                    <option value='${empresa.codigo}'>${empresa.nome} - ${empresa.bairro.cidade.nome}/${empresa.bairro.cidade.estado.nome}</option>
-                </c:forEach>
-            </select>
-
-        </div>
-    </div>
-
-    <div class="form-group">
+    <div class="form-group row">
         <label form="produto" class="control-label col-sm-2">Produto:</label>
         <div class="col-sm-10">
             <div class="input-group">
@@ -51,54 +39,50 @@
             </div>
         </div>
     </div>
-        
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Produto</th>
-                <th>Alterado em</th>
-                <th>Preço</th>
-            </tr>
-        </thead>
-        <tbody>            
-            <tr ng-repeat="tabelaPreco in tabelaPrecoList"> <!-- | filter:txtProduto"> -->
-                <td style="vertical-align: middle;" class="text-center">
-                    <img class="img-thumbnail imagem-grid" alt="Imagem do produto" data-ng-src="data:image/png;base64,{{tabelaPreco.produto.imagem}}" data-err-src="<c:url value="/imagem/produto_sem_foto.png"/>" />
-                </td>
-                <td>{{ tabelaPreco.produto.descricao }} {{ tabelaPreco.produto.medida }}</td>
-                <td>{{ tabelaPreco.alteracao | date: "dd/MM/yyyy HH:mm:ss" }}</td>
-                <td style="min-width: 150px; width: 150px;">
-                    <div class="input-group">
-                        <span class="input-group-addon">R$</span>
-                        <input type="number" step="0.01" min="0" max="999,999.99" class="form-control preco" placeholder="Preço do Produto" ng-model="tabelaPreco.preco">
-                    </div>
-                </td>
-                <td class="col_icone">
-                    <a href="javascript:void(0)" ng-click="registrarPreco(tabelaPreco);">
-                        <img src="<c:url value="/imagem/Confirmar.png"/>" alt="Alterar Preço" title="Alterar Preço">
-                    </a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
     
     <div class="col-sm-10" id="carregando" style="display:none">
         <center><img src="<c:url value="/imagem/carregando.gif"/>"/></center>
-    </div>
-                    
-                    
+    </div>    
+    
+    <span ng-repeat="(key, value) in tabelaPrecoList | groupBy: 'produto.descricao'">
+        
+        <div style="background-color: #f5f5f5; padding: 10px"><h5 style="font-weight: bold">{{ key }}<h6></div>
+        
+        <div class="row container-fluid" style="margin: 10px 0px" ng-repeat="tabelaPreco in value">
+            <div class="col-sm-8 col-xs-7">{{ tabelaPreco.empresa.nome }}</div>
+
+            <div class="col-sm-4 col-xs-5 input-group">
+                <div class="input-group">
+                    <span class="input-group-addon">R$</span>
+                    <input type="number" step="0.01" min="0" max="999,999.99" class="form-control preco" placeholder="Preço do Produto" ng-model="tabelaPreco.preco">                                
+
+                    <span class="input-group-btn">
+                        <button type="button" class="clearfix btn btn-default" aria-label="Alterar Preço" ng-click="registrarPreco(tabelaPreco);">
+                            <img src="<c:url value="/imagem/Confirmar.png"/>" alt="Alterar Preço" title="Alterar Preço">
+                        </button>
+                    </span>
+                </div>
+            
+            </div>
+            
+            
+        </div>
+        
+    </span>
+    
 </div>
                     
 <script src="<c:url value="/js/dialog_sim_nao.js"/>" type="text/javascript"></script>
-<script>
+<script src="<c:url value="/js/precos.js"/>" type="text/javascript"></script>
+<!-- <script>
 
     $('#alertaErro').hide();
     $('#alertaSucesso').hide();
     $('#carregando').hide();
 
     // Carrega os combos de cidade e estado
-    var app = angular.module('MyApp', ["ngSanitize"]);
+    var app = angular.module('MyApp', ["ngSanitize", "angular.filter"]);
+    
     
     app.controller('MyController', function ($scope, $http) {
         
@@ -106,7 +90,7 @@
             
             $('#carregando').show();
             
-            $http.get("${linkTo[TabelaPrecoController].lista}/"+ $scope.cmbEmpresa + "/"+ $scope.txtProduto ).then(
+            $http.get("${linkTo[TabelaPrecoController].lista}/"+ $scope.txtProduto ).then(
                 function(response) {
                     $scope.tabelaPrecoList = response.data.tabelaPrecoList;
                     $('#carregando').hide();
@@ -182,6 +166,5 @@
         
     });
 
-
     
-</script>
+</script>-->

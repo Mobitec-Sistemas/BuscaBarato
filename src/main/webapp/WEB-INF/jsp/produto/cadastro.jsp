@@ -22,23 +22,10 @@
 
 <form class="form-horizontal" action="${linkTo[ProdutoController].cadastro}" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="produto.codigo" value="${produto.codigo}">
-    <input type="hidden" name="produto.marca.nome" value="teste">
 
     <mt:campoTexto type="text" id="inputDescricao" label="Descrição" name="produto.descricao" value="${produto.descricao}" placeholder="Descrição do Produto" />
     
     <mt:campoTexto type="text" id="inputMedida" label="Medida" name="produto.medida" value="${produto.medida}" placeholder="Unidade de medida do Produto" />
-
-    <div class="form-group">
-        <label form="idCodigoMarca" class="control-label col-sm-2">Marca:</label>
-        <div class="col-sm-10">
-            <select name="produto.marca.codigo" id="idCodigoMarca" class="form-control" ng-model="cmbMarca" placeholder="Selecione uma marca">
-                <c:forEach items="${marcaList}" var="marca">
-                    <option value='${marca.codigo}'>${marca.nome}</option>
-                </c:forEach>
-            </select>
-
-        </div>
-    </div>
 
     <div class="form-group" id="wrapper">
         <label for="fileUpload" class="control-label col-xs-2">Imagem</label>
@@ -58,16 +45,16 @@
 
 <script type="text/JavaScript">
     
-    var app = angular.module('MyApp', []);
+    /*var app = angular.module('MyApp', []);
     app.controller('MyController', function ($scope, $http) {
 
         $http.get("${linkTo[MarcaController].listaJson}").then(function (response) {
             $scope.Marcas = response.data.marcas;
 
-            $('#marcas').value = "${produto.marca.codigo}";
+            $('#marcas').value = produto.marca.codigo;
         });
 
-    });
+    });*/
 
     // Faz o previw da imagem que será feito o upload
     $("#fileUpload").on('change', function () {

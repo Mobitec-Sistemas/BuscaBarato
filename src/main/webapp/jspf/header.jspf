@@ -58,6 +58,7 @@
         <script type="text/JavaScript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.js"></script>
         <script type="text/JavaScript" src="https://code.angularjs.org/1.0.3/angular-sanitize.js"></script>
+        <script type="text/JavaScript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.15/angular-filter.min.js"></script>
 
         <!-- Última versão JavaScript compilada e minificada -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -111,9 +112,10 @@
                             <li><a href="<c:url value="/bairro"/>">Lista de Bairro</a></li>
                             <li><a href="<c:url value="/marcaJson"/>">Lista de Marca</a></li>
                             <li><a href="<c:url value="/marca"/>">Cadastro de Marca</a></li>
-                            <li><a href="<c:url value="/produto"/>">Cadastro de Produto</a></li>
+                            <li><a href="<c:url value="/produto/1"/>">Cadastro de Produto</a></li>
                             <li><a href="<c:url value="/empresa"/>">Cadastro de Empresa</a></li>
                             <li><a href="<c:url value="/consultaPreco"/>" id="idLinkConsultaPreco">Tabela de Preços</a></li>
+                            <li><a href="<c:url value="/consultaPrecoProduto"/>" id="idLinkConsultaPrecoProduto">Consulta de Preços</a></li>
                         </ul>
                         
                     </div>
@@ -129,7 +131,7 @@
                                         $(location).attr('href', $("#idLinkConsultaPreco")[0].href + "/"+ position.coords.latitude + "/"+ position.coords.longitude);
                                     },
                                     function(erro){
-                                        alert(erro.code + " - "+ erro.message);
+                                        alert("Não foi possível obter sua localiação.\nFavor habilitar o GPS (caso esteja utilizando um dispositivo móvel) ou permitir que o esta página acesse sua localização.");
                                         console.warn('ERROR(' + erro.code + '): ' + erro.message);
                                         $(location).attr('href', $("#idLinkConsultaPreco")[0].href);
                                     }); 
