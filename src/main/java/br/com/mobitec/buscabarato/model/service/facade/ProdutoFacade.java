@@ -7,7 +7,6 @@ package br.com.mobitec.buscabarato.model.service.facade;
 
 import br.com.mobitec.buscabarato.model.Produto;
 import java.util.List;
-import static javafx.scene.input.KeyCode.T;
 import javax.enterprise.context.RequestScoped;
 import org.hibernate.Criteria;
 
