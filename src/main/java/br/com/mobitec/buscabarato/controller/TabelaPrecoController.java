@@ -68,14 +68,6 @@ public class TabelaPrecoController {
      */
     @Get("/preco/{empresa.codigo}")
     public void lista(Empresa empresa) {
-        /*List<TabelaPreco> lista = tabelaPrecoFacade.listarProdutosEmpresa(empresa);
-        
-        result.use(Results.representation()).from(lista, "tabelaPrecoList")
-                .include("produto")
-                .include("produto.imagem")
-                //.include("produto.marca")
-                .include("empresa")
-                .serialize();*/
         this.lista(empresa, null);
     }
     

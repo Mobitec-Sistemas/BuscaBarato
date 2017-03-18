@@ -16,13 +16,12 @@ app.controller('MyController', function ($scope, $http) {
     $scope.atualizaGrid = function() {
 
         $('#carregando').show();
-        var cUrl = "preco/";
+        var cUrl = $("#requisicao").val() + "/preco/";
+        
         if( typeof $scope.cmbEmpresa !== "undefined")
             cUrl += $scope.cmbEmpresa + "/";
         cUrl += $scope.txtProduto;
 
-        //$http.get("${linkTo[TabelaPrecoController].lista}/"+ $scope.cmbEmpresa + "/"+ $scope.txtProduto ).then(
-        //$http.get("preco/"+ $scope.txtProduto ).then(
         $http.get( cUrl ).then(
             function(response) {
                 $scope.tabelaPrecoList = response.data.tabelaPrecoList;
@@ -38,6 +37,8 @@ app.controller('MyController', function ($scope, $http) {
     $scope.registrarPreco = function(tabelaPreco) {
 
         if(tabelaPreco.preco > 0) {
+
+            var cUrl = $("#requisicao").val() + "/registrarPreco";
 
             $("#confirmacaoPreco").dialog({
                 resizable: false,
@@ -57,7 +58,7 @@ app.controller('MyController', function ($scope, $http) {
                         //var parametros = $.param(tabelaPreco);
                         $http({
                             method: 'POST',
-                            url: 'registrarPreco',
+                            url: cUrl, //'registrarPreco'
                             data: parametros,
                             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                         })

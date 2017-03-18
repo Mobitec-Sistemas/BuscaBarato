@@ -8,18 +8,8 @@
 
 <div ng-controller="MyController">
 
-    <!--
-    <div id="alertaErro" class="alert alert-danger" role="alert" style="display:none">
-        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-        <span class="sr-only">Erro:</span>
-        {{mensagemErro}}
-    </div>
-    <div id="alertaSucesso" class="alert alert-success" role="alert" style="display:none">
-        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-        <span class="sr-only">Sucesso:</span>
-        {{ mensagemSucesso }}
-    </div>
-    -->
+    <input type='hidden' value='<c:url value="/."/>' id='requisicao' />
+    
     <mt:mensagemSucessoErro/>
     
     <div id="confirmacaoPreco" title="Alteração de Preço" style="display:none">
