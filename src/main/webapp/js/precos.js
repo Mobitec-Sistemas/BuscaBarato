@@ -15,6 +15,7 @@ app.controller('MyController', function ($scope, $http) {
 
     $scope.atualizaGrid = function() {
 
+        $('#btnProcurar').focus();
         $('#carregando').show();
         var cUrl = $("#requisicao").val() + "/preco/";
         
@@ -35,6 +36,8 @@ app.controller('MyController', function ($scope, $http) {
     }
 
     $scope.registrarPreco = function(tabelaPreco) {
+
+        $(this).focus();
 
         if(tabelaPreco.preco > 0) {
 

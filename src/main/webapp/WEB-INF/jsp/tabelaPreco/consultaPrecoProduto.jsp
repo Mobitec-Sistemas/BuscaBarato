@@ -21,7 +21,7 @@
         <div class="col-sm-10">
             <div class="input-group">
                 <input type="search" id="idProduto" name="nomeProduto" ng-model="txtProduto" onkeypress="(window.event.keyCode === 13 ? $('#btnProcurar').click() : '' )" class="form-control" placeholder="Pesquisa de Produto">
-                <span class="input-group-btn"><!--Estava faltando esse span-->
+                <span class="input-group-btn">
                     <button ng-click="atualizaGrid()" class="btn btn-info" value="Procurar" id="btnProcurar">
                         <span class="glyphicon glyphicon-search"></span>
                     </button>
