@@ -55,14 +55,16 @@
 
             <div class="col-sm-4 col-xs-12 col-md-3 input-group">
                 <div class="input-group">
-                    <span class="input-group-addon">R$</span>
+                    <mt:campoPreco/>
+                    
+                    <!--<span class="input-group-addon">R$</span>
                     <input type="number" step="0.01" min="0" max="999,999.99" class="form-control preco" placeholder="Preço do Produto" ng-model="tabelaPreco.preco">                                
 
                     <span class="input-group-btn">
                         <button type="button" class="clearfix btn btn-default" aria-label="Alterar Preço" ng-click="registrarPreco(tabelaPreco);">
                             <img src="<c:url value="/imagem/Confirmar.png"/>" alt="Alterar Preço" title="Alterar Preço">
                         </button>
-                    </span>
+                    </span>-->
                 </div>
             
             </div>

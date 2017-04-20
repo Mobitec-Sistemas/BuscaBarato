@@ -5,6 +5,7 @@
  */
 package br.com.mobitec.buscabarato.controller;
 
+import br.com.caelum.brutauth.auth.annotations.Public;
 import br.com.caelum.vraptor.Consumes;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
@@ -56,6 +57,7 @@ public class TabelaPrecoController {
     }
     
     @Get("/preco")
+    @Public
     public void lista() {        
         List<TabelaPreco> lista = tabelaPrecoFacade.findAll();
                         
@@ -67,6 +69,7 @@ public class TabelaPrecoController {
      * @param empresa a ser utilizada na pesquisa 
      */
     @Get("/preco/{empresa.codigo}")
+    @Public
     public void lista(Empresa empresa) {
         this.lista(empresa, null);
     }
@@ -76,6 +79,7 @@ public class TabelaPrecoController {
      * @param produto 
      */
     @Get("/preco/{produto.descricao}")
+    @Public
     public void lista(Produto produto) {
         
         this.lista(null, produto);
@@ -87,6 +91,7 @@ public class TabelaPrecoController {
      * @param produto a ser pesquisado
      */
     @Get("/preco/{empresa.codigo}/{produto.descricao}")
+    @Public
     public void lista(Empresa empresa, Produto produto) {
         List<TabelaPreco> lista = tabelaPrecoFacade.listarProdutosEmpresa(empresa, produto);
         
@@ -129,6 +134,7 @@ public class TabelaPrecoController {
      * Tela de consulta de preços do produtos
      */
     @Get("/consultaPrecoProduto")
+    @Public
     public void consultaPrecoProduto()
     {
     }

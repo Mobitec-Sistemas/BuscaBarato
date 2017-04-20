@@ -8,12 +8,14 @@ package br.com.mobitec.buscabarato.controleAcesso;
 import br.com.mobitec.buscabarato.model.Usuario;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 
 /**
  *
  * @author Sensum
  */
 @SessionScoped
+@Named("usuarioLogado")
 public class UsuarioLogado implements Serializable {
     
     private Usuario usuario;

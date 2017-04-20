@@ -8,16 +8,9 @@ package br.com.mobitec.buscabarato.model.service.facade;
 import br.com.mobitec.buscabarato.model.Empresa;
 import br.com.mobitec.buscabarato.model.Produto;
 import br.com.mobitec.buscabarato.model.TabelaPreco;
-import java.math.BigDecimal;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
-import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Property;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.sql.JoinType;
 
 
 /**

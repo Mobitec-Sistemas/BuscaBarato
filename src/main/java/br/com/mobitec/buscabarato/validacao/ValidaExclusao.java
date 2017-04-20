@@ -5,9 +5,7 @@
  */
 package br.com.mobitec.buscabarato.validacao;
 
-import br.com.caelum.vraptor.validator.Validator;
 import java.util.List;
-import javax.inject.Inject;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 

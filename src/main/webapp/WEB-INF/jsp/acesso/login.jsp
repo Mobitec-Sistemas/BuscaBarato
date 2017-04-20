@@ -4,10 +4,16 @@
     Author     : Sensum
 --%>
 
+<c:if test="${not empty mensagem}">
+    <div id="alertaSucesso" class="alert alert-success" role="alert">
+        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+        ${mensagem}
+    </div>
+</c:if>
 
 <div class="col-sm-3 container" ng-app="MyApp" ng-controller="MyController">
 
-    <form class="form-signin" action="<c:url value="usuario" />" method="POST" ng-submit="enviarForm()">
+    <form class="form-signin" action="<c:url value="login" />" method="POST" ng-submit="enviarForm()">
 
         <h2 class="form-signin-heading">Acesso ao sistema Busca Barato</h2>
 
@@ -21,11 +27,10 @@
             </div>
         </c:forEach>
 
-
         <label for="inputEmail" class="sr-only">Usuário</label>
-        <input type="text" id="inputUsuario" name="usuario.login" class="form-control" placeholder="Usuário" required autofocus ng-model="login" >
+        <input type="text" id="inputUsuario" name="usuario.login" class="form-control" placeholder="Informe o nome de Usuário ou e-mail" required autofocus ng-model="login" >
         <label for="inputPassword" class="sr-only">Senha</label>
-        <input type="password" id="inputPassword" name="usuario.senha" class="form-control" placeholder="Senha" required ng-model="senha">
+        <input type="password" id="inputPassword" name="usuario.senha" class="form-control" placeholder="Informe a Senha" required ng-model="senha">
 
         <div class="checkbox">
             <label>
@@ -33,7 +38,9 @@
             </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Efetuar Login</button>
-
+        <br>
+        <a href="<c:url value="usuario/formulario" />">Cadastre-se</a>
+        
     </form>
 
 

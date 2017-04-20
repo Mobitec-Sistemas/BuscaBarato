@@ -106,10 +106,10 @@
                     <a class="navbar-brand" href="<c:url value="/"/>">Busca Barato</a>
                 
                     <!-- Nome do Usuário -->
-                    <c:if test="${not empty usuario.nome}">
-                        <a id="usuarioId" href="#" class="navbar-brand dropdown-toggle navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${usuario.nome}<span class="caret"></span></a>
+                    <c:if test="${not empty usuarioLogado.usuario}">
+                        <a id="usuarioId" href="#" class="navbar-brand dropdown-toggle navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${usuarioLogado.usuario.nome}<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="<c:url value="/usuario/logoff"/>">Sair</a></li>
+                            <li><a href="<c:url value="/logoff"/>">Sair</a></li>
                         </ul>
                     </c:if>
                     
@@ -126,7 +126,7 @@
 
                         <c:set var="uri" value="${req.requestURI}" />
 
-                        <c:if test="${not empty usuario.nome}">
+                        <c:if test="${not empty usuarioLogado.usuario}">
                             <li class="active"><a href="<c:url value="/" />">Principal<span class="sr-only">(current)</span></a></li>
                             <li><a href="<c:url value="/usuario"/>">Login</a></li>
                             <!-- <li><a href="#" ng-click="ListaJSon('<c:url value="/produto"/>')">Lista de Produto JSon</a></li> -->
@@ -137,9 +137,8 @@
                             <li><a href="<c:url value="/marca"/>">Cadastro de Marca</a></li>
                             <li><a href="<c:url value="/produto/1"/>">Cadastro de Produto</a></li>
                             <li><a href="<c:url value="/empresa"/>">Cadastro de Empresa</a></li>
+                            <li><a href="<c:url value="/consultaPreco"/>" id="idLinkConsultaPreco">Tabela de Preços</a></li>
                         </c:if>
-                        
-                        <li><a href="<c:url value="/consultaPreco"/>" id="idLinkConsultaPreco">Tabela de Preços</a></li>
                         <li><a href="<c:url value="/consultaPrecoProduto"/>" id="idLinkConsultaPrecoProduto">Consulta de Preços</a></li>
                         
                     </ul>

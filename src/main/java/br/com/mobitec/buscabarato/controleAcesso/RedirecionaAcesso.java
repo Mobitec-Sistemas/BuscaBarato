@@ -7,7 +7,7 @@ package br.com.mobitec.buscabarato.controleAcesso;
 
 import br.com.caelum.brutauth.auth.handlers.RuleHandler;
 import br.com.caelum.vraptor.Result;
-import br.com.mobitec.buscabarato.controller.UsuarioController;
+import br.com.mobitec.buscabarato.controller.AcessoController;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
@@ -34,6 +34,6 @@ public class RedirecionaAcesso implements RuleHandler {
 
     @Override
     public void handle() {
-        result.redirectTo(UsuarioController.class).login();
+        result.redirectTo(AcessoController.class).login();
     }
 }

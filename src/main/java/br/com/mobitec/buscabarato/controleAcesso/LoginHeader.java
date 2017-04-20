@@ -11,12 +11,10 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.controller.ControllerMethod;
 import br.com.caelum.vraptor.core.InterceptorStack;
 import br.com.caelum.vraptor.interceptor.Interceptor;
-import br.com.mobitec.buscabarato.controller.UsuarioController;
+import br.com.mobitec.buscabarato.controller.AcessoController;
 import br.com.mobitec.buscabarato.model.Usuario;
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -37,7 +35,7 @@ public class LoginHeader implements Interceptor {
     private UsuarioLogado usuarioLogado;
     
     @Inject
-    private UsuarioController usuarioController;
+    private AcessoController acessoController;
     
     @Override
     public boolean accepts(ControllerMethod method) {
@@ -61,7 +59,7 @@ public class LoginHeader implements Interceptor {
             usu.setLogin(usuarioSenha.substring(0, usuarioSenha.indexOf(':')));
             usu.setSenha(usuarioSenha.substring(usuarioSenha.indexOf(':')+1));
             
-            usuarioController.login(usu);
+            acessoController.login(usu);
             
             // Verifica se consegui fazer o login
             if( usuarioLogado.getUsuario() != null )

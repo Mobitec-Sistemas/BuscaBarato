@@ -82,8 +82,17 @@ public class TabelaPreco implements Serializable {
     public int compareTo(TabelaPreco t2) {
         int retorno = this.getProduto().getDescricao().compareTo(t2.getProduto().getDescricao());
         
-        if(retorno == 0)
-            retorno = this.getPreco().compareTo(t2.getPreco());
+        if(retorno == 0){
+            //retorno = this.getPreco().compareTo(t2.getPreco());
+            
+            // Ordena por preço, mas os preços zero, ficam em baixo
+            if(this.getPreco() != BigDecimal.ZERO && t2.getPreco() == BigDecimal.ZERO)
+                retorno = -1;
+            else if(this.getPreco() == BigDecimal.ZERO && t2.getPreco() != BigDecimal.ZERO)
+                retorno = 1;
+            else
+                retorno = this.getPreco().compareTo(t2.getPreco());
+        }
         
         return retorno;
     }

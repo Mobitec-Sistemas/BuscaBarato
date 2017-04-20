@@ -6,20 +6,23 @@
 package br.com.mobitec.buscabarato.controller;
 
 import br.com.caelum.brutauth.auth.annotations.Public;
-import br.com.caelum.vraptor.Consumes;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.com.caelum.vraptor.validator.Validator;
-import br.com.caelum.vraptor.view.Results;
-import br.com.mobitec.buscabarato.controleAcesso.UsuarioLogado;
 import br.com.mobitec.buscabarato.model.Usuario;
 import br.com.mobitec.buscabarato.model.service.facade.UsuarioFacade;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -37,12 +40,9 @@ public class UsuarioController {
     
     @Inject
     private UsuarioFacade usuarioFacade;
-    
+        
     @Inject
-    private HttpServletRequest request;
-    
-    @Inject
-    private UsuarioLogado usuarioLogado;
+    private Event<Usuario> eventoUsuarioCadastrado;
     
     /**
      * Contrutor padrão para o CDI
@@ -50,70 +50,95 @@ public class UsuarioController {
     public UsuarioController() {
         
     }
-    
-    /**
-     * Carrega os dados do usuário para o login
-     * @return 
-     */
-    @Public
+         
     @Get("/usuario")
-    public Usuario login() {
+    @Public
+    public Usuario formulario() {
         Usuario usuario = new Usuario();
         
+        return this.formulario(usuario);
+    }
+    
+    @Get("/usuario/{usuario}")
+    @Public
+    public Usuario formulario(Usuario usuario) {        
         return usuario;
     }
     
-    /**
-     * Executa o login do usuario
-     * @param usuario
-     */
-    @Public
-    @Consumes( value = {"application/json", "application/x-www-form-urlencoded"} )
     @Post("/usuario")
-    public void login(Usuario usuario) {
-                
-        Usuario usuarioCarregado = usuarioFacade.carrega(usuario);
+    @Transactional
+    @Public
+    public void cadastrar(@NotNull Usuario usuario) {
+               
+        validator.validate(usuario);
         
-        usuarioLogado.setUsuario(usuarioCarregado);
+        if(usuario.getEmail() == null || usuario.getEmail().isEmpty())
+            validator.add(new SimpleMessage("email", "O E-mail não pode ficar em branco"));
         
-        // Obtém o cabecalho para verificar se os dados vieram por formulário ou JSON
-        if( request.getHeader("Content-Type") != null && request.getHeader("Content-Type").equalsIgnoreCase("application/json") )
-        {
-            // Trata como aplicativo
-            if(usuarioCarregado != null)
-            {
-                result.use(Results.http()).body(usuarioCarregado.getNome()).setStatusCode(202);
-                //result.use(Results.http()).setStatusCode( 202 );
-            }
-            else
-            {
-                result.use(Results.http()).body("Usuario ou senha invalido").setStatusCode(401);
-                //result.use(Results.http()).setStatusCode( 401 );
-            }
+        if(usuario.getSenha() == null || usuario.getSenha().isEmpty())
+            validator.add(new SimpleMessage("senha", "A senha não pode ficar em branco"));
+        
+        validator.onErrorRedirectTo(this).formulario(usuario);
+
+        if(usuario.getCodigo() == null) {
+            usuario.setToken(GerarToken(usuario));
+            usuarioFacade.create(usuario);
+            
+            eventoUsuarioCadastrado.fire(usuario);
         }
         else
-        {
-            // Trata como formulário HTML
-            
-            if(usuarioCarregado == null) {
-                validator.add(
-                        new SimpleMessage("usuario.login", "Login e/ou senha inválidos"));
-            }
-
-            validator.onErrorRedirectTo(this).login();
-
-            result.redirectTo(InicioController.class).index();
-        }
-    }
-
-    /**
-     * Faz logoff da aplicação
-     */
-     @Get("/usuario/logoff")
-    public void logoff() {
+            usuarioFacade.edit(usuario);
         
-        usuarioLogado.setUsuario(null);
-     
-        result.redirectTo(InicioController.class).index();
+        result.redirectTo(AcessoController.class).login();
+    }
+    
+    /**
+     * Ativa o usuário
+     * @param token do usuário a ser ativado
+     */
+    @Get("/usuario/ativar/{token}")
+    @Transactional
+    @Public
+    public void ativar(String token) {
+        Usuario usuario = usuarioFacade.carrega(token);
+        if(usuario == null)
+            validator.add(new SimpleMessage("token", "Acesso inválido"));
+        else
+            usuario.setAtivo(true);
+        
+        validator.onErrorRedirectTo(AcessoController.class).login();
+        
+        usuarioFacade.edit(usuario);
+        
+        result.include("mensagem", "Conta ativada com sucesso!");
+        result.redirectTo(AcessoController.class).login();
+    }
+    
+    private String GerarToken(Usuario usuario) {
+        String retorno = "";
+        
+        try {
+            String frase = usuario.getNome() + usuario.getEmail() + usuario.getSenha();
+            
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(frase.getBytes());
+            byte[] hashMd5 = md.digest();
+            
+            retorno = stringHexa(hashMd5);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return retorno;
+    }
+    
+    private String stringHexa(byte[] bytes) {
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < bytes.length; i++) {
+            int parteAlta = ((bytes[i] >> 4) & 0xf) << 4;
+            int parteBaixa = bytes[i] & 0xf;
+            if (parteAlta == 0) s.append('0');
+            s.append(Integer.toHexString(parteAlta | parteBaixa));
+        }
+        return s.toString();
     }
 }
