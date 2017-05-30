@@ -23,7 +23,7 @@ public abstract class AbstractFacade<T> {
     @Inject
     private EntityManager em;
     
-    private Class<T> entityClass;
+    private final Class<T> entityClass;
 
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;

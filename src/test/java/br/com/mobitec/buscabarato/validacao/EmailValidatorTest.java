@@ -5,7 +5,6 @@
  */
 package br.com.mobitec.buscabarato.validacao;
 
-import javax.validation.ConstraintValidatorContext;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

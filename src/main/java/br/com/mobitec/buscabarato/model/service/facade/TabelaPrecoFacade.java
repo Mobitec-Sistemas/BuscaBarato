@@ -23,63 +23,7 @@ public class TabelaPrecoFacade extends AbstractFacade<TabelaPreco> {
     public TabelaPrecoFacade() {
         super(TabelaPreco.class);
     }
-
-    /**
-     * Lista os preços de todos os produtos de uma determinada empresa
-     *
-     * @param empresa
-     * @param filtroProduto
-     * @return
-     */
-/*    public List<TabelaPreco> listarProdutosEmpresa(Empresa empresa, Produto filtroProduto) {
-                
-        // Seleciona as tabelas de preços da empresa
-        DetachedCriteria query = DetachedCriteria.forClass(TabelaPreco.class, "tp");
-                
-        if(empresa != null && empresa.getCodigo() > 0 ) {
-            query.createAlias("empresa", "emp", JoinType.INNER_JOIN)
-                .add(Restrictions.eq("emp.codigo", empresa.getCodigo()));
-        }
         
-        /*List<TabelaPreco> tabelaPreco =  query.getExecutableCriteria(getSession())
-                .createAlias("produto", "prod", JoinType.INNER_JOIN)
-                .list();*/
-/*        Criteria critTabelaPreco = query.getExecutableCriteria(getSession())
-                .createAlias("produto", "prod", JoinType.INNER_JOIN);
-        
-        if(filtroProduto != null)
-            critTabelaPreco.add( Restrictions.ilike("prod.descricao", "%"+ filtroProduto.getDescricao().trim().replaceAll(" ", "%%") +"%", MatchMode.ANYWHERE) );
-        
-        List<TabelaPreco> tabelaPreco = critTabelaPreco.list();
-        
-                
-        // Seleciona os produtos que não estão na tabela de preços
-        query.setProjection( Property.forName("tp.produto") );
-        Criteria queryProduto = getSession().createCriteria(Produto.class, "p")
-                .add( Property.forName("p.codigo").notIn(query) );
-        
-        if(filtroProduto != null)
-            queryProduto.add(Restrictions.ilike("p.descricao", "%"+ filtroProduto.getDescricao() +"%", MatchMode.ANYWHERE));
-        
-        List<Produto> produtos = queryProduto.list();
-        
-        // Adiciona os produtos na lista de tabela de preço
-        produtos.stream().forEach( produto -> { 
-            TabelaPreco tabPre = new TabelaPreco();
-            tabPre.setEmpresa(empresa);
-            tabPre.setProduto(produto);
-            tabPre.setPreco(BigDecimal.ZERO);
-            
-            tabelaPreco.add(tabPre);
-        });
-        
-        // Ordena a lista por descrição do produto e preço
-        //tabelaPreco.sort((t1, t2) -> t1.getProduto().getDescricao().compareTo(t2.getProduto().getDescricao()) );
-        tabelaPreco.sort((t1, t2) -> t1.compareTo(t2) );
-        
-        return tabelaPreco;
-    }*/
-    
     /**
      * Lista os preços de todos os produtos de uma determinada empresa
      *
@@ -89,7 +33,9 @@ public class TabelaPrecoFacade extends AbstractFacade<TabelaPreco> {
      */
     public List<TabelaPreco> listarProdutosEmpresa(Empresa empresa, Produto filtroProduto) {
         
-        String cWhere = "%"+ filtroProduto.getDescricao().trim().replaceAll(" ", "%%") +"%";
+        String cWhere = "produto.descricao ILIKE '%"+ filtroProduto.getDescricao().trim().replaceAll(" ", "%' and produto.descricao ILIKE '%") +"%'";
+        
+        //String cWhere = "%"+ filtroProduto.getDescricao().trim().replaceAll(" ", "%%") +"%";
         String sql = "";
         if(empresa != null && empresa.getCodigo() > 0 ) {
             sql = " and empresa.cod_pessoa = :codEmpresa";
@@ -108,7 +54,8 @@ public class TabelaPrecoFacade extends AbstractFacade<TabelaPreco> {
                                                         "    from " +
                                                         "        produto cross join empresa "+ 
                                                         "    where "+ 
-                                                        "        produto.descricao ILIKE :descProduto "+ sql +" ) as \"uniao\" " +
+                                                        //"        produto.descricao ILIKE :descProduto "+ sql +" ) as \"uniao\" " +
+                                                        "        "+ cWhere +" "+ sql +" ) as \"uniao\" " +
                                                         "    left JOIN " +
                                                         "         tabela_preco " +
                                                         "    on " +
@@ -120,10 +67,10 @@ public class TabelaPrecoFacade extends AbstractFacade<TabelaPreco> {
             query.setInteger("codEmpresa", empresa.getCodigo());
         }
         
-        List<TabelaPreco> retorno = query.setString("descProduto", cWhere).list();
+        //List<TabelaPreco> retorno = query.setString("descProduto", cWhere).list();
+        List<TabelaPreco> retorno = query.list();
         
         // Ordena a lista por descrição do produto e preço
-        //tabelaPreco.sort((t1, t2) -> t1.getProduto().getDescricao().compareTo(t2.getProduto().getDescricao()) );
         retorno.sort((t1, t2) -> t1.compareTo(t2) );
         
         return retorno;
