@@ -5,6 +5,7 @@
  */
 package br.com.mobitec.buscabarato.controleAcesso;
 
+import br.com.caelum.brutauth.interceptors.BrutauthRuleInterceptor;
 import br.com.caelum.vraptor.InterceptionException;
 import br.com.caelum.vraptor.Intercepts;
 import br.com.caelum.vraptor.Result;
@@ -22,7 +23,8 @@ import javax.servlet.http.HttpServletRequest;
  * Faz o login utilizado os dados do header da requisição
  * @author Sensum
  */
-@Intercepts(before = ControlaAcesso.class)
+//@Intercepts(before = ControlaAcesso.class)
+@Intercepts(before = BrutauthRuleInterceptor.class)
 public class LoginHeader implements Interceptor {
 
     @Inject 

@@ -60,6 +60,7 @@ public class ProdutoController {
     public void lista() {
         
         List<Produto> lista = produtoFacade.findAll();
+        //lista.sort((p1, p2) -> p1.getDescricao().compareToIgnoreCase(p2.getDescricao()) );
         
         result.use(Results.representation()).from(lista, "produtoList").include("marca").include("imagem").serialize();
     }
