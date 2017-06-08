@@ -6,12 +6,16 @@
 package br.com.mobitec.buscabarato.model.service.facade;
 
 import br.com.mobitec.buscabarato.model.Produto;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.StandardBasicTypes;
 
 /**
  *
@@ -43,9 +47,16 @@ public class ProdutoFacade extends AbstractFacade<Produto> {
          //String cWhere = "produto.descricao ILIKE '%"+ descProd.trim().replaceAll(" ", "%' and produto.descricao ILIKE '%") +"%'";
          
          String[] cWhere = descProd.split(" ");
+                  
+         Criteria critic = this.getSession().createCriteria(Produto.class);
          
-         List<Produto> produtos = this.getSession().createCriteria(Produto.class)
-                 .add( Property.forName("descricao").in( cWhere ) )
+         Arrays.stream(cWhere).forEach( 
+                 a -> critic.add( Restrictions.sqlRestriction("lower({alias}.descricao) ilike lower(?)", "%"+ a +"%", StandardBasicTypes.STRING))  
+         );
+                
+         
+         List<Produto> produtos = critic
+                 .addOrder( Order.asc("descricao") )
                  .list();
          
          return produtos;
