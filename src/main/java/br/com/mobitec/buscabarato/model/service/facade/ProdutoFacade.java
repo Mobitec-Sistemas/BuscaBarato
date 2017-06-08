@@ -10,6 +10,8 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Property;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -30,6 +32,23 @@ public class ProdutoFacade extends AbstractFacade<Produto> {
         List<Produto> produtolst = criteria.list();
         
         return produtolst;
+    }
+
+    /**
+     * Lista os produtos de acordo com a descrição
+     * @param descProd Descrição do produto a ser pesquisado
+     * @return Uma lista de produtos
+     */
+    public List<Produto> listar(String descProd) {
+         //String cWhere = "produto.descricao ILIKE '%"+ descProd.trim().replaceAll(" ", "%' and produto.descricao ILIKE '%") +"%'";
+         
+         String[] cWhere = descProd.split(" ");
+         
+         List<Produto> produtos = this.getSession().createCriteria(Produto.class)
+                 .add( Property.forName("descricao").in( cWhere ) )
+                 .list();
+         
+         return produtos;
     }
         
 }

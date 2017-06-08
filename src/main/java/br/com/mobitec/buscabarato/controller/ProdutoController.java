@@ -5,8 +5,10 @@
  */
 package br.com.mobitec.buscabarato.controller;
 
+import br.com.caelum.brutauth.auth.annotations.Public;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
+import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.observer.upload.UploadedFile;
@@ -82,6 +84,15 @@ public class ProdutoController {
 
         result.include("pagina", pagina);
         result.include("total_pagina", totalPag);
+        result.use(Results.representation()).from(lista, "produtoList").include("imagem").serialize();
+    }
+    
+    @Get()
+    @Path(value = "/produto/{descProd}", priority = Path.LOW )
+    @Public
+    public void list(String descProd) {
+        List<Produto> lista = produtoFacade.listar(descProd);
+        
         result.use(Results.representation()).from(lista, "produtoList").include("imagem").serialize();
     }
             
